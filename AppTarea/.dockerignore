@@ -1,0 +1,33 @@
+# ===================================
+# Archivos innecesarios para Docker
+# ===================================
+
+# Build outputs de .NET
+bin/
+obj/
+
+# Configuración local
+*.user
+*.suo
+*.log
+
+# Archivos de IDE
+.vs/
+.vscode/
+
+# Git
+.git/
+.gitignore
+
+# Archivos Docker que no deben copiarse a la imagen
+docker-compose.yml
+Dockerfile
+.dockerignore
+
+# Frontend (cuando lo tengas)
+node_modules/
+dist/
+build/
+
+# Archivos sensibles
+.env
