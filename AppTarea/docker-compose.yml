@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: apptarea-api
+    build:
+      context: .
+      dockerfile: src/Presentation/Dockerfile
+    ports:
+      - "5208:80"  # El contenedor escucha en 80, tu máquina lo expone en 5208
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=Server=host.docker.internal,1433;Database=Tarea;User Id=sa;Password=TuPasswordFuerte;TrustServerCertificate=True;
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge

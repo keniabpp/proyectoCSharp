@@ -1,0 +1,45 @@
+# ==========================
+# .NET / Visual Studio
+# ==========================
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.log
+*.vs/
+*.vscode/
+*.dbmdl
+*.bak
+*.ldf
+*.ndf
+
+# Archivos de configuración locales
+launchSettings.json
+
+# ==========================
+# Sistema Operativo
+# ==========================
+.DS_Store
+Thumbs.db
+
+# ==========================
+# Frontend (React / Angular / Vue)
+# ==========================
+node_modules/
+dist/
+build/
+*.lock
+
+# ==========================
+# Docker
+# ==========================
+*.pid
+.env
+
+# ==========================
+# Tests / Coverage
+# ==========================
+TestResult*/
+coverage/
+*.trx
