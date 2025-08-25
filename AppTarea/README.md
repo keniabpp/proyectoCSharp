@@ -1,11 +1,11 @@
-# 📌 AppTarea - Backend
+📌 AppTarea - Backend
 
 Este es el **backend** de la aplicación **AppTarea**, desarrollado en **.NET 8** con una arquitectura en capas (Onion Architecture).  
-Expone una **API REST** para la gestión de usuarios, tableros y tareas, documentada con **Swagger**.
+Expone una **API REST** para la gestión de usuarios, tableros, columnas y tareas, documentada con **Swagger**.
 
----
 
-## 🚀 Tecnologías utilizadas
+
+🚀 Tecnologías utilizadas
 - **C# .NET 8**
 - **ASP.NET Core Web API**
 - **Entity Framework Core**
@@ -13,9 +13,9 @@ Expone una **API REST** para la gestión de usuarios, tableros y tareas, documen
 - **Docker & Docker Compose**
 - **Swagger** (para documentación interactiva de la API)
 
----
 
- 📂 Estructura del proyecto
+
+📂 Estructura del proyecto
 AppTarea/
 AppTarea.sln # Solución principal .NET
 docker-compose.yml # Orquestación con contenedores
@@ -55,22 +55,35 @@ Un resumen rápido de lo que ofrece tu API:
 ## 📖 Endpoints principales
 
 - **Usuarios**
+  - `POST /api/usuarios/register`
+  - `POST /api/usuarios/login`
   - `GET /api/usuarios`
+  - `GET /api/usuarios/{id}`
   - `POST /api/usuarios`
   - `PUT /api/usuarios/{id}`
   - `DELETE /api/usuarios/{id}`
 
 - **Tableros**
   - `GET /api/tableros`
+  - `GET /api/tableros/{id}`
   - `POST /api/tableros`
   - `PUT /api/tableros/{id}`
   - `DELETE /api/tableros/{id}`
 
+- **Columnas**
+  - `GET /api/columnas`
+  - `GET /api/columnas/{id}`
+  - `DELETE /api/columnas/{id}`
+
 - **Tareas**
   - `GET /api/tareas`
+  - `GET /api/tareas/{id}`
   - `POST /api/tareas`
   - `PUT /api/tareas/{id}`
   - `DELETE /api/tareas/{id}`
+  - `PUT /api/tareas/{id_tarea}/moverTarea
+
+
 
 👉 Documentación completa en Swagger:  
 `http://localhost:5207/swagger`

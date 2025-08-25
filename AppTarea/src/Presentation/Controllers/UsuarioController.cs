@@ -88,7 +88,6 @@ namespace Presentation.Controllers
 
         // PUT: api/usuarios/{id}
         [HttpPut("{id}")]
-        //[Authorize(Roles = "admin")]
         public async Task<ActionResult<Usuario>> Update(int id, [FromBody] UsuarioUpdateDTO usuarioUpdateDTO)
         {
             var command = new UpdateUsuarioCommand(id, usuarioUpdateDTO);

@@ -41,7 +41,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<Tablero>> Create([FromBody] TableroCreateDTO tableroCreateDTO)
         {
             var command = new CreateTableroCommand(tableroCreateDTO);
@@ -57,6 +57,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<Tablero>> Update(int id, [FromBody] TableroUpdateDTO tableroUpdateDTO)
         {
             var command = new UpdateTableroCommand(id, tableroUpdateDTO);
@@ -65,8 +66,9 @@ namespace Presentation.Controllers
             if (actualizado == null) return NotFound();
             return Ok(new { mensaje = "Tablero actualizado correctamente" });
         }
-        
+
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteTableroCommand(id);
