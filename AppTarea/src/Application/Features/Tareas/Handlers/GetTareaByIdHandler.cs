@@ -22,7 +22,10 @@ namespace Application.Features.Tareas.Handlers
             var tarea = await _tareaRepository.GetByIdAsync(request.Id);
 
             if (tarea == null)
-                throw new Exception("Tarea no encontrada");
+            {
+                throw new Exception($"Tarea con ID {request.Id} no encontrado.");
+            }
+                
 
             var tareaDTO = _mapper.Map<TareaDTO>(tarea);
 

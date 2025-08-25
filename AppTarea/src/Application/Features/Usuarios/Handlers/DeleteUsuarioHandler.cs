@@ -18,7 +18,7 @@ namespace Application.Features.Usuarios.Handlers
 
              var usuarioExistente = await _usuarioRepository.GetByIdAsync(request.Id);
             if (usuarioExistente == null)
-            throw new KeyNotFoundException($"No se encontró el usuario con ID {request.Id}");
+            throw new Exception($"No se encontró el usuario con ID {request.Id}");
             return await _usuarioRepository.DeleteAsync(request.Id);
         }
     }

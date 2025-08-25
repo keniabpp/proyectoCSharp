@@ -23,14 +23,14 @@ namespace Application.Features.Usuarios.Handlers
             var usuarioExistente = await _usuarioRepository.GetByIdAsync(request.Id);
             if (usuarioExistente == null)
             {
-                throw new KeyNotFoundException($" No se encontró la tarea con ID {request.Id}");
+                throw new Exception($" No se encontró el Usuario con ID {request.Id}");
             }
 
             if (usuarioExistente.email != request.UsuarioUpdateDTO.email)
             {
                 var otroUsuario = await _usuarioRepository.GetByEmailAsync(request.UsuarioUpdateDTO.email);
                 if (otroUsuario != null)
-                    throw new InvalidOperationException("El correo electrónico ya está en uso por otro usuario.");
+                    throw new Exception("El correo electrónico ya está en uso por otro usuario.");
             }
 
             _mapper.Map(request.UsuarioUpdateDTO, usuarioExistente);

@@ -24,8 +24,6 @@ namespace AppTarea.Infrastructure.Repositories
             return await _context.Usuarios.Include(u => u.Rol)
             .FirstOrDefaultAsync(u => u.id_usuario == id);
 
-
-           
         }
 
         public async Task<Usuario> CreateAsync(Usuario usuario)
@@ -48,7 +46,7 @@ namespace AppTarea.Infrastructure.Repositories
             usuarioExistente.nombre = usuario.nombre;
             usuarioExistente.apellido = usuario.apellido;
             usuarioExistente.telefono = usuario.telefono;
-            usuarioExistente.contrasena = usuario.contrasena; // si quieres permitir actualizar contraseña
+            usuarioExistente.contrasena = usuario.contrasena; 
             usuarioExistente.id_rol = usuario.id_rol;
 
             await _context.SaveChangesAsync();

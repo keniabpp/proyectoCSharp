@@ -18,7 +18,7 @@ namespace Application.Features.Tareas.Handlers
         {
             var tarea = await _tareaRepository.GetByIdAsync(request.Id);
             if (tarea == null)
-                throw new KeyNotFoundException($"No se encontró la tarea con ID {request.Id}");
+                throw new Exception($"No se encontró la tarea con ID {request.Id}");
 
             // 2. Validar que el usuario autenticado sea el creador
             if (tarea.creado_por != request.creado_por)

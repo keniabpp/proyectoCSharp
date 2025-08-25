@@ -22,7 +22,10 @@ namespace Application.Features.Columnas.Handlers
             var columna = await _columnaRepository.GetByIdAsync(request.Id);
 
             if (columna == null)
-                throw new Exception("Columna no encontrado");
+            {
+                throw new Exception($"Columna con ID {request.Id} no encontrado.");
+            }
+                
 
             var columnaDTO = _mapper.Map<ColumnaDTO>(columna);
 

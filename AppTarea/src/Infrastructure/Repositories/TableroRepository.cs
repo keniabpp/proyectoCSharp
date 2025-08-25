@@ -41,17 +41,11 @@ namespace AppTarea.Infrastructure.Repositories
             return await _context.Tableros.Include(t => t.usuario).ToListAsync();
         }
 
-        public async Task<Tablero> GetByIdAsync(int id)
+        public async Task<Tablero?> GetByIdAsync(int id)
         {
-            var tablero = await _context.Tableros.Include(t => t.usuario)
+            return await _context.Tableros.Include(t => t.usuario)
            .FirstOrDefaultAsync(t => t.id_tablero == id);
 
-           if (tablero == null)
-            {
-                throw new KeyNotFoundException($"Tablero con ID {id} no encontrada.");
-            }
-
-            return tablero;
         }
 
         public async Task<Tablero> UpdateAsync(int id, Tablero tablero)
@@ -59,7 +53,7 @@ namespace AppTarea.Infrastructure.Repositories
             var tableroExistente = await _context.Tableros.FindAsync(id);
             if (tableroExistente == null)
             {
-                throw new KeyNotFoundException($"No se encontró el Tablero con ID {id}");
+                throw new Exception($"No se encontró el Tablero con ID {id}");
             }
 
             tableroExistente.nombre = tablero.nombre;

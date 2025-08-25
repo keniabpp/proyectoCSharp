@@ -37,17 +37,12 @@ namespace AppTarea.Infrastructure.Repositories
             .Include(t => t.columna).ToListAsync();
         }
 
-        public async Task<Tarea> GetByIdAsync(int id)
+        public async Task<Tarea?> GetByIdAsync(int id)
         {
-            var tarea = await _context.Tareas.Include(t => t.creador).Include(t => t.asignado)
+            return await _context.Tareas.Include(t => t.creador).Include(t => t.asignado)
             .Include(t => t.tablero).Include(t => t.columna).FirstOrDefaultAsync(t => t.id_tarea == id);
 
-            if (tarea == null)
-            {
-                throw new KeyNotFoundException($"Tarea con ID {id} no encontrada.");
-            }
-
-            return tarea;
+            
         }
 
         public async Task<bool> MoverTareaAsync(int id_tarea, int id_columna)

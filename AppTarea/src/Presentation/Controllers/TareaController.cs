@@ -89,7 +89,7 @@ namespace Presentation.Controllers
         }
         
 
-        [HttpPut("{id_tarea}/mover")]
+        [HttpPut("{id_tarea}/moverTarea")]
         [Authorize]
         public async Task<IActionResult> MoverTarea([FromBody] MoverTareaDTO moverTareaDTO)
         {
@@ -102,19 +102,19 @@ namespace Presentation.Controllers
 
            try
            {
-               // Crear y enviar el comando
+               
                var command = new MoverTareaCommand(moverTareaDTO, asignado_a);
                var resultado = await _mediator.Send(command);
 
                if (!resultado)
-               return BadRequest("Solo el usuario asignado puede mover esta tarea.");
+               return NotFound("Solo el usuario asignado puede mover esta tarea.");
 
                return Ok(new { mensaje = "Tarea movida correctamente." });
             }
-            catch (InvalidOperationException ex)
+            catch (Exception ex)
             {
-              // Si la tarea ha vencido, capturamos la InvalidOperationException lanzada en el handler
-              return BadRequest(new { mensaje = ex.Message });
+              
+              return NotFound(new { mensaje = ex.Message });
             }
             
         }

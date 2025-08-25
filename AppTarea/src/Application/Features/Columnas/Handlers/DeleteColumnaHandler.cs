@@ -19,7 +19,7 @@ namespace Application.Features.Columnas.Handlers
             var columna = await _columnaRepository.DeleteAsync(request.Id);
 
             if (!columna)
-                throw new KeyNotFoundException($"No se encontró la Columna con ID {request.Id}");
+                throw new Exception($"No se encontró la Columna con ID {request.Id}");
              
              return true;
         }

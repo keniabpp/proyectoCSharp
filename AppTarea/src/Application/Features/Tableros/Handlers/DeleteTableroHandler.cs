@@ -18,7 +18,7 @@ namespace Application.Features.Tableros.Handlers
             var eliminado = await _tableroRepository.DeleteAsync(request.Id);
 
             if (!eliminado)
-                throw new KeyNotFoundException($"No se encontró el tablero con ID {request.Id}");
+                throw new Exception($"No se encontró el tablero con ID {request.Id}");
              
              return true;
         }

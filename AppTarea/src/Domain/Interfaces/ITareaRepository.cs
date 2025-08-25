@@ -5,7 +5,7 @@ namespace Domain.Interfaces
     public interface ITareaRepository
     {
         Task<IEnumerable<Tarea>> GetAllAsync();
-        Task<Tarea> GetByIdAsync(int id);
+        Task<Tarea?> GetByIdAsync(int id);
         Task<Tarea> CreateAsync(Tarea tarea);
         Task<Tarea> UpdateAsync(int id, Tarea tarea);
         Task<bool> DeleteAsync(int id);

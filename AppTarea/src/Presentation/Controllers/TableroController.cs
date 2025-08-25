@@ -49,7 +49,7 @@ namespace Presentation.Controllers
 
             if (nuevoTablero == null)
             {
-                return BadRequest(new { mensaje = "No se pudo crear el tablero." });
+                return NotFound(new { mensaje = "No se pudo crear el tablero." });
             }
 
 

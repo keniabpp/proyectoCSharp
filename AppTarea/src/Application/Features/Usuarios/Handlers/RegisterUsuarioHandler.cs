@@ -24,7 +24,7 @@ namespace Application.Features.Usuarios.Handlers
             // 1. Validar email único
             var usuarioExistente = await _usuarioRepository.GetByEmailAsync(request.UsuarioRegisterDTO.email);
             if (usuarioExistente != null)
-            throw new InvalidOperationException("El correo electrónico ya está registrado.");
+            throw new Exception("El correo electrónico ya está registrado.");
             var usuario = _mapper.Map<Usuario>(request.UsuarioRegisterDTO);
             // Asignar rol fijo de usuario normal
             usuario.id_rol = 2; // 2 = usuario normal

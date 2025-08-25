@@ -115,12 +115,11 @@ namespace Presentation.Controllers
                  return BadRequest(new { mensaje = "No se encontró el usuario con el ID proporcionado." });
                 }
 
-               // Si se eliminó correctamente, devolver un Ok con mensaje
                return Ok(new { mensaje = "Usuario eliminado correctamente." });
             }
             catch (InvalidOperationException ex)
             {
-               // Si ocurre una InvalidOperationException, devolver un BadRequest con el mensaje de error
+               
                return BadRequest(new { mensaje = ex.Message });
             }
             catch (Exception ex)

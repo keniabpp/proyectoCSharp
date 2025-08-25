@@ -24,7 +24,7 @@ namespace Application.Features.Tableros.Handlers
             var tableroExistente = await _tableroRepository.GetByIdAsync(request.Id);
             if (tableroExistente == null)
             {
-                throw new KeyNotFoundException($" No se encontró el Tablero con ID {request.Id}");
+                throw new Exception($" No se encontró el Tablero con ID {request.Id}");
             }
             _mapper.Map(request.TableroUpdateDTO, tableroExistente);
 

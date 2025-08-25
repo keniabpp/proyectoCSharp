@@ -22,7 +22,10 @@ namespace Application.Features.Tableros.Handlers
             var tablero = await _tableroRepository.GetByIdAsync(request.Id);
 
             if (tablero == null)
-                throw new Exception("Tablero no encontrado");
+            {
+                throw new Exception($"Tablero con ID {request.Id} no encontrado.");
+            }
+                
 
             var tableroDTO = _mapper.Map<TableroDTO>(tablero);
 

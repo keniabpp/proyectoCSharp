@@ -22,7 +22,7 @@ namespace Application.Features.Tareas.Handlers
             var tareaExistente = await _tareaRepository.GetByIdAsync(request.Id);
             if (tareaExistente == null)
             {
-                throw new KeyNotFoundException($" No se encontró la tarea con ID {request.Id}");
+                throw new Exception($" No se encontró la tarea con ID {request.Id}");
             }
             _mapper.Map(request.TareaUpdateDTO, tareaExistente);
             await _tareaRepository.UpdateAsync(request.Id, tareaExistente);

@@ -23,7 +23,7 @@ namespace Application.Features.Usuarios.Handlers
             var usuario = await _usuarioRepository.GetByIdAsync(request.Id);
             if (usuario == null)
             {
-                throw new KeyNotFoundException($"Usuario con ID {request.Id} no encontrado.");
+                throw new Exception($"Usuario con ID {request.Id} no encontrado.");
 
             }
                 
