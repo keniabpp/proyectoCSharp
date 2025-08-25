@@ -15,29 +15,29 @@ Expone una **API REST** para la gestión de usuarios, tableros y tareas, documen
 
 ---
 
-## 📂 Estructura del proyecto
+ 📂 Estructura del proyecto
 AppTarea/
-├── AppTarea.sln # Solución principal .NET
-├── docker-compose.yml # Orquestación con contenedores
-├── src/ # Código fuente del backend
-│ ├── Domain/ # Entities, Enums, Interfaces
-│ ├── Application/ # DependencyInjection, MappingProfiles,
-│ │ # Features, Handlers, Commands, Queries, DTOs
-│ │ # (lógica de negocio)
-│ ├── Infrastructure/ # DependencyInjection, Persistence, Repositorios
-│ ├── Presentation/ # Controladores, Program, Properties, Dockerfile, appsettings.json
-│ └── Tests/ # Pruebas unitarias (Application)
-└── frontend/ # (futuro) cliente web
+AppTarea.sln # Solución principal .NET
+docker-compose.yml # Orquestación con contenedores
+src/ # Código fuente del backend
+Domain/ # Entities, Enums, Interfaces
+ Application/ # DependencyInjection, MappingProfiles,
+  # Features, Handlers, Commands, Queries, DTOs
+  # (lógica de negocio)
+Infrastructure/ # DependencyInjection, Persistence, Repositorios
+ Presentation/ # Controladores, Program, Properties, Dockerfile, appsettings.json
+ Tests/ # Pruebas unitarias (Application)
+  frontend/ # (futuro) cliente web
 
 
-## ▶️ Cómo ejecutar el backend
+ ▶️ Cómo ejecutar el backend
 
 ### 1. Requisitos previos
 - [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download)
 - [SQL Server](https://www.microsoft.com/en-us/sql-server) o Docker
 - [Docker](https://www.docker.com/) (opcional)
 
-### 2. Ejecutar con .NET CLI
+ 2. Ejecutar con .NET CLI
 ```bash
 cd AppTarea / cd src/Presentation
 dotnet run
@@ -48,10 +48,10 @@ dotnet run
 
 ---
 
-### ✅ 2. **Endpoints principales**  
+ ✅ 2. **Endpoints principales**  
 Un resumen rápido de lo que ofrece tu API:  
 
-```markdown
+
 ## 📖 Endpoints principales
 
 - **Usuarios**
@@ -76,7 +76,7 @@ Un resumen rápido de lo que ofrece tu API:
 `http://localhost:5207/swagger`
 
 
-## 🏛️ Arquitectura
+🏛️ Arquitectura
 
 El proyecto sigue el patrón **Onion Architecture**:
 
