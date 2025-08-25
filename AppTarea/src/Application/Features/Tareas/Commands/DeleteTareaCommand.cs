@@ -5,12 +5,12 @@ namespace Application.Features.Tareas.Commands
     public class DeleteTareaCommand : IRequest<bool>
     {
         public int Id { get; set; }
-        public int Id_usuario { get; set; }
+        public int creado_por { get; set; }
 
-        public DeleteTareaCommand(int id, int id_usuario)
+        public DeleteTareaCommand(int id, int creado_por)
         {
             Id = id;
-            Id_usuario = id_usuario;
+            this.creado_por = creado_por;
         }
     }
 }

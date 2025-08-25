@@ -21,7 +21,7 @@ namespace Application.Features.Tareas.Handlers
                 throw new KeyNotFoundException($"No se encontró la tarea con ID {request.Id}");
 
             // 2. Validar que el usuario autenticado sea el creador
-            if (tarea.creado_por != request.Id_usuario)
+            if (tarea.creado_por != request.creado_por)
                 return false;
 
             // 3. Eliminar la tarea

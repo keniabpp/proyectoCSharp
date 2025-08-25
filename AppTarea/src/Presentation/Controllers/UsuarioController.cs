@@ -57,6 +57,7 @@ namespace Presentation.Controllers
             return Ok(usuarios);
         }
 
+
         // GET: api/usuarios/{id}
         [HttpGet("{id}")]
         [Authorize(Roles = "admin")]

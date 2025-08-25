@@ -22,7 +22,11 @@ namespace Application.Features.Usuarios.Handlers
         {
             var usuario = await _usuarioRepository.GetByIdAsync(request.Id);
             if (usuario == null)
-                throw new Exception("Usuario no encontrado");
+            {
+                throw new KeyNotFoundException($"Usuario con ID {request.Id} no encontrado.");
+
+            }
+                
             var usuarioDTO = _mapper.Map<UsuarioDTO>(usuario);
 
             return usuarioDTO;

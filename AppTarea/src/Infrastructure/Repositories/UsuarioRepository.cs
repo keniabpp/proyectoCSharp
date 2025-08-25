@@ -19,17 +19,13 @@ namespace AppTarea.Infrastructure.Repositories
             return await _context.Usuarios.Include(u => u.Rol).ToListAsync();
         }
 
-        public async Task<Usuario> GetByIdAsync(int id)
+        public async Task<Usuario?> GetByIdAsync(int id)
         {
-            var usuario = await _context.Usuarios.Include(u => u.Rol)
-           .FirstOrDefaultAsync(u => u.id_usuario == id);
+            return await _context.Usuarios.Include(u => u.Rol)
+            .FirstOrDefaultAsync(u => u.id_usuario == id);
 
-           if (usuario == null)
-            {
-                throw new KeyNotFoundException($"Tarea con ID {id} no encontrada.");
-            }
 
-            return usuario;
+           
         }
 
         public async Task<Usuario> CreateAsync(Usuario usuario)
