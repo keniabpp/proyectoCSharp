@@ -10,6 +10,7 @@ namespace Domain.Interfaces
         Task<Tarea> UpdateAsync(int id, Tarea tarea);
         Task<bool> DeleteAsync(int id);
         Task<bool> MoverTareaAsync(int id_tarea, int id_columna);
+        Task<List<Tarea>> TareasAsignadasAsync(int id_usuario);
 
         
     }

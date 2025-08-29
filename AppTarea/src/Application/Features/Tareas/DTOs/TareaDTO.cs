@@ -14,6 +14,9 @@ namespace Application.Features.Tareas.DTOs
         public string nombre_creador { get; set; } = string.Empty;
         public int asignado_a { get; set; }
         public string nombre_asignado { get; set; } = string.Empty;
+        public required string nombre_columna { get; set; }
+
+        public required string estado_fechaVencimiento { get; set; }
 
     }
 }

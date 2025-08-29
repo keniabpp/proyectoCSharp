@@ -21,6 +21,23 @@ namespace Presentation.Controllers
         }
 
 
+        [HttpGet("tareas asignadas")]
+        public async Task<ActionResult<List<TareaDTO>>> GetTareasAsignadas()
+        {
+            // Extraer el ID del usuario autenticado desde el token JWT
+            var id_usuario_claim = User.FindFirst("id")?.Value;
+            if (string.IsNullOrEmpty(id_usuario_claim))
+            return Unauthorized("No se pudo identificar al usuario.");
+
+            var id_usuario = int.Parse(id_usuario_claim);
+
+            var query = new GetTareasAsignadasQuery(id_usuario);
+            var tareas = await _mediator.Send(query);
+
+            return Ok(tareas);
+        }
+
+
         // GET: api/tareas
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tarea>>> GetAll()
@@ -58,14 +75,23 @@ namespace Presentation.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<ActionResult<Tarea>> Update(int id, [FromBody] TareaUpdateDTO tareaUpdateDTO)
         {
-            var command = new UpdateTareaCommand(id, tareaUpdateDTO);
+            // Extraer el ID del usuario autenticado desde el token JWT
+            var id_usuario_claim = User.FindFirst("id")?.Value;
+            if (string.IsNullOrEmpty(id_usuario_claim))
+            return Unauthorized("No se pudo identificar al usuario.");
+
+            var id_usuario = int.Parse(id_usuario_claim);
+
+            var command = new UpdateTareaCommand(id, tareaUpdateDTO, id_usuario);
             var tareaActualizada = await _mediator.Send(command);
 
-            if (tareaActualizada == null) return NotFound();
+            if (tareaActualizada == null) return BadRequest(" Solo el creador puede actualizar la Tarea");
             return Ok(new { mensaje = "Tarea actualizado correctamente" });
         }
+        
 
         [HttpDelete("{id}")]
         [Authorize]

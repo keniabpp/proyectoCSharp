@@ -24,6 +24,12 @@ namespace Application.Features.Tareas.Handlers
             {
                 throw new Exception($" No se encontró la tarea con ID {request.Id}");
             }
+
+            // Validar que el usuario autenticado sea el creador
+            if (tareaExistente.creado_por != request.creado_por)
+            {
+                throw new Exception($" Solo el creador puede actualizar la tarea");
+            }
             _mapper.Map(request.TareaUpdateDTO, tareaExistente);
             await _tareaRepository.UpdateAsync(request.Id, tareaExistente);
 

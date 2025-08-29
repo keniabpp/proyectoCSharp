@@ -25,7 +25,6 @@ namespace AppTarea.Infrastructure.Persistence.Context
                 .HasOne(u => u.Rol)
                 .WithMany()
                 .HasForeignKey(u => u.id_rol)
-                //.HasConstraintName("FK_Usuarios_Roles")
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Relación entre Tablero y Usuario
@@ -38,10 +37,9 @@ namespace AppTarea.Infrastructure.Persistence.Context
             // Relación entre Tablero y Rol
             modelBuilder.Entity<Tablero>()
               .HasOne(t => t.rol) // Un Tablero tiene un Rol
-              .WithMany()         // Un Rol puede estar en muchos Tableros (si decides agregar la colección en Rol)
+              .WithMany()         // Un Rol puede estar en muchos Tableros 
               .HasForeignKey(t => t.id_rol) // La clave externa en Tablero es "id_rol"
-              //.HasConstraintName("FK_Tableros_Roles") // Nombre explícito de la FK
-              .OnDelete(DeleteBehavior.Restrict); // O el comportamiento que prefieras
+              .OnDelete(DeleteBehavior.Restrict); 
 
             // Relación entre Tablero y Columnas
             modelBuilder.Entity<Tablero>()
