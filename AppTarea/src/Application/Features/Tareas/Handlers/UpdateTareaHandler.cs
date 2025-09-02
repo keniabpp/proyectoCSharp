@@ -20,15 +20,12 @@ namespace Application.Features.Tareas.Handlers
         public async Task<TareaDTO> Handle(UpdateTareaCommand request, CancellationToken cancellationToken)
         {
             var tareaExistente = await _tareaRepository.GetByIdAsync(request.Id);
-            if (tareaExistente == null)
-            {
-                throw new Exception($" No se encontró la tarea con ID {request.Id}");
-            }
+           
 
             // Validar que el usuario autenticado sea el creador
-            if (tareaExistente.creado_por != request.creado_por)
+            if (tareaExistente!.creado_por != request.creado_por)
             {
-                throw new Exception($" Solo el creador puede actualizar la tarea");
+                throw new InvalidOperationException($" Solo el creador puede actualizar la tarea");
             }
             _mapper.Map(request.TareaUpdateDTO, tareaExistente);
             await _tareaRepository.UpdateAsync(request.Id, tareaExistente);

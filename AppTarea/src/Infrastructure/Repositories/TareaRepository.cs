@@ -48,9 +48,8 @@ namespace AppTarea.Infrastructure.Repositories
         public async Task<bool> MoverTareaAsync(int id_tarea, int id_columna)
         {
             var tarea = await _context.Tareas.FindAsync(id_tarea);
-            if (tarea == null) return false;
 
-            tarea.id_columna = id_columna;
+            tarea!.id_columna = id_columna;
             await _context.SaveChangesAsync();
             return true;
         }
@@ -64,21 +63,12 @@ namespace AppTarea.Infrastructure.Repositories
         public async Task<Tarea> UpdateAsync(int id, Tarea tarea)
         {
             var tareaExistente = await _context.Tareas.FindAsync(id);
-            if (tareaExistente == null)
-            {
-                throw new KeyNotFoundException($"No se encontró la tarea con ID {id}");
-
-            }
-
-            tareaExistente.titulo = tarea.titulo;
-            tareaExistente.descripcion = tarea.descripcion;
-            
             
             await _context.SaveChangesAsync();
-            await _context.Entry(tareaExistente).Reference(t => t.creador).LoadAsync();
-            await _context.Entry(tareaExistente).Reference(t => t.asignado).LoadAsync();
+            await _context.Entry(tareaExistente!).Reference(t => t.creador).LoadAsync();
+            await _context.Entry(tareaExistente!).Reference(t => t.asignado).LoadAsync();
 
-            return tareaExistente;
+            return tareaExistente!;
         }
     }
 }

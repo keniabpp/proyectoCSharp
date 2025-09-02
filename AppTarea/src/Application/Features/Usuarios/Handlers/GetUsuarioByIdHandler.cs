@@ -21,11 +21,6 @@ namespace Application.Features.Usuarios.Handlers
         public async Task<UsuarioDTO> Handle(GetUsuarioByIdQuery request, CancellationToken cancellationToken)
         {
             var usuario = await _usuarioRepository.GetByIdAsync(request.Id);
-            if (usuario == null)
-            {
-                throw new Exception($"Usuario con ID {request.Id} no encontrado.");
-
-            }
                 
             var usuarioDTO = _mapper.Map<UsuarioDTO>(usuario);
 

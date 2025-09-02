@@ -38,22 +38,9 @@ namespace AppTarea.Infrastructure.Repositories
         public async Task<Usuario> UpdateAsync(int id, Usuario usuario)
         {
             var usuarioExistente = await _context.Usuarios.FindAsync(id);
-            if (usuarioExistente == null)
-            {
-                throw new KeyNotFoundException("");
-            }
-
-            usuarioExistente.nombre = usuario.nombre;
-            usuarioExistente.apellido = usuario.apellido;
-            usuarioExistente.telefono = usuario.telefono;
-            usuarioExistente.contrasena = usuario.contrasena; 
-            usuarioExistente.id_rol = usuario.id_rol;
-
             await _context.SaveChangesAsync();
-
-            await _context.Entry(usuarioExistente).Reference(u => u.Rol).LoadAsync();
-
-            return usuarioExistente;
+            await _context.Entry(usuarioExistente!).Reference(u => u.Rol).LoadAsync();
+            return usuarioExistente!;
         }
 
         public async Task<bool> DeleteAsync(int id)

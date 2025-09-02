@@ -10,16 +10,16 @@ COPY src/Infrastructure/Infrastructure.csproj ./src/Infrastructure/
 COPY src/Presentation/Presentation.csproj ./src/Presentation/
 COPY src/Tests/Tests.csproj ./src/Tests/
 
-# 2. Restaurar dependencias (solo si cambian los .csproj)
+
 RUN dotnet restore
 
-# 3. Copiar el resto del código (esto invalida la cache solo si hay cambios en código fuente)
+
 COPY src/ ./src/
 
-# 4. Publicar el proyecto principal
+
 RUN dotnet publish src/Presentation/Presentation.csproj -c Release -o /app/publish
 
-# Etapa 2: Runtime
+
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .

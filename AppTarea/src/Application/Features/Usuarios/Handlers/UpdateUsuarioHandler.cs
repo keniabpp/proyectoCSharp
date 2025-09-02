@@ -21,16 +21,12 @@ namespace Application.Features.Usuarios.Handlers
         public async Task<UsuarioDTO> Handle(UpdateUsuarioCommand request, CancellationToken cancellationToken)
         {
             var usuarioExistente = await _usuarioRepository.GetByIdAsync(request.Id);
-            if (usuarioExistente == null)
-            {
-                throw new Exception($" No se encontró el Usuario con ID {request.Id}");
-            }
 
-            if (usuarioExistente.email != request.UsuarioUpdateDTO.email)
+            if (usuarioExistente!.email != request.UsuarioUpdateDTO.Email)
             {
-                var otroUsuario = await _usuarioRepository.GetByEmailAsync(request.UsuarioUpdateDTO.email);
+                var otroUsuario = await _usuarioRepository.GetByEmailAsync(request.UsuarioUpdateDTO.Email);
                 if (otroUsuario != null)
-                    throw new Exception("El correo electrónico ya está en uso por otro usuario.");
+                throw new Exception("El correo electrónico ya está en uso por otro usuario.");
             }
 
             _mapper.Map(request.UsuarioUpdateDTO, usuarioExistente);

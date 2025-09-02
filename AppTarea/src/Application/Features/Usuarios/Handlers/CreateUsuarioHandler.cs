@@ -20,11 +20,6 @@ namespace Application.Features.Usuarios.Handlers
 
         public async Task<UsuarioDTO> Handle(CreateUsuarioCommand request, CancellationToken cancellationToken)
         {
-
-            // 1. Validar email único
-            var usuarioExistente = await _usuarioRepository.GetByEmailAsync(request.UsuarioCreateDTO.email);
-            if (usuarioExistente != null)
-                throw new InvalidOperationException("El correo electrónico ya está registrado.");
             var usuario = _mapper.Map<Usuario>(request.UsuarioCreateDTO);
             // Encriptar la contraseña después del mapeo
             usuario.contrasena = BCrypt.Net.BCrypt.HashPassword(usuario.contrasena);

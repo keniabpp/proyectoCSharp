@@ -51,17 +51,10 @@ namespace AppTarea.Infrastructure.Repositories
         public async Task<Tablero> UpdateAsync(int id, Tablero tablero)
         {
             var tableroExistente = await _context.Tableros.FindAsync(id);
-            if (tableroExistente == null)
-            {
-                throw new Exception($"No se encontró el Tablero con ID {id}");
-            }
-
-            tableroExistente.nombre = tablero.nombre;
-            
             await _context.SaveChangesAsync();
-            await _context.Entry(tableroExistente).Reference(t => t.usuario).LoadAsync();
+            await _context.Entry(tableroExistente!).Reference(t => t.usuario).LoadAsync();
 
-            return tableroExistente;
+            return tableroExistente!;
         }
     }
 }

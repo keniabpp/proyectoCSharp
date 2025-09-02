@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using MediatR;
 using System.Reflection;
+using FluentValidation;
+using Application.Common.Behaviors;
 
 namespace Application
 {
@@ -15,6 +17,12 @@ namespace Application
 
             // Registrar AutoMapper
             services.AddAutoMapper(typeof(Application.MappingProfiles.TableroProfile));
+
+            // Registrar FluentValidation
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+            // Registrar el pipeline de validación para MediatR
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(Application.Common.Behaviors.ValidationBehavior<,>));
 
             return services;
         }

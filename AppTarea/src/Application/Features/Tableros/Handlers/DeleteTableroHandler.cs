@@ -15,12 +15,9 @@ namespace Application.Features.Tableros.Handlers
 
         public async Task<bool> Handle(DeleteTableroCommand request, CancellationToken cancellationToken)
         {
-            var eliminado = await _tableroRepository.DeleteAsync(request.Id);
+            
 
-            if (!eliminado)
-                throw new Exception($"No se encontró el tablero con ID {request.Id}");
-             
-             return true;
+            return await _tableroRepository.DeleteAsync(request.Id);
         }
     }
 }

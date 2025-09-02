@@ -1,41 +1,23 @@
 using AppTarea.Infrastructure; // AddInfrastructure extension
-
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Application;
+using Presentation.Middleware;
+using Presentation.Security;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Config JWT
-var jwtSettings = builder.Configuration.GetSection("Jwt");
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    var keyBytes = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
-
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtSettings["Issuer"],
-        ValidAudience = jwtSettings["Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(keyBytes)
-    };
-});
-
-builder.Services.AddAuthorization();
+//Configuración local + secretos del Secret Manager
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddUserSecrets<Program>();
 
 
 
-// 🔹 Servicios
+builder.Services.AddJwtAuthentication(builder.Configuration);
+
+
+// Servicios
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -47,7 +29,7 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-        Description = "Ingrese 'Bearer {token}'"
+        Description = "Solo ingrese el token JWT sin las comillas."
     });
 
     c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
@@ -67,7 +49,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 
-// 🔹 Inyección de dependencias de infraestructura (incluye DbContext)
+//Inyección de dependencias de infraestructura (incluye DbContext)
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
@@ -77,7 +59,7 @@ var app = builder.Build();
 
 
 
-// 🔹 Middleware
+//Middleware
 //if (app.Environment.IsDevelopment())
 //{
     app.UseSwagger();
@@ -85,6 +67,7 @@ var app = builder.Build();
 //}
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseAuthentication(); // primero
 app.UseAuthorization();  // después
 

@@ -36,7 +36,6 @@ namespace Presentation.Controllers
             var query = new GetTableroByIdQuery(id);
             var tablero = await _mediator.Send(query);
 
-            if (tablero == null) return NotFound();
             return Ok(tablero);
         }
 
@@ -47,12 +46,6 @@ namespace Presentation.Controllers
             var command = new CreateTableroCommand(tableroCreateDTO);
             var nuevoTablero = await _mediator.Send(command);
 
-            if (nuevoTablero == null)
-            {
-                return NotFound(new { mensaje = "No se pudo crear el tablero." });
-            }
-
-
             return CreatedAtAction(nameof(GetById), new { id = nuevoTablero.id_tablero }, nuevoTablero);
         }
 
@@ -62,8 +55,6 @@ namespace Presentation.Controllers
         {
             var command = new UpdateTableroCommand(id, tableroUpdateDTO);
             var actualizado = await _mediator.Send(command);
-
-            if (actualizado == null) return NotFound();
             return Ok(new { mensaje = "Tablero actualizado correctamente" });
         }
 
@@ -73,8 +64,6 @@ namespace Presentation.Controllers
         {
             var command = new DeleteTableroCommand(id);
             var eliminado = await _mediator.Send(command);
-
-            if (!eliminado) return NotFound();
             return Ok(new { mensaje = "Tablero eliminado correctamente." });
         }
     }

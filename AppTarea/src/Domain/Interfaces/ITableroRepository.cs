@@ -2,13 +2,13 @@ using Domain.Entities;
 
 namespace Domain.Interfaces
 {
-    public interface ITableroRepository
+    public interface ITableroRepository : IGenericRepository<Tablero, int>
     {
-        Task<IEnumerable<Tablero>> GetAllAsync();
-        Task<Tablero?> GetByIdAsync(int id);
-        Task<Tablero> CreateAsync(Tablero tablero);
-        Task<Tablero> UpdateAsync(int id, Tablero tablero);
-        Task<bool> DeleteAsync(int id);
+        // Task<IEnumerable<Tablero>> GetAllAsync();
+        // Task<Tablero?> GetByIdAsync(int id);
+        // Task<Tablero> CreateAsync(Tablero tablero);
+        // Task<Tablero> UpdateAsync(int id, Tablero tablero);
+        // Task<bool> DeleteAsync(int id);
         
     }
 }

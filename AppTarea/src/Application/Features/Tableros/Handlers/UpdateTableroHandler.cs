@@ -22,13 +22,9 @@ namespace Application.Features.Tableros.Handlers
         public async Task<TableroDTO> Handle(UpdateTableroCommand request, CancellationToken cancellationToken)
         {
             var tableroExistente = await _tableroRepository.GetByIdAsync(request.Id);
-            if (tableroExistente == null)
-            {
-                throw new Exception($" No se encontró el Tablero con ID {request.Id}");
-            }
             _mapper.Map(request.TableroUpdateDTO, tableroExistente);
 
-            await _tableroRepository.UpdateAsync(request.Id, tableroExistente);
+            await _tableroRepository.UpdateAsync(request.Id, tableroExistente!);
             
             return _mapper.Map<TableroDTO>(tableroExistente);
         }

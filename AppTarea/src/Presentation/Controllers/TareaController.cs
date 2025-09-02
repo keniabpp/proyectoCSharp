@@ -54,7 +54,6 @@ namespace Presentation.Controllers
             var query = new GetTareaByIdQuery(id);
             var tarea = await _mediator.Send(query);
 
-            if (tarea == null) return NotFound();
             return Ok(tarea);
         }
 
@@ -64,13 +63,7 @@ namespace Presentation.Controllers
         {
             var command = new CreateTareaCommand(tareaCreateDTO);
             var nuevaTarea = await _mediator.Send(command);
-
-            if (nuevaTarea == null)
-            {
-                return BadRequest(new { mensaje = "No se pudo crear la Tarea." });
-            }
-
-
+            
             return CreatedAtAction(nameof(GetById), new { id = nuevaTarea.id_tarea }, nuevaTarea);
         }
 
@@ -87,8 +80,7 @@ namespace Presentation.Controllers
 
             var command = new UpdateTareaCommand(id, tareaUpdateDTO, id_usuario);
             var tareaActualizada = await _mediator.Send(command);
-
-            if (tareaActualizada == null) return BadRequest(" Solo el creador puede actualizar la Tarea");
+            
             return Ok(new { mensaje = "Tarea actualizado correctamente" });
         }
         
@@ -108,9 +100,6 @@ namespace Presentation.Controllers
             var command = new DeleteTareaCommand(id, id_usuario);
             var eliminado = await _mediator.Send(command);
 
-            if (!eliminado)
-            return BadRequest("Solo el creador puede eliminar esta tarea.");
-
             return Ok(new { mensaje = "Tarea eliminada correctamente." });
         }
         
@@ -126,24 +115,15 @@ namespace Presentation.Controllers
 
            int asignado_a = int.Parse(id_usuario_claim);
 
-           try
-           {
+          
+            var command = new MoverTareaCommand(moverTareaDTO, asignado_a);
+            await _mediator.Send(command);
+
                
-               var command = new MoverTareaCommand(moverTareaDTO, asignado_a);
-               var resultado = await _mediator.Send(command);
-
-               if (!resultado)
-               return NotFound("Solo el usuario asignado puede mover esta tarea.");
-
-               return Ok(new { mensaje = "Tarea movida correctamente." });
-            }
-            catch (Exception ex)
-            {
-              
-              return NotFound(new { mensaje = ex.Message });
-            }
-            
+            return Ok(new { mensaje = "Tarea movida correctamente." });
         }
+            
+        
 
 
         

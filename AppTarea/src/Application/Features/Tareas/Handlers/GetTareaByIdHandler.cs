@@ -20,15 +20,7 @@ namespace Application.Features.Tareas.Handlers
         public async Task<TareaDTO> Handle(GetTareaByIdQuery request, CancellationToken cancellationToken)
         {
             var tarea = await _tareaRepository.GetByIdAsync(request.Id);
-
-            if (tarea == null)
-            {
-                throw new Exception($"Tarea con ID {request.Id} no encontrado.");
-            }
-                
-
             var tareaDTO = _mapper.Map<TareaDTO>(tarea);
-
 
             return tareaDTO;
         }

@@ -16,12 +16,9 @@ namespace Application.Features.Columnas.Handlers
 
         public async Task<bool> Handle(DeleteColumnaCommand request, CancellationToken cancellationToken)
         {
-            var columna = await _columnaRepository.DeleteAsync(request.Id);
+            var eliminado = await _columnaRepository.DeleteAsync(request.Id);
+            return eliminado;
 
-            if (!columna)
-                throw new Exception($"No se encontró la Columna con ID {request.Id}");
-             
-             return true;
         }
     }
 

@@ -37,7 +37,6 @@ namespace Presentation.Controllers
             var query = new GetColumnaByIdQuery(id);
             var columna = await _mediator.Send(query);
 
-            if (columna == null) return NotFound();
             return Ok(columna);
         }
 
@@ -47,7 +46,6 @@ namespace Presentation.Controllers
             var command = new DeleteColumnaCommand(id);
             var eliminado = await _mediator.Send(command);
 
-            if (!eliminado) return NotFound();
             return Ok(new { mensaje = "Columna eliminado correctamente." });
         }
 

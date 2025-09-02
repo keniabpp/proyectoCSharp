@@ -30,34 +30,16 @@ namespace Application.Features.Tareas.Handlers
         {
 
             var usuarioCreador = await _usuarioRepository.GetByIdAsync(request.TareaCreateDTO.creado_por);
-            if (usuarioCreador == null)
-            {
-                throw new Exception("Usuario creador no encontrado.");
-            }
-            
             var usuarioAsignado = await _usuarioRepository.GetByIdAsync(request.TareaCreateDTO.asignado_a);
-            if (usuarioAsignado == null)
-            {
-                throw new Exception("Usuario asignado no encontrado.");
-            }
-
             var tablero = await _tableroRepository.GetByIdAsync(request.TareaCreateDTO.id_tablero);
-            if (tablero == null)
-            {
-                throw new Exception("Tablero no encontrado.");
-            }
-
             var columna = await _columnaRepository.GetByIdAsync(request.TareaCreateDTO.id_columna);
-            if (columna == null)
-            {
-                throw new Exception("Columna no encontrada.");
-            }
+            
 
             var tarea = _mapper.Map<Tarea>(request.TareaCreateDTO);
-            tarea.creador = usuarioCreador; 
-            tarea.asignado = usuarioAsignado; 
-            tarea.tablero = tablero;  
-            tarea.columna = columna;  
+            tarea.creador = usuarioCreador!; 
+            tarea.asignado = usuarioAsignado!; 
+            tarea.tablero = tablero!;  
+            tarea.columna = columna!;  
             
 
             var tareaCreada = await _tareaRepository.CreateAsync(tarea);
