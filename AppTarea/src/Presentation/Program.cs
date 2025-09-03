@@ -9,8 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 //Configuración local + secretos del Secret Manager
 builder.Configuration
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddUserSecrets<Program>();
+.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+.AddUserSecrets<Program>();
 
 
 

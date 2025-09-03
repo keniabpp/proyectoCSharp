@@ -30,7 +30,8 @@ namespace Application.Features.Usuarios.Handlers
             if (usuario == null) return null;
 
             // Validar contraseña
-            if(BCrypt.Net.BCrypt.Verify(dto.Contrasena, usuario.contrasena)) return null;
+            if (!BCrypt.Net.BCrypt.Verify(dto.Contrasena, usuario.contrasena)) return null;
+
             
 
             var roleName = usuario.Rol?.nombre.ToLower() ?? "usuario";

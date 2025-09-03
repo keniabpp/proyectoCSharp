@@ -16,11 +16,11 @@ public class UsuarioHandlersTests
         // Arrange
         var dto = new UsuarioRegisterDTO
         {
-            nombre = "Carlos",
-            apellido = "Pérez",
-            telefono = "987",
-            email = "carlos@example.com",
-            contrasena = "password"
+            Nombre = "Carlos",
+            Apellido = "Pérez",
+            Telefono = "987",
+            Email = "carlos@example.com",
+            Contrasena = "password"
         };
 
         // Crear un usuario existente con el mismo email
@@ -29,14 +29,14 @@ public class UsuarioHandlersTests
             nombre = "Carlos",
             apellido = "Pérez",
             telefono = "987",
-            email = dto.email, // Mismo email
+            email = dto.Email, // Mismo email
             contrasena = "hashed_password",
             id_rol = 2 // Usuario normal
         };
 
         var repo = new Mock<IUsuarioRepository>();
         // El método GetByEmailAsync retorna un usuario existente con el mismo email
-        repo.Setup(r => r.GetByEmailAsync(dto.email)).ReturnsAsync(usuarioExistente);
+        repo.Setup(r => r.GetByEmailAsync(dto.Email)).ReturnsAsync(usuarioExistente);
 
         var mapper = new Mock<IMapper>();
 
@@ -55,11 +55,11 @@ public class UsuarioHandlersTests
         // Arrange
         var dto = new UsuarioCreateDTO
         {
-            nombre = "Carlos",
-            apellido = "Pérez",
-            telefono = "987",
-            email = "carlos@example.com",
-            contrasena = "password",
+            Nombre = "Carlos",
+            Apellido = "Pérez",
+            Telefono = "987",
+            Email = "carlos@example.com",
+            Contrasena = "password",
             id_rol = 1 // Rol admin
         };
 
@@ -69,14 +69,14 @@ public class UsuarioHandlersTests
             nombre = "Carlos",
             apellido = "Pérez",
             telefono = "987",
-            email = dto.email,
+            email = dto.Email,
             contrasena = "hashed_password",
             id_rol = 1 // Admin
         };
 
         var repo = new Mock<IUsuarioRepository>();
         // El método GetByEmailAsync retorna un usuario existente con el mismo email
-        repo.Setup(r => r.GetByEmailAsync(dto.email)).ReturnsAsync(usuarioExistente);
+        repo.Setup(r => r.GetByEmailAsync(dto.Email)).ReturnsAsync(usuarioExistente);
 
         var mapper = new Mock<IMapper>();
 
@@ -122,7 +122,7 @@ public class UsuarioHandlersTests
     {
         // Arrange
         var usuarioExistente = new Usuario { id_usuario = 1, email = "ana@example.com" };
-        var dto = new UsuarioUpdateDTO { email = "otro@example.com" };
+        var dto = new UsuarioUpdateDTO { Email = "otro@example.com" };
 
         // Mock del repositorio
         var repo = new Mock<IUsuarioRepository>();
