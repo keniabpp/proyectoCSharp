@@ -10,9 +10,6 @@ namespace Application.MappingProfiles
         {
             CreateMap<Columna, ColumnaDTO>()
                 .ForMember(dest => dest.id_columna, opt => opt.MapFrom(src => src.id_columna));
-            
-             // 🟡 Creación: DTO → Entidad
-            CreateMap<ColumnaCreateDTO, Columna>();
         }
     }
 }

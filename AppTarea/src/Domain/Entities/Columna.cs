@@ -17,21 +17,18 @@ namespace Domain.Entities
 
         public EstadoColumna posicion { get; set; }
 
-        [ForeignKey("Tablero")]
-        [Column("id_tablero")]
-        public int id_tablero { get; set; }
-        public Tablero tablero { get; set; } = null!;
+        
 
         [InverseProperty("columna")]
         public ICollection<Tarea> tareas { get; set; } = new List<Tarea>();
 
         public Columna() { }
 
-        public Columna(string nombre, EstadoColumna posicion, int id_tablero)
+        public Columna(string nombre, EstadoColumna posicion)
         {
             this.nombre = nombre;
             this.posicion = posicion;
-            this.id_tablero = id_tablero;
+            
         }
         
     }

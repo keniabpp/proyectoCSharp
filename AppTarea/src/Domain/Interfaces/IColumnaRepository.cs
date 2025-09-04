@@ -8,9 +8,7 @@ namespace Domain.Interfaces
     {
         Task<IEnumerable<Columna>> GetAllAsync();
         Task<Columna?> GetByIdAsync(int id);
-        Task<Columna> CreateAsync(Columna columna);
-        Task<bool> DeleteAsync(int id);
-        
+       
         
         
     }

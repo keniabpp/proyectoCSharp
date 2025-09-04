@@ -26,8 +26,6 @@ namespace Domain.Entities
 
         public Rol rol { get; set; } = null!;
 
-        public ICollection<Columna> columnas { get; set; } = new List<Columna>();
-
         [InverseProperty("tablero")]
         public ICollection<Tarea> tareas { get; set; } = new List<Tarea>();
 

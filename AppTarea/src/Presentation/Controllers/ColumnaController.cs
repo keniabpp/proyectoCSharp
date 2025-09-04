@@ -1,10 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Domain.Entities;
 using Application.Features.Columnas.Queries;
-using Application.Features.Tableros.DTOs;
 using MediatR;
-using Application.Features.Columnas.Commands;
-
 namespace Presentation.Controllers
 {
     [ApiController]
@@ -40,14 +37,7 @@ namespace Presentation.Controllers
             return Ok(columna);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var command = new DeleteColumnaCommand(id);
-            var eliminado = await _mediator.Send(command);
-
-            return Ok(new { mensaje = "Columna eliminado correctamente." });
-        }
+       
 
         
     }

@@ -14,24 +14,9 @@ namespace AppTarea.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<Columna> CreateAsync(Columna columna)
-        {
-            await _context.Columnas.AddAsync(columna);
-            await _context.SaveChangesAsync();
-            return columna;
-        }
+       
 
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var columna = await _context.Columnas.FindAsync(id);
-            
-            if (columna == null) return false;
-            _context.Columnas.Remove(columna);
-            await _context.SaveChangesAsync();
-
-            return true;
-        }
-
+        
         public async Task<IEnumerable<Columna>> GetAllAsync()
         {
             return await _context.Columnas.ToListAsync();

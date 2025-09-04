@@ -22,11 +22,6 @@ namespace AppTarea.Infrastructure.Persistence.Configurations
             .OnDelete(DeleteBehavior.Restrict);
                 
 
-            // Relación con Columnas
-            builder.HasMany(t => t.columnas)
-            .WithOne(c => c.tablero)
-            .HasForeignKey(c => c.id_tablero)
-            .OnDelete(DeleteBehavior.Cascade);
 
             // Relación con Tareas
             builder.HasMany(t => t.tareas)
