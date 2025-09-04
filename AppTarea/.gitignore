@@ -8,7 +8,7 @@ obj/
 *.cache
 *.log
 *.vs/
-*.vscode/
+# *.vscode/
 *.dbmdl
 *.bak
 *.ldf
@@ -30,6 +30,12 @@ node_modules/
 dist/
 build/
 *.lock
+/frontend/.angular/
+
+
+
+
+
 
 # ==========================
 # Docker
@@ -43,3 +49,39 @@ build/
 TestResult*/
 coverage/
 *.trx
+# Angular build outputs
+/tmp
+/out-tsc
+/bazel-out
+
+# Angular cache
+/.angular/cache
+
+# Angular test tools and logs
+testem.log
+/libpeerconnection.log
+
+# ==========================
+# Visual Studio Code
+# ==========================
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Optional IDEs
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.sass-cache/
+/connect.lock
+/typings
+
+# Extra logs
+npm-debug.log
+yarn-error.log
