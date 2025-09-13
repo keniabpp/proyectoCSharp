@@ -14,19 +14,19 @@ namespace AppTarea.Infrastructure.Persistence.Configurations
                    .HasForeignKey(u => u.id_rol)
                    .OnDelete(DeleteBehavior.Restrict);
 
-            // Relación con Tableros (creados por el usuario)
+            //Relación con Tableros (creados por el usuario)
             builder.HasMany(u => u.Tableros)
                    .WithOne(t => t.usuario)
                    .HasForeignKey(t => t.creado_por)
                    .OnDelete(DeleteBehavior.Restrict);
 
-            // Relación con Tareas creadas
+            //Relación con Tareas creadas
             builder.HasMany(u => u.tareas_creadas)
                    .WithOne(t => t.creador)
                    .HasForeignKey(t => t.creado_por)
                    .OnDelete(DeleteBehavior.Restrict);
 
-            // Relación con Tareas asignadas
+            //Relación con Tareas asignadas
             builder.HasMany(u => u.tareas_asignadas)
                    .WithOne(t => t.asignado)
                    .HasForeignKey(t => t.asignado_a)

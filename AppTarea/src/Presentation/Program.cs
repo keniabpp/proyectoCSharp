@@ -1,7 +1,11 @@
-using AppTarea.Infrastructure; // AddInfrastructure extension
+
+
 using Application;
 using Presentation.Middleware;
 using Presentation.Security;
+using AppTarea.Infrastructure;
+
+
 
 
 
@@ -15,6 +19,17 @@ builder.Configuration
 
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
+
+// 👇 CORS configurado
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200") // frontend Angular
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 
 // Servicios
@@ -49,9 +64,12 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 
+
+
 //Inyección de dependencias de infraestructura (incluye DbContext)
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+
 
 
 
@@ -62,11 +80,13 @@ var app = builder.Build();
 //Middleware
 //if (app.Environment.IsDevelopment())
 //{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
 //}
 
+
 app.UseHttpsRedirection();
+app.UseCors("AllowFrontend");
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseAuthentication(); // primero
 app.UseAuthorization();  // después

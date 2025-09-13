@@ -5,7 +5,9 @@ using AppTarea.Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Domain.Entities;
+ // Aquí está ApplicationUser
+
+
 
 namespace AppTarea.Infrastructure
 {
@@ -19,6 +21,11 @@ namespace AppTarea.Infrastructure
             services.AddScoped<ITableroRepository, TableroRepository>();
             services.AddScoped<IColumnaRepository, ColumnaRepository>();
             services.AddScoped<ITareaRepository, TareaRepository>();
+
+
+             
+
+   
             
             
             return services;

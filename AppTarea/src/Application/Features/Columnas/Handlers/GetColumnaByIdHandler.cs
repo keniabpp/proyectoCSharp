@@ -20,6 +20,9 @@ namespace Application.Features.Columnas.Handlers
         public async Task<ColumnaDTO> Handle(GetColumnaByIdQuery request, CancellationToken cancellationToken)
         {
             var columna = await _columnaRepository.GetByIdAsync(request.Id);
+            
+            if (columna == null)
+            throw new KeyNotFoundException("Columna no encontrada.");
             var columnaDTO = _mapper.Map<ColumnaDTO>(columna);
 
             return columnaDTO;

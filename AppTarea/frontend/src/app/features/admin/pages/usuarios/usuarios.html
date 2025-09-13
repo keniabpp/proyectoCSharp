@@ -1,0 +1,135 @@
+
+<div class=" container mb-3 d-flex justify-content-center">
+  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearUsuarioModal">
+    Crear Usuario
+  </button>
+</div>
+
+<div class="modal fade" id="crearUsuarioModal" tabindex="-1" aria-labelledby="crearUsuarioModalLabel" aria-hidden="false" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form (ngSubmit)="addUsuario()">
+        <div class="modal-header">
+          <h5 class="modal-title" id="crearUsuarioModalLabel">Nuevo Usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input [(ngModel)]="nuevoUsuario.nombre" id="nombre" name="nombre" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input [(ngModel)]="nuevoUsuario.apellido" id="apellido" name="apellido" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input [(ngModel)]="nuevoUsuario.telefono" id="telefono" name="telefono" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" [(ngModel)]="nuevoUsuario.email" id="email" name="email" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label for="contrasena" class="form-label">Contraseña</label>
+            <input type="password" [(ngModel)]="nuevoUsuario.contrasena" id="contrasena" name="contrasena" class="form-control" required autocomplete="current-password"/>
+          </div>
+
+          <div class="mb-3">
+            <label for="id_rol" class="form-label">Rol</label>
+            <select [(ngModel)]="nuevoUsuario.id_rol" id="id_rol" name="id_rol" class="form-select" required>
+               <option [value]="1">Administrador</option>
+              <option [value]="2">Usuario</option>
+    
+            </select>
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+         <p class="text-danger mt-2" *ngFor="let msg of errorMessage">{{ msg }}</p>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="container mt-4 table-responsive">
+  <table class="table   table-bordered align-middle shadow-sm">
+    <thead class="table-success">
+      <tr style="text-align: center;">
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Teléfono</th>
+        <th scope="col">Email</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="text-align: center;" *ngFor="let u of usuarios; let i = index">
+        <th scope="row">{{ u.id_usuario }}</th>
+        <td>{{ u.nombre }}</td>
+        <td>{{ u.apellido }}</td>
+        <td>{{ u.telefono }}</td>
+        <td>{{ u.email }}</td>
+
+        <td>
+          <button *ngIf="u.id_usuario !== undefined" type="button" class="btn btn-danger ms-4" (click)="deleteUsuario(u.id_usuario)">
+          <img src="https://img.icons8.com/?size=100&id=102715&format=png&color=000000" alt="eliminar" width="40px">
+        </button>
+        <button type="button" class="btn btn-warning ms-4"(click)="cargarUsuarioParaEditar(u)" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal">
+          <img src="https://img.icons8.com/?size=100&id=102714&format=png&color=000000" alt="editar" width="40px">
+        </button>
+
+        </td>
+
+       
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="modal fade" id="editarUsuarioModal" tabindex="-1" aria-labelledby="editarUsuarioModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form  (ngSubmit)="updateUsuario()">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editarUsuarioModalLabel">Editar Usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="editNombre" class="form-label">Nombre</label>
+            <input [(ngModel)]="usuarioActualizado.nombre" id="editNombre" name="editNombre" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label for="editApellido" class="form-label">Apellido</label>
+            <input [(ngModel)]="usuarioActualizado.apellido" id="editApellido" name="editApellido" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label for="editTelefono" class="form-label">Teléfono</label>
+            <input [(ngModel)]="usuarioActualizado.telefono" id="editTelefono" name="editTelefono" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label for="editEmail" class="form-label">Email</label>
+            <input type="email" [(ngModel)]="usuarioActualizado.email" id="editEmail" name="editEmail" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label for="editContrasena" class="form-label">Contraseña</label>
+            <input type="password" [(ngModel)]="usuarioActualizado.contrasena" id="editContrasena" name="editContrasena" class="form-control" required />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Actualizar</button>
+        </div>
+        <p class="text-danger mt-2" *ngFor="let msg of errorMessage">{{ msg }}</p>
+      </form>
+    </div>
+  </div>
+</div>
+

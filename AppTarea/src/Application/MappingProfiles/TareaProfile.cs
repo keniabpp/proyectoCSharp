@@ -8,7 +8,7 @@ namespace Application.MappingProfiles
     {
         public TareaProfile()
         {
-            // 🟢 Lectura: Entidad → DTO
+        //     // 🟢 Lectura: Entidad → DTO
            CreateMap<Tarea, TareaDTO>()
               .ForMember(dest => dest.creado_por, opt => opt.MapFrom(src => src.creado_por))
               .ForMember(dest => dest.asignado_a, opt => opt.MapFrom(src => src.asignado_a))

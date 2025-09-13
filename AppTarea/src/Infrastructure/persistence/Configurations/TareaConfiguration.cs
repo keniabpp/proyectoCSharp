@@ -8,7 +8,7 @@ namespace AppTarea.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Tarea> builder)
         {
-            // Relación con Usuario (creador)
+            //Relación con Usuario (creador)
             builder.HasOne(t => t.creador)
                    .WithMany(u => u.tareas_creadas)
                    .HasForeignKey(t => t.creado_por)

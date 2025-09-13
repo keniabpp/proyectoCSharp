@@ -20,6 +20,10 @@ namespace Application.Features.Tableros.Handlers
         public async Task<TableroDTO> Handle(GetTableroByIdQuery request, CancellationToken cancellationToken)
         {
             var tablero = await _tableroRepository.GetByIdAsync(request.Id);
+
+
+            if (tablero == null)
+                throw new KeyNotFoundException("Tablero no encontrado.");
             var tableroDTO = _mapper.Map<TableroDTO>(tablero);
 
             return tableroDTO;

@@ -32,9 +32,9 @@ namespace Presentation.Controllers
 
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] UsuarioLoginDTO loginDto)
+        public async Task<IActionResult> Login([FromBody] UsuarioLoginDTO usuarioLoginDTO)
         {
-          var result = await _mediator.Send(new LoginUsuarioCommand(loginDto));
+          var result = await _mediator.Send(new LoginUsuarioCommand(usuarioLoginDTO));
 
           if (result == null)
           return Unauthorized(new { message = "Credenciales inválidas" });
@@ -93,7 +93,7 @@ namespace Presentation.Controllers
             var command = new DeleteUsuarioCommand(id);
             var eliminado = await _mediator.Send(command);
 
-            return StatusCode(500, new { mensaje = "Usuario Eliminado Correctamente"});
+            return Ok(new { mensaje = "Usuario eliminado correctamente" });
         }
 
 

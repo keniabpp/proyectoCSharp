@@ -16,8 +16,6 @@ namespace Domain.Entities
         [Column("nombre")]
         public string nombre { get; set; } = string.Empty;
 
-        
-
         public Rol() { }
 
         public Rol(string nombre)

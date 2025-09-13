@@ -28,12 +28,15 @@
     "@angular/forms": "^20.2.0",
     "@angular/platform-browser": "^20.2.0",
     "@angular/router": "^20.2.0",
+    "bootstrap": "^5.3.8",
     "rxjs": "~7.8.0",
+    "sweetalert2": "^11.23.0",
     "tslib": "^2.3.0",
+    "vite": "^7.1.5",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular/build": "^20.2.2",
+    "@angular/build": "^20.3.1",
     "@angular/cli": "^20.2.2",
     "@angular/compiler-cli": "^20.2.0",
     "@types/jasmine": "~5.1.0",

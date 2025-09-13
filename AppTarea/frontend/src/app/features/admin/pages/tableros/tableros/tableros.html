@@ -1,0 +1,38 @@
+<p>tableros works!</p>
+<div class="container mt-4 table-responsive">
+  <table class="table   table-bordered align-middle shadow-sm">
+    <thead class="table-success">
+      <tr style="text-align: center;">
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Fecha de Creacion</th>
+        <th scope="col">Usuario Creador</th>
+        <!-- <th scope="col">Rol</th> -->
+        <th scope="col">Rol</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="text-align: center;" *ngFor="let t of tableros; let i = index">
+        <th scope="row">{{ t.id_tablero }}</th>
+        <td>{{ t.nombre }}</td>
+        <td>{{ t.creado_en }}</td>
+        <td>{{ t.nombre_usuario }}</td>
+        <!-- <td>{{ t.id_rol }}</td> -->
+        <td>{{ t.nombre_rol }}</td>
+
+        <td>
+          <button type="button" class="btn btn-danger ms-4" >
+          <img src="https://img.icons8.com/?size=100&id=102715&format=png&color=000000" alt="eliminar" width="40px">
+        </button>
+        <button type="button" class="btn btn-warning ms-4" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal">
+          <img src="https://img.icons8.com/?size=100&id=102714&format=png&color=000000" alt="editar" width="40px">
+        </button>
+
+        </td>
+
+       
+      </tr>
+    </tbody>
+  </table>
+</div>

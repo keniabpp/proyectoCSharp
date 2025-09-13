@@ -25,13 +25,16 @@ namespace Application.Features.Usuarios.Handlers
             if (usuarioExistente!.email != request.UsuarioUpdateDTO.Email)
             {
                 var otroUsuario = await _usuarioRepository.GetByEmailAsync(request.UsuarioUpdateDTO.Email);
-                if (otroUsuario != null)
+                if (otroUsuario != null && otroUsuario.id_usuario != request.Id)
                 throw new Exception("El correo electrónico ya está en uso por otro usuario.");
             }
 
             _mapper.Map(request.UsuarioUpdateDTO, usuarioExistente);
 
-            usuarioExistente.contrasena = BCrypt.Net.BCrypt.HashPassword(usuarioExistente.contrasena);
+            if (!string.IsNullOrEmpty(request.UsuarioUpdateDTO.Contrasena))
+            {
+                usuarioExistente.contrasena = BCrypt.Net.BCrypt.HashPassword(request.UsuarioUpdateDTO.Contrasena);  // Solo se actualiza si la contraseña está presente
+            }
 
             await _usuarioRepository.UpdateAsync(request.Id, usuarioExistente);
             

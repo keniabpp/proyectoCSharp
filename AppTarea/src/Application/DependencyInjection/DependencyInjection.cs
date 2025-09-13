@@ -15,7 +15,7 @@ namespace Application
             // Registrar MediatR
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
-            // Registrar AutoMapper
+            //Registrar AutoMapper
             services.AddAutoMapper(typeof(Application.MappingProfiles.TableroProfile));
 
             // Registrar FluentValidation

@@ -38,7 +38,7 @@ namespace AppTarea.Infrastructure.Repositories
         
         public async Task<IEnumerable<Tablero>> GetAllAsync()
         {
-            return await _context.Tableros.Include(t => t.usuario).ToListAsync();
+            return await _context.Tableros.Include(t => t.usuario).Include(t => t.rol).ToListAsync();
         }
 
         public async Task<Tablero?> GetByIdAsync(int id)
