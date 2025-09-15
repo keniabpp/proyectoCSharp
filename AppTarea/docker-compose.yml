@@ -1,6 +1,20 @@
+
 version: '3.8'
 
 services:
+  sqlserver:
+    container_name: apptarea-db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Kenia123!
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - app_network
+
   api:
     container_name: apptarea-api
     build:
@@ -10,11 +24,21 @@ services:
       - "5208:80"  # El contenedor escucha en 80, tu máquina lo expone en 5208
     environment:
       - ASPNETCORE_URLS=http://+:80
-      - ConnectionStrings__DefaultConnection=Server=host.docker.internal,1433;Database=Tarea;User Id=sa;Password=TuPasswordFuerte;TrustServerCertificate=True;
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=Tarea;User Id=sa;Password=Kenia123!;TrustServerCertificate=True;
+
       - Jwt__Key=ClaveJWTSegura1234567890SuperClave!!
+      - Jwt__Issuer=AppTarea
+      - Jwt__Audience=AppTareaUsuarios
+      - Jwt__ExpireMinutes=60
+    depends_on:
+      - sqlserver
+    
     networks:
       - app_network
 
 networks:
   app_network:
     driver: bridge
+
+volumes:
+  sqlserver_data:

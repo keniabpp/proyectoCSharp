@@ -4,6 +4,9 @@ using Application;
 using Presentation.Middleware;
 using Presentation.Security;
 using AppTarea.Infrastructure;
+using AppTarea.Infrastructure.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
+// using AppTarea.Infrastructure.Persistence.SeedData;
 
 
 
