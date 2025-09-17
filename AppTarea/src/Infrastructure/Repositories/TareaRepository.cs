@@ -57,7 +57,7 @@ namespace AppTarea.Infrastructure.Repositories
         public async Task<List<Tarea>> TareasAsignadasAsync(int id_usuario)
         {
             return await _context.Tareas.Include(t => t.creador).Include(t => t.asignado)
-            .Include(t => t.columna).Where(t => t.asignado_a == id_usuario).ToListAsync();
+            .Include(t => t.columna).Include(t => t.tablero).Where(t => t.asignado_a == id_usuario).ToListAsync();
         }
 
         public async Task<Tarea> UpdateAsync(int id, Tarea tarea)

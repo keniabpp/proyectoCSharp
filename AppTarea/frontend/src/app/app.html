@@ -1,7 +1,19 @@
 
-<app-header *ngIf="showMainLayout">    </app-header>
+<!-- <app-header *ngIf="showMainLayout">    </app-header>
 <main class="flex-grow-1" *ngIf="showMainLayout">
   <router-outlet> </router-outlet>
 </main>
-<router-outlet *ngIf="!showMainLayout"></router-outlet> <!-- para admin -->
-<app-footer *ngIf="showMainLayout">  </app-footer>
+<router-outlet *ngIf="!showMainLayout"></router-outlet> 
+<app-footer *ngIf="showMainLayout">  </app-footer> -->
+
+
+@if (showMainLayout) {
+  <app-header></app-header>
+  <main class="flex-grow-1">
+    <router-outlet></router-outlet>
+  </main>
+  <app-footer></app-footer>
+} @else {
+  <!-- Para admin -->
+  <router-outlet></router-outlet>
+}

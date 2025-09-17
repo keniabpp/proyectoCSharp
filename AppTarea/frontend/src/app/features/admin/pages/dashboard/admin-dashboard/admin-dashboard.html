@@ -1,2 +1,42 @@
-<h1>Bienvenida Administradora</h1>
-<p>Desde aquí puedes gestionar usuarios, tableros y tareas.</p>
+
+
+<!-- <app-tablerokanban [tareas]="tareas" [id_tablero]="idTableroActual"></app-tablerokanban> -->
+<div class="container">
+    <h1>Bienvenida Administradora</h1>
+    <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#crearTareaModal">
+  Crear nueva tarea
+</button>
+
+
+
+
+<div class="modal fade" id="crearTareaModal" tabindex="-1" aria-labelledby="crearTareaModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="crearTareaModalLabel">Nueva Tarea</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <app-createTareas (tareaCreadaEvent)="agregarTareaDesdeFormulario($event)"></app-createTareas>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="mb-3">
+  <label for="tableroSelect" class="form-label">Seleccionar tablero:</label>
+  <select id="tableroSelect" class="form-select" [(ngModel)]="tableroSeleccionado" (change)="cargarTareasDelTablero()">
+    <option *ngFor="let tablero of tableros" [value]="tablero.id_tablero">
+      {{ tablero.nombre }}
+    </option>
+  </select>
+</div>
+
+<!-- <app-tablerokanban [tareas]="tareas"></app-tablerokanban> -->
+ <app-tablerokanban [tareas]="tareas" [id_tablero]="tableroSeleccionado"></app-tablerokanban>
+ 
+
+</div>

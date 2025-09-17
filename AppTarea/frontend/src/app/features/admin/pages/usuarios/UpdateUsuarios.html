@@ -1,0 +1,48 @@
+
+
+<div class="modal fade" id="editarUsuarioModal" tabindex="-1" aria-labelledby="editarUsuarioModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form (ngSubmit)="updateUsuario()">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editarUsuarioModalLabel">Editar Usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="editNombre" class="form-label">Nombre</label>
+            <input [(ngModel)]="usuarioActualizado.nombre" id="editNombre" name="editNombre" class="form-control"
+              required />
+          </div>
+          <div class="mb-3">
+            <label for="editApellido" class="form-label">Apellido</label>
+            <input [(ngModel)]="usuarioActualizado.apellido" id="editApellido" name="editApellido" class="form-control"
+              required />
+          </div>
+          <div class="mb-3">
+            <label for="editTelefono" class="form-label">Teléfono</label>
+            <input [(ngModel)]="usuarioActualizado.telefono" id="editTelefono" name="editTelefono" class="form-control"
+              required />
+          </div>
+          <div class="mb-3">
+            <label for="editEmail" class="form-label">Email</label>
+            <input type="email" [(ngModel)]="usuarioActualizado.email" id="editEmail" name="editEmail"
+              class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label for="editContrasena" class="form-label">Contraseña</label>
+            <input type="password" [(ngModel)]="usuarioActualizado.contrasena" id="editContrasena" name="editContrasena"
+              class="form-control" required />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Actualizar</button>
+        </div>
+       @for (msg of errorMessage; track $index) {
+        <p class="text-danger mt-2">{{ msg }}</p>}
+      </form>
+    </div>
+  </div>
+</div>

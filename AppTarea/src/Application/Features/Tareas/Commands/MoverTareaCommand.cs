@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Features.Tareas.Commands
 {
-    public class MoverTareaCommand : IRequest<bool>
+    public class MoverTareaCommand : IRequest<TareaDTO>
     {
         public MoverTareaDTO MoverTareaDTO { get; set; }
         public int asignado_a { get; set; }

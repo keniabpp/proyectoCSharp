@@ -1,0 +1,35 @@
+
+
+
+<div class="modal fade" id="editarTareaModal" tabindex="-1" aria-labelledby="editarTareaModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form (ngSubmit)="updateTarea()">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editarTareaModalLabel">Editar Tarea</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="editTitulo" class="form-label">Titulo</label>
+            <input [(ngModel)]="tareaActualizada.titulo" id="editTitulo" name="editTitulo" class="form-control"
+              required />
+          </div>
+          <div class="mb-3">
+            <label for="editDescripcion" class="form-label">Descripcion</label>
+            <input [(ngModel)]="tareaActualizada.descripcion" id="editDescripcion" name="editDescripcion" class="form-control"
+              required />
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Actualizar</button>
+        </div>
+       @for (msg of errorMessage; track $index) {
+        <p class="text-danger mt-2">{{ msg }}</p>}
+      </form>
+    </div>
+  </div>
+</div>

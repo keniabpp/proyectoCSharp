@@ -1,187 +1,39 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UsuariosService } from '../../../../core/services/usuarios.service';
 import { Usuario, UsuarioUpdate } from '../../../../core/models/usuario.model';
 import { FormsModule } from '@angular/forms';
-import Swal from 'sweetalert2'
+import { ListUsuarios } from './ListUsuarios';
+import { UpdateUsuarios } from './UpdateUsuarios';
+import { CreateUsuarios } from './CreateUsuarios';
 
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ListUsuarios, UpdateUsuarios, CreateUsuarios],
   templateUrl: './usuarios.html',
   styleUrl: './usuarios.css'
 })
 
-export class Usuarios implements OnInit {
-  usuarios: Usuario[] = [];
-
-  nuevoUsuario: Usuario = {
-    nombre: '',
-    apellido: '',
-    telefono: '',
-    email: '',
-    contrasena: '',
-    id_rol: 0,
-
-  };
-
-  errorMessage: string[] = [];
+export class Usuarios {
+  @ViewChild(UpdateUsuarios) updateComponent!: UpdateUsuarios;
+  @ViewChild(ListUsuarios) listComponent!: ListUsuarios;
 
 
-
-  constructor(private usuariosService: UsuariosService) { }
-
-  ngOnInit(): void {
-    this.listUsuarios();
+  seleccionarUsuario(usuario: Usuario) {
+    console.log('Usuario seleccionado para editar:', usuario);
+    this.updateComponent.cargarUsuarioParaEditar(usuario);
   }
 
+  refrescarLista() {
 
-  listUsuarios() {
-    this.usuariosService.getAllUsuarios().subscribe({
-      next: (data) => (this.usuarios = data),
-
-      error: (err) => {
-        console.error('Error al cargar usuarios:', err);
-      }
-    })
+    this.listComponent.listUsuarios();
   }
 
-  addUsuario(): void {
-    this.usuariosService.createUsuario(this.nuevoUsuario).subscribe({
-      next: (usuarioCreado) => {
-        this.usuarios.push(usuarioCreado);
-        this.nuevoUsuario = {
-
-          nombre: '',
-          apellido: '',
-          telefono: '',
-          email: '',
-          contrasena: '',
-          id_rol: 0
-        };
-
-      },
-
-      error: (err) => {
-        console.error('Error al cargar usuarios:', err);
-
-        if (err.error?.errores?.length) {
-
-          this.errorMessage = err.error.errores.map((e: any) => e.mensaje);
-        }
-        else if (err.error?.mensaje) {
-
-          this.errorMessage = [err.error.mensaje];
-        }
-        else {
-          this.errorMessage = ['No se pudo registrar el usuario'];
-        }
-      }
-
-
-    })
-  }
-  
-  deleteUsuario(id_usuario: number) {
-    Swal.fire({
-      title: '¿Estás seguro?',
-      text: 'Esta acción eliminará al usuario permanentemente.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.usuariosService.deleteUsuarioById(id_usuario).subscribe({
-          next: () => {
-            // Actualiza la lista de usuarios
-            this.listUsuarios();
-
-            // Muestra mensaje de éxito
-            Swal.fire({
-              title: '¡Eliminado!',
-              text: 'El usuario ha sido eliminado correctamente.',
-              icon: 'success',
-              timer: 2000,
-              showConfirmButton: false
-            });
-          },
-          error: (err) => {
-            // Muestra mensaje de error
-            Swal.fire({
-              title: 'Error',
-              text: 'No se pudo eliminar el usuario. Intenta de nuevo.',
-              icon: 'error'
-            });
-            console.error('Error al eliminar:', err);
-          }
-        });
-      }
-    });
-  }
-
-
-
-
-  // deleteUsuario(id_usuario: number) {
-  //   console.log(id_usuario);
-  //   this.usuariosService.deleteUsuarioById(id_usuario).subscribe(
-  //     ()=> this.listUsuarios()
-  //   );
-
-  // }
-
-  usuarioActualizado: UsuarioUpdate = {
-    nombre: '',
-    apellido: '',
-    telefono: '',
-    email: '',
-    contrasena: '',
-
+  agregarUsuarioALaLista(usuario: Usuario): void {
+    this.listComponent.usuarios.push(usuario);
 
   }
-
-  updateUsuario(): void {
-    this.usuariosService.updateUsuario(this.idUsuarioEditando, this.usuarioActualizado).subscribe({
-      next: (respuesta) => {
-        console.log(respuesta);
-        this.listUsuarios(); // refresca la lista
-      },
-      error: (err) => {
-        console.error('Error al actualizar usuario:', err);
-
-        if (err.error?.errores?.length) {
-          this.errorMessage = err.error.errores.map((e: any) => e.mensaje);
-        }
-        else if (err.error?.mensaje) {
-          this.errorMessage = [err.error.mensaje];
-        }
-        else {
-          this.errorMessage = ['No se pudo actualizar el usuario'];
-        }
-      }
-    });
-  }
-
-
-  idUsuarioEditando: number = 0;
-
-
-  cargarUsuarioParaEditar(usuario: Usuario) {
-    this.usuarioActualizado = {
-      nombre: usuario.nombre,
-      apellido: usuario.apellido,
-      telefono: usuario.telefono,
-      email: usuario.email,
-      contrasena: '',
-    };
-    this.idUsuarioEditando = usuario.id_usuario!;
-  }
-
-
-
 
 }
+

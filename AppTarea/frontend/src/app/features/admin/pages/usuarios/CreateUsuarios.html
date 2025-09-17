@@ -1,0 +1,45 @@
+
+<form (ngSubmit)="addUsuario()">
+  <div class="mb-3">
+    <label for="nombre" class="form-label">Nombre</label>
+    <input [(ngModel)]="nuevoUsuario.nombre" id="nombre" name="nombre" class="form-control" required />
+  </div>
+
+  <div class="mb-3">
+    <label for="apellido" class="form-label">Apellido</label>
+    <input [(ngModel)]="nuevoUsuario.apellido" id="apellido" name="apellido" class="form-control" required />
+  </div>
+
+  <div class="mb-3">
+    <label for="telefono" class="form-label">Teléfono</label>
+    <input [(ngModel)]="nuevoUsuario.telefono" id="telefono" name="telefono" class="form-control" required />
+  </div>
+
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" [(ngModel)]="nuevoUsuario.email" id="email" name="email" class="form-control" required />
+  </div>
+
+  <div class="mb-3">
+    <label for="contrasena" class="form-label">Contraseña</label>
+    <input type="password" [(ngModel)]="nuevoUsuario.contrasena" id="contrasena" name="contrasena"
+      class="form-control" required autocomplete="current-password" />
+  </div>
+
+  <div class="mb-3">
+    <label for="id_rol" class="form-label">Rol</label>
+    <select [(ngModel)]="nuevoUsuario.id_rol" id="id_rol" name="id_rol" class="form-select" required>
+      <option [value]="1">Administrador</option>
+      <option [value]="2">Usuario</option>
+    </select>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </div>
+
+  <div *ngFor="let msg of errorMessage">
+    <p class="text-danger mt-2">{{ msg }}</p>
+  </div>
+</form>

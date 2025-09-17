@@ -1,0 +1,52 @@
+
+
+<div class="container mt-4 table-responsive">
+  <table class="table table-bordered align-middle shadow-sm">
+    <thead class="table-success">
+      <tr style="text-align: center;">
+        <th scope="col">#</th>
+        <th scope="col">Titulo</th>
+        <th scope="col">Descripcion</th>
+        <th scope="col">Detalle</th>
+        <th scope="col">Fecha de creación</th>
+        <th scope="col">Fecha de Vencimiento</th>
+        <th scope="col">Nombre Creador</th>
+        <th scope="col">Nombre Asignado</th>
+        <th scope="col">Nombre Tablero</th>
+        <th scope="col">Nombre Columna</th>
+        <th scope="col">Estado Fecha</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (t of tareas; track t.id_tarea; ) {
+      <tr style="text-align: center;">
+        <th scope="row">{{ t.id_tarea }}</th>
+        <td scope="row">{{ t.titulo }}</td>
+        <td scope="row">{{ t.descripcion }}</td>
+        <td scope="row">{{ t.detalle }}</td>
+        <td scope="row">{{ t.creado_en }}</td>
+        <td scope="row">{{ t.fecha_vencimiento }}</td>
+        <td scope="row">{{ t.nombre_creador }}</td>
+        <td scope="row">{{ t.nombre_asignado }}</td>
+        <td scope="row">{{ t.nombre_tablero }}</td>
+        <td scope="row">{{ t.nombre_columna }}</td>
+        <td scope="row">{{ t.estado_fechaVencimiento }}</td>
+
+        <td>
+          @if (t.id_tarea !== undefined) {
+          <button type="button" class="btn btn-danger ms-4" (click)="deleteTarea(t.id_tarea!)">
+            <img src="https://img.icons8.com/?size=100&id=102715&format=png&color=000000" alt="eliminar" width="40px">
+          </button>
+          }
+
+          <button type="button" class="btn btn-warning ms-4" data-bs-toggle="modal"
+            data-bs-target="#editarTareaModal" (click)="emitirTarea(t)">
+            <img src="https://img.icons8.com/?size=100&id=102714&format=png&color=000000" alt="editar" width="40px">
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

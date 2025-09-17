@@ -28,4 +28,7 @@ export class UsuariosService {
         return this._http.put<void>(`${this.apiUrl}/${id_usuario}`, usuarioActualizado);
     }
 
+
+    
+
 }

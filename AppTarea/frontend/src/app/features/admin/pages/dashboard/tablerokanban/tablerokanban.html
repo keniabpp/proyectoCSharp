@@ -1,0 +1,48 @@
+<!-- <p *ngIf="tareas.length === 0">No hay tareas para mostrar.</p>
+<p *ngIf="tareas.length > 0">Tareas recibidas: {{ tareas.length }}</p> -->
+
+<div class="container-fluid mt-4" cdkDropListGroup>
+  <div class="row">
+    @for (columna of columnas; track columna.id_columna) {
+    <div class="col-md-4">
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white text-center">
+          {{ columna.nombre }}
+        </div>
+
+        <div class="card-body" cdkDropList [cdkDropListData]="obtenerTareas(columna.id_columna)"
+          [cdkDropListConnectedTo]="connectedDropLists" (cdkDropListDropped)="moverTarea($event, columna.id_columna)">
+
+          @for (tarea of obtenerTareas(columna.id_columna); track tarea.id_tarea) {
+          <div class="card mb-2" cdkDrag [cdkDragData]="tarea" style="cursor: move;">
+            <div class="card-body">
+              <h5 class="card-title">{{ tarea.titulo }}</h5>
+              <p class="card-text">{{ tarea.descripcion }}</p>
+
+              <div class="mb-2">
+                <label class="form-label">Detalle</label>
+                <input type="text" class="form-control" [(ngModel)]="tarea.detalle"
+                  placeholder="Escribe un detalle..." />
+              </div>
+
+
+              <div class="d-flex justify-content-end gap-2 mt-2">
+                <button class="btn btn-sm btn-outline-primary" (click)="editarTarea(tarea)">
+                </button>
+                <button class="btn btn-sm btn-outline-danger" (click)="eliminarTarea(tarea)">
+                </button>
+              </div>
+            </div>
+          </div>
+          }
+
+
+        </div>
+      </div>
+    </div>
+    }
+
+  </div>
+</div>
+
+<app-updateTareas #modalTarea (tareaActualizadaEvent)="refrescarTarea($event)"></app-updateTareas>
