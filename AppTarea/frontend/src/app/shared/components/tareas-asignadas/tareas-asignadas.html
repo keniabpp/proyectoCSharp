@@ -1,0 +1,27 @@
+
+@if (nuevaAsignacion()) {
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    <p>🆕 Se ha asignado la tarea: <strong>{{ nuevaAsignacionTitulo() }}</strong></p>
+    <button type="button" class="btn-close" (click)="cerrarNotificacion()" aria-label="Cerrar"></button>
+  </div>
+}
+
+
+<div class="container mt-4">
+  <div class="row">
+    @for (tarea of tareas; track tarea.id_tarea) {
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm" cdkDrag
+             style="cursor: move;">
+          <div class="card-body">
+            <h5 class="card-title">{{ tarea.titulo }}</h5>
+            <p class="card-text">{{ tarea.descripcion }}</p>
+            <p class="card-text" [style.color]="tarea.estado_fechaVencimiento.toString() | vencimientoColor">
+              {{ tarea.estado_fechaVencimiento }}
+            </p>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

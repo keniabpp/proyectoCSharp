@@ -4,19 +4,19 @@ import { Observable } from "rxjs";
 import { environment } from "../../../environments/environment";
 import { Usuario, UsuarioUpdate } from "../models/usuario.model";
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class UsuariosService {
     private apiUrl = `${environment.apiUrl}/usuarios`;
     private readonly _http = inject(HttpClient);
 
     getAllUsuarios(): Observable<Usuario[]> {
         return this._http.get<Usuario[]>(this.apiUrl);
-    
+
     }
 
     createUsuario(usuario: Usuario): Observable<Usuario> {
-     return this._http.post<Usuario>(this.apiUrl, usuario);
-     
+        return this._http.post<Usuario>(this.apiUrl, usuario);
+
     }
 
     deleteUsuarioById(id_usuario: number): Observable<void> {
@@ -28,7 +28,12 @@ export class UsuariosService {
         return this._http.put<void>(`${this.apiUrl}/${id_usuario}`, usuarioActualizado);
     }
 
+    getUsuarioById(id_usuario: number): Observable<Usuario> {
+        return this._http.get<Usuario>(`${this.apiUrl}/${id_usuario}`);
+    }
 
-    
+
+
+
 
 }

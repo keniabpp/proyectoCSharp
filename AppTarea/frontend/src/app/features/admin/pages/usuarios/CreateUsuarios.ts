@@ -6,24 +6,24 @@ import { UsuariosService } from "../../../../core/services/usuarios.service";
 
 
 @Component({
-    selector: 'app-createUsuarios',
-    standalone: true,
-    imports: [CommonModule, FormsModule],
-    templateUrl: './CreateUsuarios.html',
-    styleUrl: './usuarios.css'
+  selector: 'app-createUsuarios',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './CreateUsuarios.html',
+  styleUrl: './usuarios.css'
 })
 
-export class CreateUsuarios  {
+export class CreateUsuarios {
 
-    constructor(private usuariosService: UsuariosService) { }
-    
-    @Output() usuarioCreadoEvent = new EventEmitter<Usuario>();
+  constructor(private usuariosService: UsuariosService) { }
 
-    errorMessage: string[] = [];
+  @Output() usuarioCreadoEvent = new EventEmitter<Usuario>();
 
-    usuarios: Usuario[] = [];
+  errorMessage: string[] = [];
 
-    nuevoUsuario: Usuario = {
+  usuarios: Usuario[] = [];
+
+  nuevoUsuario: Usuario = {
     nombre: '',
     apellido: '',
     telefono: '',
@@ -33,7 +33,7 @@ export class CreateUsuarios  {
 
   };
 
-   addUsuario(): void {
+  addUsuario(): void {
     this.usuariosService.createUsuario(this.nuevoUsuario).subscribe({
       next: (usuarioCreado) => {
         this.usuarios.push(usuarioCreado);

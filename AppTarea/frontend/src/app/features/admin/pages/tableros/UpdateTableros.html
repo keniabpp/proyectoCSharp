@@ -1,4 +1,5 @@
 
+
 <div class="modal fade" id="editarTableroModal" tabindex="-1" aria-labelledby="editarTableroModalLabel"
   aria-hidden="true">
   <div class="modal-dialog">
@@ -14,13 +15,13 @@
             <input [(ngModel)]="tableroActualizado.nombre" id="editNombre" name="editNombre" class="form-control"
               required />
           </div>
-          
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
           <button type="submit" class="btn btn-primary">Actualizar</button>
         </div>
-       @for (msg of errorMessage; track $index) {
+        @for (msg of errorMessage; track $index) {
         <p class="text-danger mt-2">{{ msg }}</p>}
       </form>
     </div>

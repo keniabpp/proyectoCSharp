@@ -17,10 +17,12 @@ import Swal from "sweetalert2";
 
 export class ListTareas {
 
+    constructor(private tareasService: TareasService) { }
+
     tareas: Tarea[] = [];
     errorMessage: string[] = [];
 
-    constructor(private tareasService: TareasService) { }
+    
 
     @Output() tareaSeleccionada = new EventEmitter<Tarea>();
 
@@ -59,10 +61,8 @@ export class ListTareas {
             if (result.isConfirmed) {
                 this.tareasService.deleteTareaById(id_tarea).subscribe({
                     next: () => {
-                        // Actualiza la lista de usuarios
                         this.listTareas();
 
-                        // Muestra mensaje de éxito
                         Swal.fire({
                             title: '¡Eliminado!',
                             text: 'La Tarea ha sido eliminada correctamente.',
@@ -72,7 +72,7 @@ export class ListTareas {
                         });
                     },
                     error: (err) => {
-                        // Muestra mensaje de error
+                        
                         Swal.fire({
                             title: 'Error',
                             text: 'No se pudo eliminar la tarea. Intenta de nuevo.',

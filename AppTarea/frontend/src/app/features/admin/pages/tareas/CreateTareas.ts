@@ -38,8 +38,8 @@ export class CreateTareas implements OnInit {
 
     columnas: Columna[] = [
         { id_columna: 1, nombre: 'Por hacer', posicion: 1 },
-        { id_columna: 2, nombre: 'En Progreso', posicion: 2 },
-        { id_columna: 3, nombre: 'hecho', posicion: 3 }
+        // { id_columna: 2, nombre: 'En Progreso', posicion: 2 },
+        // { id_columna: 3, nombre: 'hecho', posicion: 3 }
     ];
 
     ngOnInit(): void {
@@ -86,6 +86,7 @@ export class CreateTareas implements OnInit {
             next: (tareaCreada) => {
                 this.tareas.push(tareaCreada);
                 this.tareaCreadaEvent.emit(tareaCreada);
+                this.tareasService.notificarNuevaAsignacion(tareaCreada.titulo);
                 this.nuevaTarea = {
 
                     titulo: '',

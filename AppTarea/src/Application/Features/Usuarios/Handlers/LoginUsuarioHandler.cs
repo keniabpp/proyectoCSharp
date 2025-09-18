@@ -74,6 +74,7 @@ namespace Application.Features.Usuarios.Handlers
             // Devolver DTO con token
             return new UsuarioLoginResponseDTO
             {
+                id_usuario = usuario.id_usuario,
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Nombre = usuario.nombre,
                 Email = usuario.email,

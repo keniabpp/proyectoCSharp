@@ -1,23 +1,30 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { moverTarea, Tarea } from '../../../../../core/models/tarea.model';
-import { Columna } from '../../../../../core/models/columna.model';
+
 import { CommonModule } from '@angular/common';
-import { TablerosService } from '../../../../../core/services/tableros.service';
-import { Tablero } from '../../../../../core/models/tablero.model';
+
 import { FormsModule } from '@angular/forms';
 import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
-import { TareasService } from '../../../../../core/services/tareas.service';
+
 import Swal from 'sweetalert2';
-import { UpdateTareas } from '../../tareas/UpdateTareas';
+import { UpdateTareas } from '../../../features/admin/pages/tareas/UpdateTareas';
+import { TablerosService } from '../../../core/services/tableros.service';
+import { TareasService } from '../../../core/services/tareas.service';
+import { Tablero } from '../../../core/models/tablero.model';
+import { moverTarea, Tarea } from '../../../core/models/tarea.model';
+import { Columna } from '../../../core/models/columna.model';
+import { ColumnaColorPipe } from '../../pipes/columnaColor.pipe';
+
+
 
 @Component({
   selector: 'app-tablerokanban',
   standalone: true,
-  imports: [CommonModule, FormsModule, DragDropModule, UpdateTareas],
+  imports: [CommonModule, FormsModule, DragDropModule, UpdateTareas, ColumnaColorPipe ],
   templateUrl: './tablerokanban.html',
   styleUrl: './tablerokanban.css'
 })
 export class Tablerokanban implements OnInit {
+
   constructor(
     private tablerosService: TablerosService,
     private tareasService: TareasService
@@ -57,16 +64,10 @@ export class Tablerokanban implements OnInit {
 
     this.tareasService.moverTarea(payload).subscribe({
       next: () => {
-        // Actualiza el campo localmente
+        
         tareaMovida.id_columna = nuevaColumnaId;
-
-        // Elimina la tarea de su columna anterior
         this.tareas = this.tareas.filter(t => t.id_tarea !== tareaMovida.id_tarea);
-
-        // Reinsertar la tarea actualizada
         this.tareas.push(tareaMovida);
-
-        // Fuerza el refresco visual
         this.tareas = [...this.tareas];
 
         console.log('✅ Tarea movida con éxito');
@@ -91,7 +92,7 @@ export class Tablerokanban implements OnInit {
 
 
   editarTarea(tarea: Tarea): void {
-    this.modalTarea.cargarTareaParaEditar(tarea); // ✅ carga el ID correctamente
+    this.modalTarea.cargarTareaParaEditar(tarea); 
 
     const modalElement = document.getElementById('editarTareaModal');
     if (modalElement) {
@@ -105,7 +106,7 @@ export class Tablerokanban implements OnInit {
     const index = this.tareas.findIndex(t => t.id_tarea === tareaActualizada.id_tarea);
     if (index !== -1) {
       this.tareas[index] = tareaActualizada;
-      this.tareas = [...this.tareas]; // 🔁 fuerza el refresco visual
+      this.tareas = [...this.tareas]; 
     }
   }
 
@@ -126,7 +127,7 @@ export class Tablerokanban implements OnInit {
         this.tareasService.deleteTareaById(tarea.id_tarea!).subscribe({
           next: () => {
             this.tareas = this.tareas.filter(t => t.id_tarea !== tarea.id_tarea);
-            this.tareas = [...this.tareas]; // fuerza el refresco
+            this.tareas = [...this.tareas]; 
 
             Swal.fire({
               title: '¡Eliminado!',
@@ -137,18 +138,18 @@ export class Tablerokanban implements OnInit {
             });
           },
           error: (err) => {
-        const mensaje = err.error?.mensaje || 'No se pudo mover la tarea';
+            const mensaje = err.error?.mensaje || 'No se pudo mover la tarea';
 
-        Swal.fire({
-          icon: 'warning',
-          title: 'Acción no permitida',
-          text: mensaje,
-          confirmButtonText: 'Entendido',
-          confirmButtonColor: '#3085d6'
-        });
+            Swal.fire({
+              icon: 'warning',
+              title: 'Acción no permitida',
+              text: mensaje,
+              confirmButtonText: 'Entendido',
+              confirmButtonColor: '#3085d6'
+            });
 
-        console.error('❌ Error al mover tarea:', err);
-      }
+            console.error('❌ Error al mover tarea:', err);
+          }
         });
       }
     });

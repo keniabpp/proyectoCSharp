@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand"  routerLink="/admin/dashboard" >AppTarea</a>
+        <a class="navbar-brand" routerLink="/admin/dashboard">AppTarea</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -18,9 +18,25 @@
                     <a class="nav-link" routerLink="/admin/tareas">Gestionar Tareas</a>
                 </li>
             </ul>
-           <div>
-            <button class="btn btn" (click)="logout()">Cerrar sesión</button>
-           </div>
+            <div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Opciones
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" routerLink="/admin/perfil">Perfil</a></li>
+                        <li><a class="dropdown-item" routerLink="/admin/tareas-asignadas">Tareas Asignadas</a></li>
+                        
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        
+                        <button class="btn btn" (click)="logout()">Cerrar sesión</button>
+                    </ul>
+                </div>
+                
+            </div>
         </div>
     </div>
 </nav>

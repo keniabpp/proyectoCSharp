@@ -14,10 +14,15 @@ export class AuthService {
   }
 
   login(credentials: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, credentials);
+    return this.http.post(`${this.apiUrl}/login`, credentials,{
+      withCredentials: true
+
+    });
   }
 
-  logout() {
-    localStorage.removeItem('token')
-  }
+  logout(): Observable<any> {
+  return this.http.post(`${this.apiUrl}/logout`, {}, {
+    withCredentials: true
+  });
+}
 }

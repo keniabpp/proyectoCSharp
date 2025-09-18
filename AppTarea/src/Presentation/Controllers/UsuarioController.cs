@@ -23,10 +23,10 @@ namespace Presentation.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<Usuario>> Register([FromBody] UsuarioRegisterDTO usuarioRegisterDTO)
         {
-          var command = new RegisterUsuarioCommand(usuarioRegisterDTO);
-          var nuevoUsuario = await _mediator.Send(command);
+            var command = new RegisterUsuarioCommand(usuarioRegisterDTO);
+            var nuevoUsuario = await _mediator.Send(command);
 
-          return CreatedAtAction(nameof(GetById), new { id = nuevoUsuario.id_rol }, nuevoUsuario);
+            return CreatedAtAction(nameof(GetById), new { id = nuevoUsuario.id_rol }, nuevoUsuario);
         }
 
 
@@ -34,19 +34,44 @@ namespace Presentation.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] UsuarioLoginDTO usuarioLoginDTO)
         {
-          var result = await _mediator.Send(new LoginUsuarioCommand(usuarioLoginDTO));
+            Console.WriteLine("Login ejecutado para: " + usuarioLoginDTO.Email);
 
-          if (result == null)
-          return Unauthorized(new { message = "Credenciales inválidas" });
+            var result = await _mediator.Send(new LoginUsuarioCommand(usuarioLoginDTO));
 
-          return Ok(result);
+            if (result == null)
+                return Unauthorized(new { message = "Credenciales inválidas" });
+
+
+            Response.Cookies.Append("token", result.Token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = false, // Asegúrate de usar HTTPS en producción
+                SameSite = SameSiteMode.Lax,
+                Expires = DateTimeOffset.UtcNow.AddHours(1)
+            });
+
+            return Ok(new
+            {
+                result.id_usuario,
+                result.Email,
+                result.Rol,
+                result.Nombre
+            });
         }
+
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("token");
+            return Ok(new { message = "Sesión cerrada correctamente" });
+        }
+
 
 
 
         // GET: api/usuarios
         [HttpGet]
-        [Authorize(Roles = "admin")]
+        
         public async Task<ActionResult<IEnumerable<Usuario>>> GetAll()
         {
             var query = new GetAllUsuariosQuery();
@@ -57,7 +82,7 @@ namespace Presentation.Controllers
 
         // GET: api/usuarios/{id}
         [HttpGet("{id}")]
-        [Authorize(Roles = "admin")]
+        
         public async Task<ActionResult<Usuario>> GetById(int id)
         {
             var query = new GetUsuarioByIdQuery(id);

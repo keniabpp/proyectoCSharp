@@ -15,27 +15,35 @@ import { Tablero, TableroUpdate } from "../../../../core/models/tablero.model";
 
 export class UpdateTableros {
 
-    constructor(private tablerosService: TablerosService) { }
+  constructor(private tablerosService: TablerosService) { }
 
-    @Output() tableroActualizadoEvent = new EventEmitter<void>();
+  @Output() tableroActualizadoEvent = new EventEmitter<void>();
 
-    tableros: Tablero[] = [];
-    
-    errorMessage: string[] = [];
+  tableros: Tablero[] = [];
+
+  errorMessage: string[] = [];
 
 
-    tableroActualizado: TableroUpdate = {
+  tableroActualizado: TableroUpdate = {
     nombre: '',
 
   }
 
   idTableroEditando: number = 0;
 
+  cargarTableroParaEditar(tablero: Tablero) {
+    this.tableroActualizado = {
+      nombre: tablero.nombre,
+
+    };
+    this.idTableroEditando = tablero.id_tablero!;
+  }
+
   updateTablero(): void {
     this.tablerosService.updateTablero(this.idTableroEditando, this.tableroActualizado).subscribe({
       next: (respuesta) => {
         console.log(respuesta);
-        this.tableroActualizadoEvent.emit(); // refresca la lista
+        this.tableroActualizadoEvent.emit();
       },
       error: (err) => {
         console.error('Error al actualizar usuario:', err);
@@ -53,12 +61,6 @@ export class UpdateTableros {
     });
   }
 
-  cargarTableroParaEditar(tablero: Tablero) {
-    this.tableroActualizado = {
-      nombre: tablero.nombre,
-      
-    };
-    this.idTableroEditando = tablero.id_tablero!;
-  }
-    
+
+
 }

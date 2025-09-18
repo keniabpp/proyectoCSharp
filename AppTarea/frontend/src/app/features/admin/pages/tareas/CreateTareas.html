@@ -1,7 +1,6 @@
 
-
 <form (ngSubmit)="addTarea()">
-   
+
     <div class="modal-body">
         <div class="mb-3">
             <label for="titulo" class="form-label">Titulo</label>
@@ -32,18 +31,10 @@
         </div>
 
         <div class="mb-3">
-  <label for="fechaVencimiento" class="form-label">Fecha de Vencimiento</label>
-  <input
-    type="date"
-    id="fechaVencimiento"
-    class="form-control"
-    [(ngModel)]="nuevaTarea.fecha_vencimiento"
-    name="fecha_vencimiento"
-    required
-  />
-</div>
-
-
+            <label for="fechaVencimiento" class="form-label">Fecha de Vencimiento</label>
+            <input type="date" id="fechaVencimiento" class="form-control" [(ngModel)]="nuevaTarea.fecha_vencimiento"
+                name="fecha_vencimiento" required />
+        </div>
 
 
         <div class="mb-3">
@@ -55,11 +46,16 @@
             </select>
         </div>
 
-        <select [(ngModel)]="nuevaTarea.id_columna" name="columna" class="form-select" required>
-            @for (c of columnas; track c.id_columna) {
-            <option [value]="c.id_columna">{{ c.nombre }}</option>
-            }
-        </select>
+        <div>
+            <label for="columna" class="form-label"> Nombre Columna</label>
+            <select [(ngModel)]="nuevaTarea.id_columna" name="columna" class="form-select" required>
+                @for (c of columnas; track c.id_columna) {
+                <option [value]="c.id_columna">{{ c.nombre }}</option>
+                }
+            </select>
+        </div>
+
+
 
 
     </div>

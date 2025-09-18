@@ -1,26 +1,25 @@
 import { CdkDrag } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { Component, } from '@angular/core';
-import { Columna } from '../../../../../core/models/columna.model';
-import { TareasService } from '../../../../../core/services/tareas.service';
-import { Tarea } from '../../../../../core/models/tarea.model';
 import { Tablerokanban } from '../tablerokanban/tablerokanban';
-import { TablerosService } from '../../../../../core/services/tableros.service';
-import { Tablero } from '../../../../../core/models/tablero.model';
 import { FormsModule } from '@angular/forms';
-import { UpdateTareas } from '../../tareas/UpdateTareas';
-import { CreateTareas } from '../../tareas/CreateTareas';
+import { CreateTareas } from '../../../features/admin/pages/tareas/CreateTareas';
+import { TareasService } from '../../../core/services/tareas.service';
+import { TablerosService } from '../../../core/services/tableros.service';
+import { Tablero } from '../../../core/models/tablero.model';
+import { Tarea } from '../../../core/models/tarea.model';
+
 
 
 @Component({
-  selector: 'app-admin-dashboard',
+  selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, Tablerokanban, FormsModule, CreateTareas],
-  templateUrl: './admin-dashboard.html',
-  styleUrl: './admin-dashboard.css'
+  imports: [CommonModule, FormsModule, CreateTareas, Tablerokanban],
+  templateUrl: './dashboard.html',
+  styleUrl: './dashboard.css'
 })
 
-export class AdminDashboard {
+export class Dashboard {
 
   constructor(
     private tareasService: TareasService,
@@ -47,7 +46,7 @@ export class AdminDashboard {
   cargarTareasDelTablero() {
     this.tareasService.getAllTareas().subscribe(data => {
       this.tareas = data;
-      console.log('Todas las tareas:', data); // 👈 Verifica que llegan
+      console.log('Todas las tareas:', data); 
       console.log('Tablero seleccionado:', this.tableroSeleccionado);
       this.tareas = data.filter(t => t.id_tablero === Number(this.tableroSeleccionado));
       console.log('Tareas filtradas:', this.tareas);
@@ -56,7 +55,7 @@ export class AdminDashboard {
 
   agregarTareaDesdeFormulario(tarea: Tarea): void {
     this.tareas.push(tarea);
-    this.tareas = [...this.tareas]; // 🔁 fuerza el refresco visual
+    this.tareas = [...this.tareas]; 
   }
 
 

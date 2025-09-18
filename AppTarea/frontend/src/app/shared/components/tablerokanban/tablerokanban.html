@@ -1,6 +1,3 @@
-<!-- <p *ngIf="tareas.length === 0">No hay tareas para mostrar.</p>
-<p *ngIf="tareas.length > 0">Tareas recibidas: {{ tareas.length }}</p> -->
-
 <div class="container-fluid mt-4" cdkDropListGroup>
   <div class="row">
     @for (columna of columnas; track columna.id_columna) {
@@ -14,11 +11,20 @@
           [cdkDropListConnectedTo]="connectedDropLists" (cdkDropListDropped)="moverTarea($event, columna.id_columna)">
 
           @for (tarea of obtenerTareas(columna.id_columna); track tarea.id_tarea) {
-          <div class="card mb-2" cdkDrag [cdkDragData]="tarea" style="cursor: move;">
+          <div class="card mb-2" cdkDrag [cdkDragData]="tarea" [style.borderLeft]="'8px solid ' + (tarea.id_columna | columnaColor)" style="cursor: move;">
             <div class="card-body">
               <h5 class="card-title">{{ tarea.titulo }}</h5>
               <p class="card-text">{{ tarea.descripcion }}</p>
-
+              <label for="asignado"> Fecha de Creación</label>
+              <p class="card-text">{{ tarea.creado_en }}</p>
+              <label for="asignado"> Fecha de Vencimiento</label>
+              <p class="card-text">{{ tarea.fecha_vencimiento }}</p>
+              <label for="asignado"> Creador</label>
+              <p class="card-text">{{ tarea.nombre_creador }}</p>
+              <label for="asignado"> Asignado a</label>
+              <p class="card-text">{{ tarea.nombre_asignado }}</p>
+              <p class="card-text">{{ tarea.estado_fechaVencimiento }}</p>
+              
               <div class="mb-2">
                 <label class="form-label">Detalle</label>
                 <input type="text" class="form-control" [(ngModel)]="tarea.detalle"
@@ -27,10 +33,16 @@
 
 
               <div class="d-flex justify-content-end gap-2 mt-2">
-                <button class="btn btn-sm btn-outline-primary" (click)="editarTarea(tarea)">
+                <button type="button" class="btn btn-warning ms-4" (click)="editarTarea(tarea)">
+                  <img src="https://img.icons8.com/?size=100&id=102714&format=png&color=000000" alt="editar"
+                    width="40px">
                 </button>
-                <button class="btn btn-sm btn-outline-danger" (click)="eliminarTarea(tarea)">
+
+                <button type="button" class="btn btn-danger ms-4" (click)="eliminarTarea(tarea)">
+                  <img src="https://img.icons8.com/?size=100&id=102715&format=png&color=000000" alt="eliminar"
+                    width="40px">
                 </button>
+
               </div>
             </div>
           </div>

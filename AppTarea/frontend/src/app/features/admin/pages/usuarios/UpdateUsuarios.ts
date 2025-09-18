@@ -3,6 +3,7 @@ import { Component, EventEmitter, Output } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { Usuario, UsuarioUpdate } from "../../../../core/models/usuario.model";
 import { UsuariosService } from "../../../../core/services/usuarios.service";
+import Swal from "sweetalert2";
 
 
 
@@ -19,7 +20,7 @@ import { UsuariosService } from "../../../../core/services/usuarios.service";
 })
 
 export class UpdateUsuarios {
-  
+
   constructor(private usuariosService: UsuariosService) { }
 
   @Output() usuarioActualizadoEvent = new EventEmitter<void>();
@@ -35,6 +36,20 @@ export class UpdateUsuarios {
     contrasena: '',
 
 
+  }
+
+  idUsuarioEditando: number = 0;
+
+
+  cargarUsuarioParaEditar(usuario: Usuario) {
+    this.usuarioActualizado = {
+      nombre: usuario.nombre,
+      apellido: usuario.apellido,
+      telefono: usuario.telefono,
+      email: usuario.email,
+      contrasena: '',
+    };
+    this.idUsuarioEditando = usuario.id_usuario!;
   }
 
   updateUsuario(): void {
@@ -57,25 +72,15 @@ export class UpdateUsuarios {
           this.errorMessage = ['No se pudo actualizar el usuario'];
         }
       }
+
+
     });
   }
-  
 
 
 
-  idUsuarioEditando: number = 0;
 
 
-  cargarUsuarioParaEditar(usuario: Usuario) {
-    this.usuarioActualizado = {
-      nombre: usuario.nombre,
-      apellido: usuario.apellido,
-      telefono: usuario.telefono,
-      email: usuario.email,
-      contrasena: '',
-    };
-    this.idUsuarioEditando = usuario.id_usuario!;
-  }
 
 
 

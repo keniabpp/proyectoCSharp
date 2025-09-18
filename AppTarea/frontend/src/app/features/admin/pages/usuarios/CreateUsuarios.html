@@ -22,8 +22,8 @@
 
   <div class="mb-3">
     <label for="contrasena" class="form-label">Contraseña</label>
-    <input type="password" [(ngModel)]="nuevoUsuario.contrasena" id="contrasena" name="contrasena"
-      class="form-control" required autocomplete="current-password" />
+    <input type="password" [(ngModel)]="nuevoUsuario.contrasena" id="contrasena" name="contrasena" class="form-control"
+      required autocomplete="current-password" />
   </div>
 
   <div class="mb-3">
@@ -39,7 +39,6 @@
     <button type="submit" class="btn btn-primary">Guardar</button>
   </div>
 
-  <div *ngFor="let msg of errorMessage">
-    <p class="text-danger mt-2">{{ msg }}</p>
-  </div>
+  @for (msg of errorMessage; track $index) {
+  <p class="text-danger mt-2">{{ msg }}</p>}
 </form>

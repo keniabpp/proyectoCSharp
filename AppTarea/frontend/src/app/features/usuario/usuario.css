@@ -1,0 +1,11 @@
+
+.usuario-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+}
+
+.usuario-main {
+  flex: 1; 
+}
+

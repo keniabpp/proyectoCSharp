@@ -16,10 +16,12 @@ import { Tarea, TareaUpdate } from "../../../../core/models/tarea.model";
 
 export class UpdateTareas {
 
+    constructor(private tareasService: TareasService) { }
+
     tareas: Tarea[] = [];
     errorMessage: string[] = [];
 
-    constructor(private tareasService: TareasService) { }
+    
     @Output() tareaActualizadaEvent = new EventEmitter<Tarea>();
 
 
@@ -28,9 +30,22 @@ export class UpdateTareas {
         titulo: '',
         descripcion: '',
 
-
-
     }
+
+
+    idTareaEditando: number = 0;
+
+
+    cargarTareaParaEditar(tarea: Tarea) {
+        this.tareaActualizada = {
+            titulo: tarea.titulo,
+            descripcion: tarea.descripcion,
+
+
+        };
+        this.idTareaEditando = tarea.id_tarea!;
+    }
+
 
 
 
@@ -39,7 +54,7 @@ export class UpdateTareas {
         this.tareasService.updateTarea(this.idTareaEditando, this.tareaActualizada).subscribe({
             next: (respuesta) => {
                 console.log(respuesta);
-                this.tareaActualizadaEvent.emit(respuesta); // refresca la lista
+                this.tareaActualizadaEvent.emit(respuesta); 
             },
             error: (err) => {
                 console.error('Error al actualizar usuario:', err);
@@ -60,17 +75,5 @@ export class UpdateTareas {
 
 
 
-    idTareaEditando: number = 0;
-
-
-    cargarTareaParaEditar(tarea: Tarea) {
-        this.tareaActualizada = {
-            titulo: tarea.titulo,
-            descripcion: tarea.descripcion,
-
-
-        };
-        this.idTareaEditando = tarea.id_tarea!;
-    }
-
+    
 }

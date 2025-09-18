@@ -21,15 +21,10 @@ namespace Presentation.Controllers
         }
 
 
-        [HttpGet("tareas asignadas")]
-        public async Task<ActionResult<List<TareaDTO>>> GetTareasAsignadas()
+        [HttpGet("tareasAsignadas")]
+        public async Task<ActionResult<List<TareaDTO>>> GetTareasAsignadas(int id_usuario)
         {
-            // Extraer el ID del usuario autenticado desde el token JWT
-            var id_usuario_claim = User.FindFirst("id")?.Value;
-            if (string.IsNullOrEmpty(id_usuario_claim))
-            return Unauthorized("No se pudo identificar al usuario.");
-
-            var id_usuario = int.Parse(id_usuario_claim);
+            
 
             var query = new GetTareasAsignadasQuery(id_usuario);
             var tareas = await _mediator.Send(query);

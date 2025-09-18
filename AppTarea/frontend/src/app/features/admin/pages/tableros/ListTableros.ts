@@ -59,10 +59,8 @@ export class ListTableros implements OnInit {
             if (result.isConfirmed) {
                 this.tablerosService.deleteTableroById(id_tablero).subscribe({
                     next: () => {
-                        // Actualiza la lista de usuarios
                         this.listTableros();
 
-                        // Muestra mensaje de éxito
                         Swal.fire({
                             title: '¡Eliminado!',
                             text: 'El tablero ha sido eliminado correctamente.',
@@ -72,7 +70,7 @@ export class ListTableros implements OnInit {
                         });
                     },
                     error: (err) => {
-                        // Muestra mensaje de error
+                        
                         Swal.fire({
                             title: 'Error',
                             text: 'No se pudo eliminar el tablero. Intenta de nuevo.',

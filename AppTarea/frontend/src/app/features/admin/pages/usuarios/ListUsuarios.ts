@@ -72,14 +72,21 @@ export class ListUsuarios implements OnInit {
                             showConfirmButton: false
                         });
                     },
+
+
+
                     error: (err) => {
-                        // Muestra mensaje de error
+                        const mensaje = err.error?.mensaje || 'No se pudo eliminar el usuario';
+
                         Swal.fire({
-                            title: 'Error',
-                            text: 'No se pudo eliminar el usuario. Intenta de nuevo.',
-                            icon: 'error'
+                            icon: 'warning',
+                            title: 'Acción no permitida',
+                            text: mensaje,
+                            confirmButtonText: 'Entendido',
+                            confirmButtonColor: '#3085d6'
                         });
-                        console.error('Error al eliminar:', err);
+
+
                     }
                 });
             }

@@ -15,6 +15,6 @@ import { AdminFooter } from '../../layout/admin/admin-footer/admin-footer';
   styleUrl: 'admin.css'
 })
 
-export class admin {
+export class Admin {
 
 }
