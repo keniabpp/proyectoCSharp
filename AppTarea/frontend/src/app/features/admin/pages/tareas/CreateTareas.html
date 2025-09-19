@@ -14,7 +14,7 @@
 
         <div class="mb-3">
             <label for="tablero" class="form-label">Tablero</label>
-            <select [(ngModel)]="nuevaTarea.id_tablero" name="tablero" class="form-select" required>
+            <select [(ngModel)]="nuevaTarea.id_tablero" id="tablero" name="tablero" class="form-select" required>
                 @for (t of tableros; track t.id_tablero){
                 <option [value]="t.id_tablero">{{ t.nombre }}</option>
                 }
@@ -23,7 +23,7 @@
 
         <div class="mb-3">
             <label for="creador" class="form-label">Creado por</label>
-            <select [(ngModel)]="nuevaTarea.creado_por" name="creador" class="form-select" required>
+            <select [(ngModel)]="nuevaTarea.creado_por" id="creador" name="creador" class="form-select" required>
                 @for (u of usuarios; track u.id_usuario){
                 <option [value]="u.id_usuario">{{ u.nombre }}</option>
                 }
@@ -39,7 +39,7 @@
 
         <div class="mb-3">
             <label for="asignado" class="form-label">Asignado a</label>
-            <select [(ngModel)]="nuevaTarea.asignado_a" name="asignado" class="form-select" required>
+            <select [(ngModel)]="nuevaTarea.asignado_a" id="asignado" name="asignado" class="form-select" required>
                 @for (u of usuarios; track u.id_usuario){
                 <option [value]="u.id_usuario">{{ u.nombre }}</option>
                 }
@@ -48,7 +48,7 @@
 
         <div>
             <label for="columna" class="form-label"> Nombre Columna</label>
-            <select [(ngModel)]="nuevaTarea.id_columna" name="columna" class="form-select" required>
+            <select [(ngModel)]="nuevaTarea.id_columna" id="columna" name="columna" class="form-select" required>
                 @for (c of columnas; track c.id_columna) {
                 <option [value]="c.id_columna">{{ c.nombre }}</option>
                 }

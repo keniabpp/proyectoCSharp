@@ -70,7 +70,7 @@ export class Tablerokanban implements OnInit {
         this.tareas.push(tareaMovida);
         this.tareas = [...this.tareas];
 
-        console.log('✅ Tarea movida con éxito');
+        
       },
       error: (err) => {
         const mensaje = err.error?.mensaje || 'No se pudo mover la tarea';
@@ -83,7 +83,7 @@ export class Tablerokanban implements OnInit {
           confirmButtonColor: '#3085d6'
         });
 
-        console.error('❌ Error al mover tarea:', err);
+        
       }
     });
   }
@@ -148,7 +148,7 @@ export class Tablerokanban implements OnInit {
               confirmButtonColor: '#3085d6'
             });
 
-            console.error('❌ Error al mover tarea:', err);
+            
           }
         });
       }

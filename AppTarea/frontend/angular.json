@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "frontend": {
+    "AppTarea": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -34,6 +34,12 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -60,10 +66,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "frontend:build:production"
+              "buildTarget": "AppTarea:build:production"
             },
             "development": {
-              "buildTarget": "frontend:build:development"
+              "buildTarget": "AppTarea:build:development"
             }
           },
           "defaultConfiguration": "development"

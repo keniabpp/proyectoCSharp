@@ -26,8 +26,8 @@
               <p class="card-text">{{ tarea.estado_fechaVencimiento }}</p>
               
               <div class="mb-2">
-                <label class="form-label">Detalle</label>
-                <input type="text" class="form-control" [(ngModel)]="tarea.detalle"
+                <label for="detalle" class="form-label">Detalle</label>
+                <input type="text" id="detalle" name="detalle" class="form-control" [(ngModel)]="tarea.detalle"
                   placeholder="Escribe un detalle..." />
               </div>
 
