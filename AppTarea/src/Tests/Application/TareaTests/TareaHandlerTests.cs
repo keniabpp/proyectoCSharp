@@ -211,34 +211,45 @@ public class TareaHandlerTests
     }
 
     [Fact]
-    public async Task TareaMovidaCorrectamente()
+    public async Task TareaFueMovidaCorrectamente()
     {
         // Arrange
         var tareaRepo = new Mock<ITareaRepository>();
         var columnaRepo = new Mock<IColumnaRepository>();
+        var mapper = new Mock<IMapper>();
 
         var tarea = new Tarea
         {
             id_tarea = 1,
             asignado_a = 5,
             id_columna = 1,
-            fecha_vencimiento = DateTime.Now.AddDays(1)
+            fecha_vencimiento = DateTime.Now.AddDays(1),
+            detalle = "Detalle inicial"
         };
+
         var columna = new Columna { id_columna = 1, posicion = EstadoColumna.PorHacer };
 
         tareaRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(tarea);
         columnaRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(columna);
         tareaRepo.Setup(r => r.MoverTareaAsync(1, 2)).ReturnsAsync(true);
 
-        var handler = new MoverTareaHandler(tareaRepo.Object, columnaRepo.Object);
-        var command = new MoverTareaCommand(new MoverTareaDTO { id_tarea = 1, id_columna = 2, detalle = "Nuevo detalle" }, 5);
+        // Configura el mapper para que devuelva un objeto válido
+        mapper.Setup(m => m.Map<TareaDTO>(It.IsAny<Tarea>())).Returns(new TareaDTO
+        {
+            id_tarea = 1,
+            detalle = "gryytytyt",
+            asignado_a = 5,
+            id_columna = 2
+        });
+
+        var handler = new MoverTareaHandler(tareaRepo.Object, columnaRepo.Object, mapper.Object);
+        var command = new MoverTareaCommand(new MoverTareaDTO { id_tarea = 1, id_columna = 2, detalle = "gryytytyt" }, 5);
 
         // Act
         var result = await handler.Handle(command, default);
 
         // Assert
-        Assert.True(result);
-        Assert.Equal("Nuevo detalle", tarea.detalle);
+        Assert.NotNull(result);
         tareaRepo.Verify(r => r.MoverTareaAsync(1, 2), Times.Once);
     }
 

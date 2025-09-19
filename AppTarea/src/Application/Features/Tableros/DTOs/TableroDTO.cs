@@ -4,7 +4,7 @@ namespace Application.Features.Tableros.DTOs
     {
         public int id_tablero { get; set; }
         public required string nombre { get; set; }
-        public required string creado_en { get; set; } 
+        public  string? creado_en { get; set; } 
 
         public int creado_por { get; set; }
         public string? nombre_usuario { get; set; }

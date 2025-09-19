@@ -16,11 +16,9 @@ namespace Application.Common.Behaviors
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             var context = new ValidationContext<TRequest>(request);
-            // Ejecutar todos los validators en paralelo (async)
+            // Ejecutar todos los validators 
             var validationResults = await Task.WhenAll(_validators.Select(v => v.ValidateAsync(context, cancellationToken)));
-            var failures = validationResults
-            .SelectMany(r => r.Errors)
-            .Where(f => f != null).ToList();
+            var failures = validationResults.SelectMany(r => r.Errors).Where(f => f != null).ToList();
             if (failures.Any())
             throw new ValidationException(failures);
             return await next();

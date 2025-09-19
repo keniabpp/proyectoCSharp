@@ -15,7 +15,13 @@ public class TableroHandlerTests
     {
         // Arrange
         var dto = new TableroCreateDTO { nombre = "Tablero Prueba", creado_por = 1, id_rol = 1 };
-        var tableroCreado = new Tablero { id_tablero = 1, nombre = dto.nombre, creado_por = dto.creado_por, id_rol = dto.id_rol };
+        var tableroCreado = new Tablero
+        {
+            id_tablero = 1,
+            nombre = dto.nombre,
+            creado_por = dto.creado_por,
+            id_rol = dto.id_rol
+        };
 
         var repoMock = new Mock<ITableroRepository>();
         repoMock.Setup(r => r.CreateAsync(It.IsAny<Tablero>())).ReturnsAsync(tableroCreado);

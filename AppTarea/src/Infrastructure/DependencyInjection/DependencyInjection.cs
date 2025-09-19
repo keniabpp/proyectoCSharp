@@ -17,7 +17,7 @@ namespace AppTarea.Infrastructure
                     sqlServerOptions => sqlServerOptions.EnableRetryOnFailure(
                         maxRetryCount: 5,             // Número máximo de reintentos
                         maxRetryDelay: TimeSpan.FromSeconds(10), // Tiempo máximo de espera entre reintentos
-                        errorNumbersToAdd: null       // Puedes dejar null para los errores transitorios por defecto
+                        errorNumbersToAdd: null       //null para los errores transitorios por defecto
                     )
                 )
             );

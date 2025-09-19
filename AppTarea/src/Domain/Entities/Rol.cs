@@ -23,9 +23,6 @@ namespace Domain.Entities
             this.nombre = nombre;
         }
 
-        public override string ToString()
-        {
-            return $"Rol: {id_rol} - {nombre}";
-        }
+       
     }
 }

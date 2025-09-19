@@ -4,8 +4,6 @@ using Application;
 using Presentation.Middleware;
 using Presentation.Security;
 using AppTarea.Infrastructure;
-using AppTarea.Infrastructure.Persistence.Context;
-using Microsoft.EntityFrameworkCore;
 // using AppTarea.Infrastructure.Persistence.SeedData;
 
 
@@ -23,7 +21,7 @@ builder.Configuration
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
-// 👇 CORS configurado
+//  CORS configurado
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>

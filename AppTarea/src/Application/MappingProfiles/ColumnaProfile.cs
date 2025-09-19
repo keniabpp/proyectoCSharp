@@ -9,7 +9,7 @@ namespace Application.MappingProfiles
         public ColumnaProfile()
         {
             CreateMap<Columna, ColumnaDTO>()
-                .ForMember(dest => dest.id_columna, opt => opt.MapFrom(src => src.id_columna));
+            .ForMember(dest => dest.id_columna, opt => opt.MapFrom(src => src.id_columna));
         }
     }
 }

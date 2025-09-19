@@ -65,10 +65,7 @@ namespace Domain.Entities
             this.id_rol = id_rol;
         }
 
-        public override string ToString()
-        {
-            return $"Usuario: {id_usuario} - {nombre} {apellido} ({email}) - Rol ID: {id_rol}";
-        }
+        
     }
 }
 

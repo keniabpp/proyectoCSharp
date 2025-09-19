@@ -10,7 +10,7 @@ namespace Application.Features.Tareas.DTOs
         public string descripcion { get; set; } = string.Empty;
         public  string detalle { get; set; } = string.Empty;
         public  string creado_en{ get; set; } = string.Empty;
-        public required string fecha_vencimiento { get; set; } 
+        public  string? fecha_vencimiento { get; set; } 
         public int creado_por { get; set; } 
         public string nombre_creador { get; set; } = string.Empty;
         public int asignado_a { get; set; }

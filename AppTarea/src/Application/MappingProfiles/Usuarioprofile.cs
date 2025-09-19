@@ -11,13 +11,13 @@ namespace Application.Features.Usuarios.Mapping
         {
             CreateMap<UsuarioRegisterDTO, Usuario>();
 
-            // 🟡 Creación: DTO → Entidad
+            // Creación: DTO → Entidad
             CreateMap<UsuarioCreateDTO, Usuario>();
 
-            // 🟢 Lectura: Entidad → DTO (si lo necesitas)
+            // Lectura: Entidad → DTO 
             CreateMap<Usuario, UsuarioDTO>();
 
-            // 🔵 Actualización: DTO → Entidad (si lo necesitas)
+            // Actualización: DTO → Entidad 
             CreateMap<UsuarioUpdateDTO, Usuario>();
         }
     }

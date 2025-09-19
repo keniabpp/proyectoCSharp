@@ -53,7 +53,7 @@ namespace Application.Features.Usuarios.Handlers
             var jwtAudience = _config["Jwt:Audience"]?? throw new InvalidOperationException("El audience JWT no está configurado.");
             var jwtExpireMinutesString = _config["Jwt:ExpireMinutes"]?? throw new InvalidOperationException("El tiempo de expiración JWT no está configurado.");
             if (!double.TryParse(jwtExpireMinutesString, out double jwtExpireMinutes))
-                throw new InvalidOperationException("El tiempo de expiración JWT no es un número válido.");
+            throw new InvalidOperationException("El tiempo de expiración JWT no es un número válido.");
 
             // Generar la llave y credenciales
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
