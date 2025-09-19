@@ -1,3 +1,60 @@
+
+# 📌 AppTarea - Frontend
+
+Este es el **frontend** de la aplicación **AppTarea**, desarrollado en **Angular**.  
+Se conecta con el backend en **.NET 8** para gestionar usuarios, tableros, columnas y tareas en un tablero estilo **Kanban**.  
+
+---
+
+## ✨ Funcionalidades principales
+
+- 🔐 **Usuarios**
+  - Registro de nuevos usuarios
+  - Inicio y cierre de sesión
+  - Edición de perfil
+
+
+- 📊 **Dashboard**
+  - Visualización general de los tableros
+  - Selección de un tablero específico
+  - Visualización de todas las tareas existentes en el tablero elegido
+
+- 📋 **Gestión de tareas**
+  - Crear tareas
+  - Asignar tareas a otros usuarios
+  - Ver las tareas que me han sido asignadas
+  - Mover tareas entre columnas del tablero correspondiente (**solo el usuario asignado puede moverlas**)
+  - Agregar detalles a las tareas que me han sido asignadas
+  - El creador de la tarea puede **editarla o eliminarla**
+  - El usuario asignado **no puede editar ni eliminar** la tarea
+  - Las tareas completadas **no se pueden mover** a otra columna
+
+- 📂 **Gestión de tableros**
+  - Ver tableros disponibles
+
+---
+
+## 🛠️ Tecnologías utilizadas
+
+- **Angular 20.2.2**
+- **TypeScript**
+- **Bootstrap** (para estilos)
+- **RxJS** (manejo de estados y observables)
+- **REST API** (consumo del backend en .NET 8)
+
+---
+
+## 🚀 Servidor de desarrollo
+
+Para iniciar un servidor local, ejecutar:
+
+```bash
+ng serve
+
+
+
+
+
 # Frontend
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.2.

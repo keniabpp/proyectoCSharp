@@ -44,7 +44,7 @@ describe('Perfil', () => {
     expect(component.usuarioActualizado.nombre).toBe(mockUsuario.nombre);
   });
 
-  it('ngOnInit debería manejar error si falla la carga', () => {
+  it('debería manejar error si falla la carga', () => {
     spyOn(localStorage, 'getItem').and.returnValue(String(mockUsuario.id_usuario));
     const consoleSpy = spyOn(console, 'error');
     usuariosServiceMock.getUsuarioById.and.returnValue(throwError(() => ({ error: 'fallo' })));

@@ -32,12 +32,12 @@ Infrastructure/ # DependencyInjection, Persistence, Repositorios
 
  ▶️ Cómo ejecutar el backend
 
-### 1. Requisitos previos
+
 - [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download)
 - [SQL Server](https://www.microsoft.com/en-us/sql-server) o Docker
 - [Docker](https://www.docker.com/) (opcional)
 
- 2. Ejecutar con .NET CLI
+ Ejecutar con .NET CLI
 ```bash
 cd AppTarea / cd src/Presentation
 dotnet run
@@ -46,10 +46,24 @@ dotnet run
 👉 Swagger en: http://localhost:5207/swagger
 
 
+
+docker-compose up --build
+Esto levantará:
+
+SQL Server en localhost:1433
+
+Backend (API) en http://localhost:5208
+
+Frontend (Angular) en http://localhost:4200
+
+⚡ La API estará disponible en Swagger en:
+👉 http://localhost:5208/swagger
+
+
 ---
 
- ✅ 2. **Endpoints principales**  
-Un resumen rápido de lo que ofrece tu API:  
+Endpoints principales
+ 
 
 
 ## 📖 Endpoints principales
@@ -73,9 +87,11 @@ Un resumen rápido de lo que ofrece tu API:
 - **Columnas**
   - `GET /api/columnas`
   - `GET /api/columnas/{id}`
-  - `DELETE /api/columnas/{id}`
+  
 
 - **Tareas**
+
+  - `GET /api/tareas/tareasAsignadas`
   - `GET /api/tareas`
   - `GET /api/tareas/{id}`
   - `POST /api/tareas`

@@ -1,6 +1,4 @@
 
-// src/testing/mocks/tarea.mock.ts
-
 import { Tarea, createTareaDTO, TareaUpdate, moverTarea } from '../../core/models/tarea.model';
 
 export const mockTarea: Tarea = {

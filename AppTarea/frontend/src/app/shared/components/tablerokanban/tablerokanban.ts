@@ -19,7 +19,7 @@ import { ColumnaColorPipe } from '../../pipes/columnaColor.pipe';
 @Component({
   selector: 'app-tablerokanban',
   standalone: true,
-  imports: [CommonModule, FormsModule, DragDropModule, UpdateTareas, ColumnaColorPipe ],
+  imports: [CommonModule, FormsModule, DragDropModule, UpdateTareas, ColumnaColorPipe],
   templateUrl: './tablerokanban.html',
   styleUrl: './tablerokanban.css'
 })
@@ -64,13 +64,22 @@ export class Tablerokanban implements OnInit {
 
     this.tareasService.moverTarea(payload).subscribe({
       next: () => {
-        
+
         tareaMovida.id_columna = nuevaColumnaId;
         this.tareas = this.tareas.filter(t => t.id_tarea !== tareaMovida.id_tarea);
         this.tareas.push(tareaMovida);
         this.tareas = [...this.tareas];
 
-        
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Tarea movida correctamente',
+          showConfirmButton: false,
+          timer: 1500
+        });
+
+
+
       },
       error: (err) => {
         const mensaje = err.error?.mensaje || 'No se pudo mover la tarea';
@@ -83,7 +92,7 @@ export class Tablerokanban implements OnInit {
           confirmButtonColor: '#3085d6'
         });
 
-        
+
       }
     });
   }
@@ -92,7 +101,7 @@ export class Tablerokanban implements OnInit {
 
 
   editarTarea(tarea: Tarea): void {
-    this.modalTarea.cargarTareaParaEditar(tarea); 
+    this.modalTarea.cargarTareaParaEditar(tarea);
 
     const modalElement = document.getElementById('editarTareaModal');
     if (modalElement) {
@@ -106,7 +115,7 @@ export class Tablerokanban implements OnInit {
     const index = this.tareas.findIndex(t => t.id_tarea === tareaActualizada.id_tarea);
     if (index !== -1) {
       this.tareas[index] = tareaActualizada;
-      this.tareas = [...this.tareas]; 
+      this.tareas = [...this.tareas];
     }
   }
 
@@ -127,7 +136,7 @@ export class Tablerokanban implements OnInit {
         this.tareasService.deleteTareaById(tarea.id_tarea!).subscribe({
           next: () => {
             this.tareas = this.tareas.filter(t => t.id_tarea !== tarea.id_tarea);
-            this.tareas = [...this.tareas]; 
+            this.tareas = [...this.tareas];
 
             Swal.fire({
               title: '¡Eliminado!',
@@ -148,7 +157,7 @@ export class Tablerokanban implements OnInit {
               confirmButtonColor: '#3085d6'
             });
 
-            
+
           }
         });
       }

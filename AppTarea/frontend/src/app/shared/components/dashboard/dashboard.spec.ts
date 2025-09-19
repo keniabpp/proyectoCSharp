@@ -34,7 +34,7 @@ describe('Dashboard', () => {
     expect(component).toBeTruthy();
   });
 
-  it('ngOnInit debería cargar tableros y seleccionar el primero', () => {
+  it('debería cargar tableros y seleccionarlo y q muestre las tareas q hay en ese tablero ', () => {
     tablerosServiceMock.getAllTableros.and.returnValue(of(mockTableros));
     tareasServiceMock.getAllTareas.and.returnValue(of(mockTareas));
 
@@ -47,7 +47,7 @@ describe('Dashboard', () => {
     expect(component.tareas.every(t => t.id_tablero === component.tableroSeleccionado)).toBeTrue();
   });
 
-  it('cargarTareasDelTablero debería filtrar tareas por tablero', () => {
+  it('debería filtrar tareas por tablero', () => {
     tareasServiceMock.getAllTareas.and.returnValue(of(mockTareas));
     component.tableroSeleccionado = mockTablero.id_tablero;
 
@@ -57,7 +57,7 @@ describe('Dashboard', () => {
     expect(component.tareas.every(t => t.id_tablero === mockTablero.id_tablero)).toBeTrue();
   });
 
-  it('agregarTareaDesdeFormulario debería agregar tarea a la lista', () => {
+  it(' debería agregar tarea a la lista', () => {
     component.tareas = [];
     component.agregarTareaDesdeFormulario(mockTarea);
 

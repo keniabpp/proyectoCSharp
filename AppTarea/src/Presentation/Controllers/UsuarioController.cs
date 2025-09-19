@@ -25,8 +25,21 @@ namespace Presentation.Controllers
         {
             var command = new RegisterUsuarioCommand(usuarioRegisterDTO);
             var nuevoUsuario = await _mediator.Send(command);
+            
+            var response = new
+    {
+        nuevoUsuario.id_usuario,
+        nuevoUsuario.Nombre,
+        nuevoUsuario.Apellido,
+        nuevoUsuario.Email,
+        nuevoUsuario.Telefono,
+        Rol = nuevoUsuario.rolNombre?.ToLower() // normalizamos a minúscula
+    };
 
-            return CreatedAtAction(nameof(GetById), new { id = nuevoUsuario.id_rol }, nuevoUsuario);
+            return CreatedAtAction(nameof(GetById), new
+            {
+                id = nuevoUsuario.id_rol
+            }, nuevoUsuario);
         }
 
 
@@ -54,7 +67,7 @@ namespace Presentation.Controllers
             {
                 result.id_usuario,
                 result.Email,
-                result.Rol,
+                Rol = result.Rol.ToLower(),
                 result.Nombre
             });
         }

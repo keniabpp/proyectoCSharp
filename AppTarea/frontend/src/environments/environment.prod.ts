@@ -12,5 +12,5 @@
 
 export const environment = {
   production: true,
-  apiUrl: 'http://api/api'
+  apiUrl: '/api'
 };

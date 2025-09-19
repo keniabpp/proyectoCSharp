@@ -3,6 +3,7 @@ import { Component, EventEmitter, Output } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { TareasService } from "../../../../core/services/tareas.service";
 import { Tarea, TareaUpdate } from "../../../../core/models/tarea.model";
+import Swal from "sweetalert2";
 
 
 
@@ -21,7 +22,7 @@ export class UpdateTareas {
     tareas: Tarea[] = [];
     errorMessage: string[] = [];
 
-    
+
     @Output() tareaActualizadaEvent = new EventEmitter<Tarea>();
 
 
@@ -54,26 +55,33 @@ export class UpdateTareas {
         this.tareasService.updateTarea(this.idTareaEditando, this.tareaActualizada).subscribe({
             next: (respuesta) => {
                 console.log(respuesta);
-                this.tareaActualizadaEvent.emit(respuesta); 
+                this.tareaActualizadaEvent.emit(respuesta);
             },
             error: (err) => {
-                console.error('Error al actualizar usuario:', err);
+                console.error('Error al actualizar tarea:', err);
+
+                let mensaje = 'No se pudo actualizar la tarea';
 
                 if (err.error?.errores?.length) {
-                    this.errorMessage = err.error.errores.map((e: any) => e.mensaje);
+                    mensaje = err.error.errores.map((e: any) => e.mensaje).join('\n');
+                } else if (err.error?.mensaje) {
+                    mensaje = err.error.mensaje;
                 }
-                else if (err.error?.mensaje) {
-                    this.errorMessage = [err.error.mensaje];
-                }
-                else {
-                    this.errorMessage = ['No se pudo actualizar el usuario'];
-                }
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error al actualizar',
+                    text: mensaje,
+                    confirmButtonText: 'Entendido',
+                    confirmButtonColor: '#d33'
+                });
             }
+
         });
     }
 
 
 
 
-    
+
 }

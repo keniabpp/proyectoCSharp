@@ -1,27 +1,34 @@
-
 @if (nuevaAsignacion()) {
-  <div class="alert alert-info alert-dismissible fade show" role="alert">
-    <p>🆕 Se ha asignado la tarea: <strong>{{ nuevaAsignacionTitulo() }}</strong></p>
-    <button type="button" class="btn-close" (click)="cerrarNotificacion()" aria-label="Cerrar"></button>
-  </div>
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+  <p>🆕 Se ha asignado la tarea: <strong>{{ nuevaAsignacionTitulo() }}</strong></p>
+  <button type="button" class="btn-close" (click)="cerrarNotificacion()" aria-label="Cerrar"></button>
+</div>
 }
 
 
 <div class="container mt-4">
   <div class="row">
     @for (tarea of tareas; track tarea.id_tarea) {
-      <div class="col-md-4 mb-4">
-        <div class="card h-100 shadow-sm" cdkDrag
-             style="cursor: move;">
-          <div class="card-body">
-            <h5 class="card-title">{{ tarea.titulo }}</h5>
-            <p class="card-text">{{ tarea.descripcion }}</p>
-            <p class="card-text" [style.color]="tarea.estado_fechaVencimiento.toString() | vencimientoColor">
-              {{ tarea.estado_fechaVencimiento }}
-            </p>
-          </div>
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 shadow-sm" cdkDrag style="cursor: move;">
+        <div class="card-body">
+
+
+          <h2> Tablero: {{tarea.nombre_tablero}} </h2>
+          
+          <h5 class="card-title">{{ tarea.titulo }}</h5>
+          <h5>descripcion</h5>
+          <p class="card-text">{{ tarea.descripcion }}</p>
+          <p class="card-text"> Creador: {{ tarea.nombre_creador }}</p>
+          <p class="card-text"> Asignado: {{ tarea.nombre_asignado }}</p>
+          <p class="card-text"> Fecha de Creación: {{ tarea.creado_en }}</p>
+          <p class="card-text"> comentarios: {{ tarea.detalle }}</p>
+          <p class="card-text" [style.color]="tarea.estado_fechaVencimiento.toString() | vencimientoColor">
+            {{ tarea.estado_fechaVencimiento }} {{ tarea.fecha_vencimiento }}
+          </p>
         </div>
       </div>
+    </div>
     }
   </div>
 </div>
