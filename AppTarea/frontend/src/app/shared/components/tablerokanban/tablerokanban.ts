@@ -6,20 +6,22 @@ import { FormsModule } from '@angular/forms';
 import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
 
 import Swal from 'sweetalert2';
-import { UpdateTareas } from '../../../features/admin/pages/tareas/UpdateTareas';
+
 import { TablerosService } from '../../../core/services/tableros.service';
 import { TareasService } from '../../../core/services/tareas.service';
 import { Tablero } from '../../../core/models/tablero.model';
 import { moverTarea, Tarea } from '../../../core/models/tarea.model';
 import { Columna } from '../../../core/models/columna.model';
 import { ColumnaColorPipe } from '../../pipes/columnaColor.pipe';
+import { Tareas } from '../../../features/admin/pages/tareas/tareas';
+import { UpdateTareas } from '../../../features/admin/pages/tareas/update-tareas/update-tareas';
 
 
 
 @Component({
   selector: 'app-tablerokanban',
   standalone: true,
-  imports: [CommonModule, FormsModule, DragDropModule, UpdateTareas, ColumnaColorPipe],
+  imports: [CommonModule, FormsModule, DragDropModule, ColumnaColorPipe,UpdateTareas ],
   templateUrl: './tablerokanban.html',
   styleUrl: './tablerokanban.css'
 })
@@ -97,12 +99,18 @@ export class Tablerokanban implements OnInit {
     });
   }
 
-  @ViewChild('modalTarea') modalTarea!: UpdateTareas;
+  @ViewChild('modalTarea') modalTarea!: Tareas;
+
+
+
 
 
   editarTarea(tarea: Tarea): void {
+    
     this.modalTarea.cargarTareaParaEditar(tarea);
+    
 
+   
     const modalElement = document.getElementById('editarTareaModal');
     if (modalElement) {
       const modal = new (window as any).bootstrap.Modal(modalElement);

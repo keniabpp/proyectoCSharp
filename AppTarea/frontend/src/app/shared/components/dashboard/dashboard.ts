@@ -3,18 +3,19 @@ import { CommonModule } from '@angular/common';
 import { Component, } from '@angular/core';
 import { Tablerokanban } from '../tablerokanban/tablerokanban';
 import { FormsModule } from '@angular/forms';
-import { CreateTareas } from '../../../features/admin/pages/tareas/CreateTareas';
 import { TareasService } from '../../../core/services/tareas.service';
 import { TablerosService } from '../../../core/services/tableros.service';
 import { Tablero } from '../../../core/models/tablero.model';
 import { Tarea } from '../../../core/models/tarea.model';
+import { Tareas } from '../../../features/admin/pages/tareas/tareas';
+import { CreateTareas } from '../../../features/admin/pages/tareas/create-tareas/create-tareas';
 
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, CreateTareas, Tablerokanban],
+  imports: [CommonModule, FormsModule, Tablerokanban, CreateTareas],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
@@ -33,23 +34,27 @@ export class Dashboard {
 
   tareas: Tarea[] = [];
 
-  ngOnInit() {
-    this.tablerosService.getAllTableros().subscribe(data => {
-      this.tableros = data;
-      if (data.length > 0) {
-        this.tableroSeleccionado = data[0].id_tablero;
-        this.cargarTareasDelTablero();
-      }
-    });
+
+  ngOnInit(): void {
+    this.listTableros();
   }
+
+  listTableros() {
+    this.tablerosService.getAllTableros().subscribe({
+      next: (data) => (this.tableros = data),
+
+      error: (err) => {
+        console.error('Error al cargar tableros:', err);
+      }
+    })
+  }
+
 
   cargarTareasDelTablero() {
     this.tareasService.getAllTareas().subscribe(data => {
       this.tareas = data;
-      console.log('Todas las tareas:', data); 
-      console.log('Tablero seleccionado:', this.tableroSeleccionado);
       this.tareas = data.filter(t => t.id_tablero === Number(this.tableroSeleccionado));
-      console.log('Tareas filtradas:', this.tareas);
+
     });
   }
 

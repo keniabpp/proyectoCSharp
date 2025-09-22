@@ -3,12 +3,12 @@
     @for (columna of columnas; track columna.id_columna) {
     <div class="col-md-4 d-flex">
       <div class="card shadow-sm mb-4 flex-fill">
-        <!-- Encabezado de la columna -->
+       
         <div class="card-header bg-primary text-white text-center">
           {{ columna.nombre }}
         </div>
 
-        <!-- Cuerpo con DropList -->
+        
         <div class="card-body d-flex flex-column overflow-auto" style="min-height: 500px; max-height: 80vh;" cdkDropList
           [cdkDropListData]="obtenerTareas(columna.id_columna)" [cdkDropListConnectedTo]="connectedDropLists"
           (cdkDropListDropped)="moverTarea($event, columna.id_columna)">
@@ -26,16 +26,16 @@
               <p class="card-text"> Creador: {{ tarea.nombre_creador }}</p>
               <p class="card-text"> Asignado: {{ tarea.nombre_asignado }}</p>
 
-              <!-- Detalle editable -->
+              
               <div class="mb-2">
                 <label for="detalle-{{ tarea.id_tarea }}" class="form-label">Detalle</label>
                 <input type="text" id="detalle-{{ tarea.id_tarea }}" name="detalle" class="form-control"
                   [(ngModel)]="tarea.detalle" placeholder="Escribe un detalle..." />
               </div>
 
-              <!-- Botones de acción -->
+              
               <div class="d-flex justify-content-end gap-2 mt-2">
-                <button type="button" class="btn btn-warning" (click)="editarTarea(tarea)">
+                <button type="button" class="btn btn-warning" (click)="editarTarea(tarea)"  >
                   <img src="https://img.icons8.com/?size=100&id=102714&format=png&color=000000" alt="editar"
                     width="30px">
                 </button>
@@ -55,5 +55,5 @@
   </div>
 </div>
 
-<!-- Modal para actualizar tareas -->
-<app-updateTareas #modalTarea (tareaActualizadaEvent)="refrescarTarea($event)"></app-updateTareas>
+
+<app-update-tareas #modalTarea (tareaActualizadaEvent)="refrescarTarea($event)"></app-update-tareas>

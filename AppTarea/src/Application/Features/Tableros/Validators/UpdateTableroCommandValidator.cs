@@ -14,6 +14,8 @@ namespace Application.Features.Tableros.Validator
 
             RuleFor(x => x.Id)
             .MustAsync(TableroExistente).WithMessage("Tablero no encontrado");
+            RuleFor(x => x.TableroUpdateDTO.nombre)
+            .NotEmpty().WithMessage("El nombre del tablero es obligatorio");
 
         }
         

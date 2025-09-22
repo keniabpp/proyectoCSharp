@@ -1,10 +1,9 @@
 import { Routes } from '@angular/router';
-// import { AdminLayout } from './layout/admin-layout/admin-layout';
 import { AdminGuard } from '../../core/guards/admin-guard';
 
 import { Usuarios } from './pages/usuarios/usuarios';
 import { Tableros } from './pages/tableros/tableros';
-import { Admin, } from './admin';
+import { Admin, } from '../../layout/admin/admin';
 import { Tareas } from './pages/tareas/tareas';
 import { Perfil } from '../../shared/components/perfil/perfil';
 import { TareasAsignadas } from '../../shared/components/tareas-asignadas/tareas-asignadas';

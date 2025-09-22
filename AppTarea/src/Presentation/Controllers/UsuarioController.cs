@@ -25,16 +25,16 @@ namespace Presentation.Controllers
         {
             var command = new RegisterUsuarioCommand(usuarioRegisterDTO);
             var nuevoUsuario = await _mediator.Send(command);
-            
+
             var response = new
-    {
-        nuevoUsuario.id_usuario,
-        nuevoUsuario.Nombre,
-        nuevoUsuario.Apellido,
-        nuevoUsuario.Email,
-        nuevoUsuario.Telefono,
-        Rol = nuevoUsuario.rolNombre?.ToLower() // normalizamos a minúscula
-    };
+            {
+                nuevoUsuario.id_usuario,
+                nuevoUsuario.Nombre,
+                nuevoUsuario.Apellido,
+                nuevoUsuario.Email,
+                nuevoUsuario.Telefono,
+                Rol = nuevoUsuario.rolNombre?.ToLower() // normalizamos a minúscula
+            };
 
             return CreatedAtAction(nameof(GetById), new
             {
@@ -84,7 +84,7 @@ namespace Presentation.Controllers
 
         // GET: api/usuarios
         [HttpGet]
-        
+
         public async Task<ActionResult<IEnumerable<Usuario>>> GetAll()
         {
             var query = new GetAllUsuariosQuery();
@@ -95,7 +95,7 @@ namespace Presentation.Controllers
 
         // GET: api/usuarios/{id}
         [HttpGet("{id}")]
-        
+
         public async Task<ActionResult<Usuario>> GetById(int id)
         {
             var query = new GetUsuarioByIdQuery(id);

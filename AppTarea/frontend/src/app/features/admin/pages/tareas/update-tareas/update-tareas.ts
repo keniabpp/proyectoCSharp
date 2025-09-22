@@ -1,20 +1,17 @@
-import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, Output } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { TareasService } from "../../../../core/services/tareas.service";
-import { Tarea, TareaUpdate } from "../../../../core/models/tarea.model";
-import Swal from "sweetalert2";
-
-
+import { Component, EventEmitter, Output } from '@angular/core';
+import Swal from 'sweetalert2';
+import { Tarea, TareaUpdate } from '../../../../../core/models/tarea.model';
+import { TareasService } from '../../../../../core/services/tareas.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'app-updateTareas',
-    standalone: true,
-    imports: [CommonModule, FormsModule],
-    templateUrl: './UpdateTareas.html',
-    styleUrl: './tareas.css'
+  selector: 'app-update-tareas',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './updateTareas.html',
+  styleUrl: './update-tareas.css'
 })
-
 export class UpdateTareas {
 
     constructor(private tareasService: TareasService) { }
@@ -79,9 +76,6 @@ export class UpdateTareas {
 
         });
     }
-
-
-
 
 
 }

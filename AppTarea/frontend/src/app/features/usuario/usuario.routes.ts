@@ -1,10 +1,11 @@
 import { Routes } from "@angular/router";
-import { Usuario } from "./usuario";
+
 import { UsuarioGuard } from "../../core/guards/usuario-guard";
 import { Dashboard } from "../../shared/components/dashboard/dashboard";
 import { Perfil } from "../../shared/components/perfil/perfil";
 import { TareasAsignadas } from "../../shared/components/tareas-asignadas/tareas-asignadas";
 import { Usuarios } from "../admin/pages/usuarios/usuarios";
+import { Usuario } from "../../layout/usuario/usuario";
 
 
 
