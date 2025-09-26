@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule, FormsModule,],
   templateUrl: './tableros.html',
-  styleUrl: './tableros.css'
+  
 })
 export class Tableros {
 

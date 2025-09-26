@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UsuariosService } from '../../../../../core/services/usuarios.service';
 import { TablerosService } from '../../../../../core/services/tableros.service';
 import { TareasService } from '../../../../../core/services/tareas.service';
@@ -26,13 +26,15 @@ export class CreateTareas {
     private tareasService: TareasService
   ) { }
 
-  @Output() tareaCreadaEvent = new EventEmitter<Tarea>();
+  
+
+  @Input() onTareaCreada!: (tarea: Tarea) => void;
 
   errorMessage: string[] = [];
 
 
   usuarios: Usuario[] = [];
-  tareas: Tarea[] = [];
+  // tareas: Tarea[] = [];
   tableros: Tablero[] = [];
 
   columnas: Columna[] = [
@@ -83,8 +85,10 @@ export class CreateTareas {
   addTarea(): void {
     this.tareasService.createTarea(this.nuevaTarea).subscribe({
       next: (tareaCreada) => {
-        this.tareas.push(tareaCreada);
-        this.tareaCreadaEvent.emit(tareaCreada);
+        
+        if (this.onTareaCreada){
+          this.onTareaCreada(tareaCreada);
+        }
         this.tareasService.notificarNuevaAsignacion(tareaCreada.titulo);
         this.nuevaTarea = {
 

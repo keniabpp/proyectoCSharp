@@ -17,7 +17,6 @@ import { CreateTareas } from '../../../features/admin/pages/tareas/create-tareas
   standalone: true,
   imports: [CommonModule, FormsModule, Tablerokanban, CreateTareas],
   templateUrl: './dashboard.html',
-  styleUrl: './dashboard.css'
 })
 
 export class Dashboard {

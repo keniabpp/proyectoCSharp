@@ -1,12 +1,8 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-
+import { Component, Input, OnInit, ViewChild, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { FormsModule } from '@angular/forms';
 import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
-
 import Swal from 'sweetalert2';
-
 import { TablerosService } from '../../../core/services/tableros.service';
 import { TareasService } from '../../../core/services/tareas.service';
 import { Tablero } from '../../../core/models/tablero.model';
@@ -99,7 +95,7 @@ export class Tablerokanban implements OnInit {
     });
   }
 
-  @ViewChild('modalTarea') modalTarea!: Tareas;
+  @ViewChild('modalTarea') modalTarea!: UpdateTareas;
 
 
 

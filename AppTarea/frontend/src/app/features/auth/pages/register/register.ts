@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [FormsModule,CommonModule],
   templateUrl: './register.html',
-  styleUrl: './register.css'
+  
 })
 
 export class Register {

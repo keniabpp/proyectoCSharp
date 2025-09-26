@@ -9,7 +9,7 @@ import { filter } from 'rxjs';
   selector: 'app-root',
   imports: [RouterOutlet,CommonModule,Footer,Header],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  
 })
 
 export class App {

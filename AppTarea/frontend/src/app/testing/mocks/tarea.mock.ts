@@ -4,19 +4,19 @@ import { Tarea, createTareaDTO, TareaUpdate, moverTarea } from '../../core/model
 export const mockTarea: Tarea = {
   id_tablero: 1,
   id_columna: 1,
-  id_tarea: 101,
-  titulo: 'Diseñar interfaz de login',
-  descripcion: 'Crear diseño responsive para la pantalla de inicio de sesión',
-  detalle: 'Debe incluir validación de campos y compatibilidad móvil',
-  creado_en: new Date('2025-09-10T09:00:00'),
-  fecha_vencimiento: new Date('2025-09-20T18:00:00'),
+  id_tarea: 9,
+  titulo: 'Diseñar ',
+  descripcion: 'Crear diseño responsive ',
+  detalle: 'httuyiyi',
+  creado_en: new Date(),
+  fecha_vencimiento: new Date(),
   creado_por: 1,
-  nombre_creador: 'Laura Martínez',
+  nombre_creador: 'Laura ',
   asignado_a: 2,
-  nombre_asignado: 'Carlos Ruiz',
-  nombre_tablero: 'Proyecto Kanban',
+  nombre_asignado: 'Carlos ',
+  nombre_tablero: 'Proyecto ',
   nombre_columna: 'En progreso',
-  estado_fechaVencimiento: new Date('2025-09-20T18:00:00')
+  estado_fechaVencimiento: new Date()
 };
 
 export const mockTareas: Tarea[] = [
@@ -24,39 +24,39 @@ export const mockTareas: Tarea[] = [
   {
     id_tablero: 1,
     id_columna: 2,
-    id_tarea: 102,
-    titulo: 'Configurar base de datos',
+    id_tarea: 10,
+    titulo: 'Configurar ',
     descripcion: 'Instalar y configurar PostgreSQL para el proyecto',
-    detalle: 'Debe incluir usuarios, roles y backups automáticos',
-    creado_en: new Date('2025-09-11T10:30:00'),
-    fecha_vencimiento: new Date('2025-09-22T17:00:00'),
+    detalle: 'fgjgjkhkjk',
+    creado_en: new Date(),
+    fecha_vencimiento: new Date(),
     creado_por: 1,
-    nombre_creador: 'Laura Martínez',
+    nombre_creador: 'Laura ',
     asignado_a: 3,
-    nombre_asignado: 'Sofía Gómez',
-    nombre_tablero: 'Proyecto Kanban',
+    nombre_asignado: 'Sofía ',
+    nombre_tablero: 'Proyecto ',
     nombre_columna: 'Por hacer',
-    estado_fechaVencimiento: new Date('2025-09-22T17:00:00')
+    estado_fechaVencimiento: new Date()
   }
 ];
 
 export const mockCreateTareaDTO: createTareaDTO = {
-  titulo: 'Implementar autenticación',
-  descripcion: 'Agregar login con JWT y refresh token',
+  titulo: 'Implementar ',
+  descripcion: 'Agregar ',
   creado_por: 1,
-  fecha_vencimiento: new Date('2025-09-25T23:59:00'),
+  fecha_vencimiento: new Date(),
   asignado_a: 2,
   id_tablero: 1,
   id_columna: 1
 };
 
 export const mockTareaUpdate: TareaUpdate = {
-  titulo: 'Diseño de login actualizado',
-  descripcion: 'Se agregó validación con expresiones regulares'
+  titulo: 'Diseño de login ',
+  descripcion: 'Se agregó gfgfhgfhg'
 };
 
 export const mockMoverTarea: moverTarea = {
-  id_tarea: 101,
+  id_tarea: 10,
   id_columna: 3,
-  detalle: 'Se movió a la columna "Finalizado" tras revisión'
+  detalle: 'lo logre'
 };

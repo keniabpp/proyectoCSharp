@@ -14,7 +14,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
       <div class="modal-body">
-        <app-create-tareas (tareaCreadaEvent)="agregarTareaALista($event)"></app-create-tareas>
+         <app-create-tareas [onTareaCreada]="agregarTareaALista.bind(this)"></app-create-tareas>
+
       </div>
     </div>
   </div>
@@ -22,10 +23,11 @@
 
 
 
+<app-list-tareas [tareas]="tareasSignal()" [onTareaSeleccionada]="seleccionarTarea.bind(this)"></app-list-tareas>
 
+ <app-update-tareas  [tarea]="tareaSeleccionadaSignal()" [onTareaActualizada]="refrescarLista.bind(this)">
+</app-update-tareas>
 
-<app-list-tareas (tareaSeleccionada)="seleccionarTarea($event)" ></app-list-tareas>
-<app-update-tareas (tareaActualizadaEvent)="refrescarLista()"></app-update-tareas>
 
 
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import Swal from 'sweetalert2';
 import { Tarea, TareaUpdate } from '../../../../../core/models/tarea.model';
 import { TareasService } from '../../../../../core/services/tareas.service';
@@ -20,7 +20,17 @@ export class UpdateTareas {
     errorMessage: string[] = [];
 
 
-    @Output() tareaActualizadaEvent = new EventEmitter<Tarea>();
+    
+    @Input() onTareaActualizada!: () => void;
+    @Input() tarea: Tarea | null = null;
+
+
+    ngOnChanges(changes: SimpleChanges): void {
+    if (changes['tarea'] && this.tarea) {
+      this.cargarTareaParaEditar(this.tarea);
+    }
+  }
+
 
 
 
@@ -49,10 +59,14 @@ export class UpdateTareas {
 
     updateTarea(): void {
         console.log('ID que se va a actualizar:', this.idTareaEditando);
+        console.log('Tarea actualizada recibida en UpdateTareas:',);
         this.tareasService.updateTarea(this.idTareaEditando, this.tareaActualizada).subscribe({
             next: (respuesta) => {
                 console.log(respuesta);
-                this.tareaActualizadaEvent.emit(respuesta);
+                if (this.onTareaActualizada) {
+                    this.onTareaActualizada();
+                }
+                
             },
             error: (err) => {
                 console.error('Error al actualizar tarea:', err);

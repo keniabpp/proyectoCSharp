@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import Swal from 'sweetalert2';
 import { TareasService } from '../../../../../core/services/tareas.service';
 import { Tarea } from '../../../../../core/models/tarea.model';
@@ -14,20 +14,24 @@ export class ListTareas {
 
   constructor(private tareasService: TareasService) { }
 
-  tareas: Tarea[] = [];
+
   errorMessage: string[] = [];
 
-   @Output() tareaSeleccionada = new EventEmitter<Tarea>();
 
-    emitirTarea(tarea: Tarea): void {
-        this.tareaSeleccionada.emit(tarea);
+  @Input() tareas: Tarea[] = [];
+
+  @Input() onTareaSeleccionada!: (tarea: Tarea) => void; // "Este componente hijo va a recibir del padre una función (callback) llamada 'onTareaSeleccionada'"
+  emitirTarea(tarea: Tarea): void {
+    if (this.onTareaSeleccionada) {
+      this.onTareaSeleccionada(tarea);
     }
+  }
 
 
 
   ngOnInit(): void {
     this.listTareas();
-    
+
 
 
 
@@ -43,11 +47,11 @@ export class ListTareas {
     })
   }
 
- 
 
 
 
- 
+
+
 
   deleteTarea(id_tarea: number) {
     Swal.fire({
@@ -74,11 +78,14 @@ export class ListTareas {
             });
           },
           error: (err) => {
+            const mensaje = err.error?.mensaje;
 
             Swal.fire({
-              title: 'Error',
-              text: 'No se pudo eliminar la tarea. Intenta de nuevo.',
-              icon: 'error'
+              icon: 'warning',
+              title: 'Acción no permitida',
+              text: mensaje,
+              confirmButtonText: 'Entendido',
+              confirmButtonColor: '#3085d6'
             });
             console.error('Error al eliminar:', err);
           }

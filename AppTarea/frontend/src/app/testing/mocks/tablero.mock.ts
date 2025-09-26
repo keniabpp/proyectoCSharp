@@ -5,10 +5,10 @@ import { Tablero, createTableroDTO, TableroUpdate } from "../../core/models/tabl
 // Objeto mock que simula un tablero existente con todos sus datos
 export const mockTablero: Tablero = {
   id_tablero: 1,
-  nombre: 'Proyecto Kanban',
-  creado_en: new Date('2025-09-01T10:00:00'),
+  nombre: 'Proyecto ',
+  creado_en: new Date(),
   creado_por: 1,
-  nombre_usuario: 'Ana Pérez',
+  nombre_usuario: 'Ana ',
   id_rol: 1,
   nombre_rol: 'Admin'
 };
@@ -19,11 +19,11 @@ export const mockTableros: Tablero[] = [
   {
     id_tablero: 2,
     nombre: 'Desarrollo',
-    creado_en: new Date('2025-09-02T15:30:00'),
+    creado_en: new Date(),
     creado_por: 1,
-    nombre_usuario: 'Juan Gómez',
+    nombre_usuario: 'Juan',
     id_rol: 1,
-    nombre_rol: 'Usuario'
+    nombre_rol: 'Admin'
   }
 ];
 
@@ -34,5 +34,5 @@ export const mockCreateTableroDTO: createTableroDTO = {
 };
 
 export const mockTableroUpdate: TableroUpdate = {
-  nombre: 'Proyecto Actualizado'
+  nombre: 'Actualizar'
 };

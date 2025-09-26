@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule, FormsModule,],
   templateUrl: './usuarios.html',
-  styleUrl: './usuarios.css'
+  
 })
 
 export class Usuarios {

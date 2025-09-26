@@ -13,7 +13,7 @@ import { nuevaAsignacion, nuevaAsignacionTitulo } from '../../../state/tarea.sta
   standalone: true,
   imports: [CommonModule, FormsModule, VencimientoColorPipe, DragDropModule],
   templateUrl: './tareas-asignadas.html',
-  styleUrl: './tareas-asignadas.css'
+  
 })
 export class TareasAsignadas implements OnInit {
 
