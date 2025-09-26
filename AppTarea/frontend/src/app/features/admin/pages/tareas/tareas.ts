@@ -5,7 +5,8 @@ import { Tarea, } from '../../../../core/models/tarea.model';
 import { ListTareas } from './list-tareas/list-tareas';
 import { UpdateTareas } from './update-tareas/update-tareas';
 import { CreateTareas } from './create-tareas/create-tareas';
-import { TareasService } from '../../../../core/services/tareas.service';
+import { TareasService } from '../../../../core/services/Tarea/tareas.service';
+
 
 @Component({
   selector: 'app-tareas',

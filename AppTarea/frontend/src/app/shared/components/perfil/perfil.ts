@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { UsuariosService } from '../../../core/services/usuarios.service';
 import { Usuario, UsuarioUpdate } from '../../../core/models/usuario.model';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { UsuariosService } from '../../../core/services/Usuario/usuarios.service';
 
 @Component({
   selector: 'app-perfil',

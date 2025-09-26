@@ -2,8 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { createTableroDTO, Tablero, TableroUpdate } from '../../../../core/models/tablero.model';
-import { TablerosService } from '../../../../core/services/tableros.service';
+
 import Swal from 'sweetalert2';
+import { TablerosService } from '../../../../core/services/Tableros/tableros.service';
 
 @Component({
   selector: 'app-tableros',
@@ -33,7 +34,7 @@ export class Tableros {
       next: (data) => (this.tableros = data),
 
       error: (err) => {
-        console.error('Error al cargar tableros:', err);
+        // console.error('Error al cargar tableros:', err);
       }
     })
   }
@@ -60,7 +61,7 @@ export class Tableros {
       },
 
       error: (err) => {
-        console.error('Error al cargar tableros:', err);
+        // console.error('Error al cargar tableros:', err);
 
         if (err.error?.errores?.length) {
 

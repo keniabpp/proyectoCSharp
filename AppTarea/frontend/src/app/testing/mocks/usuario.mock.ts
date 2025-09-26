@@ -1,4 +1,4 @@
-// src/testing/mocks/usuario.mock.ts
+
 import { Usuario, UsuarioUpdate } from "../../core/models/usuario.model";
 
 export const mockUsuario: Usuario = {

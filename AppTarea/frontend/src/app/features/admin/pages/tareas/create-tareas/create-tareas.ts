@@ -1,14 +1,13 @@
 import { Component, Input } from '@angular/core';
-import { UsuariosService } from '../../../../../core/services/usuarios.service';
-import { TablerosService } from '../../../../../core/services/tableros.service';
-import { TareasService } from '../../../../../core/services/tareas.service';
-
 import { Tablero } from '../../../../../core/models/tablero.model';
 import { Columna } from '../../../../../core/models/columna.model';
 import { createTareaDTO, Tarea } from '../../../../../core/models/tarea.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Usuario } from '../../../../../core/models/usuario.model';
+import { UsuariosService } from '../../../../../core/services/Usuario/usuarios.service';
+import { TablerosService } from '../../../../../core/services/Tableros/tableros.service';
+import { TareasService } from '../../../../../core/services/Tarea/tareas.service';
 
 @Component({
   selector: 'app-create-tareas',
@@ -53,7 +52,7 @@ export class CreateTareas {
       next: (data) => (this.usuarios = data),
 
       error: (err) => {
-        console.error('Error al cargar usuarios:', err);
+        // console.error('Error al cargar usuarios:', err);
 
       }
     })
@@ -65,7 +64,7 @@ export class CreateTareas {
       next: (data) => (this.tableros = data),
 
       error: (err) => {
-        console.error('Error al cargar tableros:', err);
+        // console.error('Error al cargar tableros:', err);
       }
     })
   }
@@ -105,7 +104,7 @@ export class CreateTareas {
       },
 
       error: (err) => {
-        console.error('Error al cargar tareas:', err);
+        // console.error('Error al cargar tareas:', err);
 
         if (err.error?.errores?.length) {
 

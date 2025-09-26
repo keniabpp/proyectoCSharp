@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import Swal from 'sweetalert2';
-import { TareasService } from '../../../../../core/services/tareas.service';
 import { Tarea } from '../../../../../core/models/tarea.model';
+import { TareasService } from '../../../../../core/services/Tarea/tareas.service';
 
 @Component({
   selector: 'app-list-tareas',
@@ -42,7 +42,7 @@ export class ListTareas {
       next: (data) => (this.tareas = data),
 
       error: (err) => {
-        console.error('Error al cargar tareas:', err);
+        // console.error('Error al cargar tareas:', err);
       }
     })
   }
@@ -87,7 +87,7 @@ export class ListTareas {
               confirmButtonText: 'Entendido',
               confirmButtonColor: '#3085d6'
             });
-            console.error('Error al eliminar:', err);
+            // console.error('Error al eliminar:', err);
           }
         });
       }

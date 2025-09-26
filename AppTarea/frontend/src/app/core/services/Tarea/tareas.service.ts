@@ -1,9 +1,9 @@
 import { inject, Injectable, signal, WritableSignal } from "@angular/core";
-import { environment } from "../../../environments/environment";
+import { environment } from "../../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { createTareaDTO, moverTarea, Tarea, TareaUpdate } from "../models/tarea.model";
-import { nuevaAsignacion, nuevaAsignacionTitulo } from "../../state/tarea.state";
+import { createTareaDTO, moverTarea, Tarea, TareaUpdate } from "../../models/tarea.model";
+import { nuevaAsignacion, nuevaAsignacionTitulo } from "../../../state/tarea.state";
 
 
 @Injectable({ providedIn: 'root' })

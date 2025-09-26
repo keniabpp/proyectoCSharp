@@ -1,61 +1,51 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TareasAsignadas } from './tareas-asignadas';
-import { setupTestingModule } from '../../../testing/helpers/test-bed.helper';
-import { TareasService } from '../../../core/services/tareas.service';
+import { TareasService } from '../../../core/services/Tarea/tareas.service';
 import { of, throwError } from 'rxjs';
 import { mockTareas } from '../../../testing/mocks/tarea.mock';
 import { nuevaAsignacion, nuevaAsignacionTitulo } from '../../../state/tarea.state';
 
-describe('TareasAsignadas', () => {
+describe('TareasAsignadas Component', () => {
   let component: TareasAsignadas;
   let fixture: ComponentFixture<TareasAsignadas>;
-  let tareasServiceMock: jasmine.SpyObj<TareasService>;
+  let tareasService: jest.Mocked<TareasService>;
 
-  beforeEach(async () => {
-    tareasServiceMock = jasmine.createSpyObj('TareasService', ['getTareasByUsuario']);
+  beforeEach(() => {
+    const tareasServiceMock = {
+      getTareasByUsuario: jest.fn(),
+    };
 
-    setupTestingModule([
-      { provide: TareasService, useValue: tareasServiceMock }
-    ]);
-
-    await TestBed.configureTestingModule({
-      imports: [TareasAsignadas]
-    }).compileComponents();
+    TestBed.configureTestingModule({
+      imports: [TareasAsignadas],
+      providers: [
+        { provide: TareasService, useValue: tareasServiceMock },
+      ],
+    });
 
     fixture = TestBed.createComponent(TareasAsignadas);
     component = fixture.componentInstance;
+    tareasService = TestBed.inject(TareasService) as jest.Mocked<TareasService>;
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('llamar getTareasByUsuario', () => {
-    tareasServiceMock.getTareasByUsuario.and.returnValue(of(mockTareas));
-
+  it('debería cargar tareas asignadas al iniciar', () => {
+    tareasService.getTareasByUsuario.mockReturnValue(of(mockTareas));
     component.ngOnInit();
-
-    expect(tareasServiceMock.getTareasByUsuario).toHaveBeenCalled();
     expect(component.tareas).toEqual(mockTareas);
   });
 
-  it('getTareasByUsuario debería manejar error', () => {
-    const consoleSpy = spyOn(console, 'error');
-    tareasServiceMock.getTareasByUsuario.and.returnValue(throwError(() => ({ error: 'fallo' })));
-
-    component.getTareasByUsuario();
-
-    expect(consoleSpy).toHaveBeenCalledWith('Error al cargar tareas:', { error: 'fallo' });
+  it('debería manejar error al cargar tareas asignadas', () => {
+    tareasService.getTareasByUsuario.mockReturnValue(throwError(() => new Error('Error')));
+    component.ngOnInit();
     expect(component.errorMessage).toEqual(['No se pudieron cargar las tareas asignadas.']);
   });
 
-  it('cerrarNotificacion ', () => {
-    const asignacionSpy = spyOn(nuevaAsignacion, 'set');
-    const tituloSpy = spyOn(nuevaAsignacionTitulo, 'set');
+  it('debería cerrar la notificación correctamente', () => {
+    nuevaAsignacion.set(true);
+    nuevaAsignacionTitulo.set('Tarea urgente');
 
     component.cerrarNotificacion();
 
-    expect(asignacionSpy).toHaveBeenCalledWith(false);
-    expect(tituloSpy).toHaveBeenCalledWith(null);
+    expect(nuevaAsignacion()).toBe(false);
+    expect(nuevaAsignacionTitulo()).toBe(null);
   });
 });

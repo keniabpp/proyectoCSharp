@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UsuariosService } from '../../../../core/services/usuarios.service';
+
 import { Usuario, UsuarioUpdate } from '../../../../core/models/usuario.model';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { UsuariosService } from '../../../../core/services/Usuario/usuarios.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -65,7 +66,7 @@ export class Usuarios {
       },
 
       error: (err) => {
-        console.error('Error al cargar usuarios:', err);
+        // console.error('Error al cargar usuarios:', err);
 
         if (err.error?.errores?.length) {
 
@@ -117,7 +118,7 @@ export class Usuarios {
 
       },
       error: (err) => {
-        console.error('Error al actualizar usuario:', err);
+        
 
         if (err.error?.errores?.length) {
           this.errorMessage = err.error.errores.map((e: any) => e.mensaje);

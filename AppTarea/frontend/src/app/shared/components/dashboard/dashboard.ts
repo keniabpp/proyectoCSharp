@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Component, } from '@angular/core';
 import { Tablerokanban } from '../tablerokanban/tablerokanban';
 import { FormsModule } from '@angular/forms';
-import { TareasService } from '../../../core/services/tareas.service';
-import { TablerosService } from '../../../core/services/tableros.service';
 import { Tablero } from '../../../core/models/tablero.model';
 import { Tarea } from '../../../core/models/tarea.model';
 import { Tareas } from '../../../features/admin/pages/tareas/tareas';
 import { CreateTareas } from '../../../features/admin/pages/tareas/create-tareas/create-tareas';
+import { TareasService } from '../../../core/services/Tarea/tareas.service';
+import { TablerosService } from '../../../core/services/Tableros/tableros.service';
 
 
 

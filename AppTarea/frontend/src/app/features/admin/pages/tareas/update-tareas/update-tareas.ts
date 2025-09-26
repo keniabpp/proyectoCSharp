@@ -1,16 +1,16 @@
-import { Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Tarea, TareaUpdate } from '../../../../../core/models/tarea.model';
-import { TareasService } from '../../../../../core/services/tareas.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TareasService } from '../../../../../core/services/Tarea/tareas.service';
 
 @Component({
-  selector: 'app-update-tareas',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './updateTareas.html',
-  styleUrl: './update-tareas.css'
+    selector: 'app-update-tareas',
+    standalone: true,
+    imports: [CommonModule, FormsModule],
+    templateUrl: './updateTareas.html',
+    styleUrl: './update-tareas.css'
 })
 export class UpdateTareas {
 
@@ -20,16 +20,16 @@ export class UpdateTareas {
     errorMessage: string[] = [];
 
 
-    
+
     @Input() onTareaActualizada!: () => void;
     @Input() tarea: Tarea | null = null;
 
 
     ngOnChanges(changes: SimpleChanges): void {
-    if (changes['tarea'] && this.tarea) {
-      this.cargarTareaParaEditar(this.tarea);
+        if (changes['tarea'] && this.tarea) {
+            this.cargarTareaParaEditar(this.tarea);
+        }
     }
-  }
 
 
 
@@ -66,7 +66,7 @@ export class UpdateTareas {
                 if (this.onTareaActualizada) {
                     this.onTareaActualizada();
                 }
-                
+
             },
             error: (err) => {
                 console.error('Error al actualizar tarea:', err);
