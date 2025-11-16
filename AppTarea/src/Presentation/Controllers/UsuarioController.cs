@@ -21,24 +21,14 @@ namespace Presentation.Controllers
 
 
         [HttpPost("register")]
-        public async Task<ActionResult<Usuario>> Register([FromBody] UsuarioRegisterDTO usuarioRegisterDTO)
+        public async Task<ActionResult> Register([FromBody] UsuarioRegisterDTO usuarioRegisterDTO)
         {
             var command = new RegisterUsuarioCommand(usuarioRegisterDTO);
             var nuevoUsuario = await _mediator.Send(command);
 
-            var response = new
-            {
-                nuevoUsuario.id_usuario,
-                nuevoUsuario.Nombre,
-                nuevoUsuario.Apellido,
-                nuevoUsuario.Email,
-                nuevoUsuario.Telefono,
-                Rol = nuevoUsuario.rolNombre?.ToLower() // normalizamos a minúscula
-            };
-
             return CreatedAtAction(nameof(GetById), new
             {
-                id = nuevoUsuario.id_rol
+                id = nuevoUsuario.id_usuario
             }, nuevoUsuario);
         }
 
@@ -63,13 +53,7 @@ namespace Presentation.Controllers
                 Expires = DateTimeOffset.UtcNow.AddHours(1)
             });
 
-            return Ok(new
-            {
-                result.id_usuario,
-                result.Email,
-                Rol = result.Rol.ToLower(),
-                result.Nombre
-            });
+            return Ok(result);
         }
 
         [HttpPost("logout")]
@@ -105,7 +89,7 @@ namespace Presentation.Controllers
 
         // POST: api/usuarios
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        // [Authorize(Roles = "Admin")]
         public async Task<ActionResult<UsuarioDTO>> Create([FromBody] UsuarioCreateDTO usuarioCreateDTO)
         {
             var command = new CreateUsuarioCommand(usuarioCreateDTO);

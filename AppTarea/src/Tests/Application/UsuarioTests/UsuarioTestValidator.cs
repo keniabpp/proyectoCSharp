@@ -1,20 +1,22 @@
-
-using Xunit;
-using Moq;
-using FluentValidation.TestHelper;
 using Application.Features.Usuarios.Commands;
+using Application.Features.Usuarios.DTOs;
+using Application.Features.Usuarios.Queries;
 using Application.Features.Usuarios.Validator;
 using Domain.Entities;
 using Domain.Interfaces;
-using Application.Features.Usuarios.DTOs;
-using Application.Features.Usuarios.Queries;
+using FluentValidation.TestHelper;
+using Moq;
+using Xunit;
 
+namespace Tests.Application.UsuarioTests;
 
-
-public class UsuarioTestsValidator
+public class UsuarioValidatorTests
 {
+    /// <summary>
+    /// Verifica que RegisterUsuarioCommandValidator valide correctamente cuando el email ya existe
+    /// </summary>
     [Fact]
-    public async Task RegisterValidator()
+    public async Task Validate_Should_HaveErrors_When_EmailAlreadyExists()
     {
         // Arrange
         var repoMock = new Mock<IUsuarioRepository>();
@@ -43,8 +45,11 @@ public class UsuarioTestsValidator
     }
 
 
+    /// <summary>
+    /// Verifica que LoginUsuarioCommandValidator valide correctamente cuando el email está vacío
+    /// </summary>
     [Fact]
-    public async Task LoginValidator()
+    public async Task Validate_Should_HaveErrors_When_EmailIsEmpty()
     {
         // Arrange
         var validator = new LoginUsuarioCommandValidator();
@@ -68,8 +73,11 @@ public class UsuarioTestsValidator
 
 
 
+    /// <summary>
+    /// Verifica que UpdateUsuarioCommandValidator valide cuando el usuario no existe o el email está duplicado
+    /// </summary>
     [Fact]
-    public async Task UpdateValidator()
+    public async Task Validate_Should_HaveErrors_When_UsuarioNotFoundOrEmailDuplicated()
     {
         // Arrange
         var repoMock = new Mock<IUsuarioRepository>();
@@ -102,8 +110,11 @@ public class UsuarioTestsValidator
         result.ShouldHaveValidationErrorFor(x => x.UsuarioUpdateDTO.Email).WithErrorMessage("El correo ya está registrado por otro usuario.");
     }
 
+    /// <summary>
+    /// Verifica que CreateUsuarioCommandValidator valide cuando el email ya existe y la contraseña está vacía
+    /// </summary>
     [Fact]
-    public async Task CreatedValidator()
+    public async Task Validate_Should_HaveErrors_When_EmailExistsAndPasswordIsEmpty()
     {
         // Arrange
         var repoMock = new Mock<IUsuarioRepository>();

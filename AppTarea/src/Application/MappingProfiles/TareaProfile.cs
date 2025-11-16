@@ -12,8 +12,8 @@ namespace Application.MappingProfiles
            CreateMap<Tarea, TareaDTO>()
               .ForMember(dest => dest.creado_por, opt => opt.MapFrom(src => src.creado_por))
               .ForMember(dest => dest.asignado_a, opt => opt.MapFrom(src => src.asignado_a))
-              .ForMember(dest => dest.nombre_creador, opt => opt.MapFrom(src => src.creador.nombre))
-              .ForMember(dest => dest.nombre_asignado, opt => opt.MapFrom(src => src.asignado.nombre))
+              .ForMember(dest => dest.nombre_creador, opt => opt.Ignore()) // Se configurará en el handler
+              .ForMember(dest => dest.nombre_asignado, opt => opt.Ignore()) // Se configurará en el handler
               .ForMember(dest => dest.nombre_columna, opt => opt.MapFrom(src => src.columna.nombre))
               .ForMember(dest => dest.nombre_tablero, opt => opt.MapFrom(src => src.tablero.nombre))
               .ForMember(dest => dest.estado_fechaVencimiento, opt =>opt.MapFrom(src =>

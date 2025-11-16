@@ -8,21 +8,9 @@ namespace AppTarea.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Tablero> builder)
         {
-            //Relación entre Tablero y Usuario
-
-            builder.HasOne(t => t.usuario) // Un Tablero tiene un Usuario
-            .WithMany(u => u.Tableros) // Un Usuario puede tener muchos Tableros
-            .HasForeignKey(t => t.creado_por) // La clave externa en Tablero es "creado_por"
-            .OnDelete(DeleteBehavior.Restrict);
-
-            // Relación con Rol
-            builder.HasOne(t => t.rol)
-            .WithMany()
-            .HasForeignKey(t => t.id_rol)
-            .OnDelete(DeleteBehavior.Restrict);
-                
-
-
+            // creado_por es solo un campo de referencia a AspNetUsers (sin navegación para mantener Domain limpio)
+            // id_rol es solo un campo de referencia a AspNetRoles (sin navegación para mantener Domain limpio)
+            
             // Relación con Tareas
             builder.HasMany(t => t.tareas)
             .WithOne(tr => tr.tablero)

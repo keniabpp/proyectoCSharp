@@ -1,18 +1,24 @@
-
-using Moq;
 using Application.Features.Tareas.Commands;
 using Application.Features.Tareas.DTOs;
 using Application.Features.Tareas.Handlers;
-using Domain.Entities;
-using Domain.Interfaces;
-using AutoMapper;
 using Application.Features.Tareas.Queries;
+using Application.Interfaces;
+using AutoMapper;
+using Domain.Entities;
 using Domain.Enums;
+using Domain.Interfaces;
+using Moq;
+using Xunit;
+
+namespace Tests.Application.TareaTests;
 
 public class TareaHandlerTests
 {
+    /// <summary>
+    /// Verifica que CreateTareaHandler cree una tarea correctamente con todas las dependencias válidas
+    /// </summary>
     [Fact]
-    public async Task CreatedTarea()
+    public async Task CreateAsync_Should_ReturnTareaDTO_When_AllDependenciesAreValid()
     {
         // Arrange
         var dto = new TareaCreateDTO
@@ -34,8 +40,8 @@ public class TareaHandlerTests
         var tareaRepo = new Mock<ITareaRepository>();
         tareaRepo.Setup(r => r.CreateAsync(It.IsAny<Tarea>())).ReturnsAsync(tarea);
 
-        var usuarioRepo = new Mock<IUsuarioRepository>();
-        usuarioRepo.Setup(r => r.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(usuario);
+        var usuarioService = new Mock<IApplicationUserService>();
+        usuarioService.Setup(s => s.GetUserNameByIdAsync(It.IsAny<int>())).ReturnsAsync("Usuario Test");
 
         var tableroRepo = new Mock<ITableroRepository>();
         tableroRepo.Setup(r => r.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(tablero);
@@ -48,7 +54,7 @@ public class TareaHandlerTests
         mapper.Setup(m => m.Map<TareaDTO>(tarea)).Returns(new TareaDTO { id_tarea = 1, titulo = tarea.titulo });
 
         var handler = new CreateTareaHandler(
-            tareaRepo.Object, mapper.Object, usuarioRepo.Object, columnaRepo.Object, tableroRepo.Object
+            tareaRepo.Object, mapper.Object, usuarioService.Object, columnaRepo.Object, tableroRepo.Object
         );
 
         // Act
@@ -61,8 +67,11 @@ public class TareaHandlerTests
     }
 
 
+    /// <summary>
+    /// Verifica que el creador de una tarea pueda eliminarla correctamente
+    /// </summary>
     [Fact]
-    public async Task CreadorEliminaTarea()
+    public async Task DeleteAsync_Should_ReturnTrue_When_UserIsCreator()
     {
         // Arrange
         var tarea = new Tarea { id_tarea = 1, creado_por = 10 };
@@ -83,8 +92,11 @@ public class TareaHandlerTests
 
 
 
+    /// <summary>
+    /// Verifica que un usuario que no es el creador no pueda eliminar la tarea
+    /// </summary>
     [Fact]
-    public async Task NoCreadorEliminaTarea()
+    public async Task DeleteAsync_Should_ThrowInvalidOperationException_When_UserIsNotCreator()
     {
         // Arrange
         var tarea = new Tarea { id_tarea = 1, creado_por = 10 };
@@ -99,27 +111,39 @@ public class TareaHandlerTests
         repoMock.Verify(r => r.DeleteAsync(It.IsAny<int>()), Times.Never);
     }
 
+    /// <summary>
+    /// Verifica que GetAllTareasHandler devuelva todas las tareas correctamente
+    /// </summary>
     [Fact]
-    public async Task GetAllTareas()
+    public async Task GetAllAsync_Should_ReturnAllTareas_When_Called()
     {
+        // Arrange
         var tareas = new[] { new Tarea { id_tarea = 1, titulo = "fin" }, new Tarea { id_tablero = 2, descripcion = "prueba" } };
 
         var repoMock = new Mock<ITareaRepository>();
         repoMock.Setup(r => r.GetAllAsync()).ReturnsAsync(tareas);
 
+        var usuarioServiceMock = new Mock<IApplicationUserService>();
+        usuarioServiceMock.Setup(s => s.GetUserNameByIdAsync(It.IsAny<int>())).ReturnsAsync("Usuario Test");
+
         var mapperMock = new Mock<IMapper>();
         mapperMock.Setup(m => m.Map<IEnumerable<TareaDTO>>(tareas))
         .Returns(tareas.Select(t => new TareaDTO { id_tarea = t.id_tarea, titulo = t.titulo, descripcion = t.descripcion }));
 
-        var handler = new GetAllTareasHandler(repoMock.Object, mapperMock.Object);
+        var handler = new GetAllTareasHandler(repoMock.Object, mapperMock.Object, usuarioServiceMock.Object);
 
+        // Act
         var result = await handler.Handle(new GetAllTareasQuery(), default);
 
+        // Assert
         Assert.Equal(2, result.Count());
     }
 
+    /// <summary>
+    /// Verifica que GetTareaByIdHandler lance KeyNotFoundException cuando la tarea no existe
+    /// </summary>
     [Fact]
-    public async Task GetByIdTarea()
+    public async Task GetByIdAsync_Should_ThrowKeyNotFoundException_When_TareaDoesNotExist()
     {
         // Arrange
         var repo = new Mock<ITareaRepository>();
@@ -127,8 +151,11 @@ public class TareaHandlerTests
         // Configura el mock para lanzar una excepción si no encuentra el usuario
         repo.Setup(r => r.GetByIdAsync(999)).ThrowsAsync(new KeyNotFoundException("Tarea no encontrada."));
 
+        var usuarioServiceMock = new Mock<IApplicationUserService>();
+        usuarioServiceMock.Setup(s => s.GetUserNameByIdAsync(It.IsAny<int>())).ReturnsAsync("Usuario Test");
+
         var mapper = new Mock<IMapper>();
-        var handler = new GetTareaByIdHandler(repo.Object, mapper.Object);
+        var handler = new GetTareaByIdHandler(repo.Object, mapper.Object, usuarioServiceMock.Object);
 
         // Act & Assert
         var exception = await Assert.ThrowsAsync<KeyNotFoundException>(async () =>
@@ -138,12 +165,17 @@ public class TareaHandlerTests
         Assert.Equal("Tarea no encontrada.", exception.Message);
     }
 
+    /// <summary>
+    /// Verifica que el creador pueda actualizar la tarea correctamente
+    /// </summary>
     [Fact]
-    public async Task UpdateTareaCreador()
+    public async Task UpdateAsync_Should_ReturnUpdatedTarea_When_UserIsCreator()
     {
         // Arrange
         var tareaRepoMock = new Mock<ITareaRepository>();
         var mapperMock = new Mock<IMapper>();
+        var usuarioServiceMock = new Mock<IApplicationUserService>();
+        usuarioServiceMock.Setup(s => s.GetUserNameByIdAsync(It.IsAny<int>())).ReturnsAsync("Usuario Test");
 
         var tareaExistente = new Tarea { id_tarea = 1, creado_por = 10, titulo = "prueba" };
         var updateDto = new TareaUpdateDTO { titulo = "pruebas", descripcion = "hacer las pruebas" };
@@ -154,7 +186,7 @@ public class TareaHandlerTests
         mapperMock.Setup(m => m.Map(updateDto, tareaExistente));
         mapperMock.Setup(m => m.Map<TareaDTO>(tareaExistente)).Returns(new TareaDTO { id_tarea = 1, titulo = "Nuevo título", descripcion = "Nueva desc", detalle = "X", nombre_columna = "Y", estado_fechaVencimiento = "Z" });
 
-        var handler = new UpdateTareaHandler(tareaRepoMock.Object, mapperMock.Object);
+        var handler = new UpdateTareaHandler(tareaRepoMock.Object, mapperMock.Object, usuarioServiceMock.Object);
 
         // Act
         var result = await handler.Handle(command, CancellationToken.None);
@@ -165,12 +197,17 @@ public class TareaHandlerTests
         Assert.Equal("Nueva desc", result.descripcion);
     }
 
+    /// <summary>
+    /// Verifica que un usuario que no es el creador no pueda actualizar la tarea
+    /// </summary>
     [Fact]
-    public async Task UpdateTareaNoCreador()
+    public async Task UpdateAsync_Should_ThrowInvalidOperationException_When_UserIsNotCreator()
     {
         // Arrange
         var tareaRepoMock = new Mock<ITareaRepository>();
         var mapperMock = new Mock<IMapper>();
+        var usuarioServiceMock = new Mock<IApplicationUserService>();
+        usuarioServiceMock.Setup(s => s.GetUserNameByIdAsync(It.IsAny<int>())).ReturnsAsync("Usuario Test");
 
         var tareaExistente = new Tarea { id_tarea = 1, creado_por = 10, titulo = "prueba" };
         var updateDto = new TareaUpdateDTO { titulo = "pruebas", descripcion = "hacer las pruebas" };
@@ -178,7 +215,7 @@ public class TareaHandlerTests
 
         tareaRepoMock.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(tareaExistente);
 
-        var handler = new UpdateTareaHandler(tareaRepoMock.Object, mapperMock.Object);
+        var handler = new UpdateTareaHandler(tareaRepoMock.Object, mapperMock.Object, usuarioServiceMock.Object);
 
         // Act
         var exception = await Assert.ThrowsAsync<InvalidOperationException>(
@@ -190,11 +227,17 @@ public class TareaHandlerTests
     }
 
 
+    /// <summary>
+    /// Verifica que GetTareasAsignadasHandler devuelva las tareas asignadas a un usuario
+    /// </summary>
     [Fact]
-    public async Task TareasAsignadas()
+    public async Task GetTareasAsignadas_Should_ReturnAssignedTareas_When_UserHasTareas()
     {
+        // Arrange
         var repo = new Mock<ITareaRepository>();
         var mapper = new Mock<IMapper>();
+        var usuarioServiceMock = new Mock<IApplicationUserService>();
+        usuarioServiceMock.Setup(s => s.GetUserNameByIdAsync(It.IsAny<int>())).ReturnsAsync("Usuario Test");
 
         repo.Setup(r => r.TareasAsignadasAsync(1))
         .ReturnsAsync(new List<Tarea> { new Tarea { id_tarea = 1, titulo = "Tarea prueba" } });
@@ -202,21 +245,28 @@ public class TareaHandlerTests
         mapper.Setup(m => m.Map<List<TareaDTO>>(It.IsAny<List<Tarea>>()))
         .Returns(new List<TareaDTO> { new TareaDTO { id_tarea = 1, titulo = "Tarea prueba", descripcion = "d", detalle = "x", nombre_columna = "c", estado_fechaVencimiento = "e" } });
 
-        var handler = new GetTareasAsignadasHandler(repo.Object, mapper.Object);
+        var handler = new GetTareasAsignadasHandler(repo.Object, mapper.Object, usuarioServiceMock.Object);
 
+        // Act
         var result = await handler.Handle(new GetTareasAsignadasQuery(1), default);
 
+        // Assert
         Assert.Single(result);
         Assert.Equal("Tarea prueba", result[0].titulo);
     }
 
+    /// <summary>
+    /// Verifica que MoverTareaHandler mueva la tarea a otra columna correctamente
+    /// </summary>
     [Fact]
-    public async Task TareaFueMovidaCorrectamente()
+    public async Task MoverTareaAsync_Should_ReturnTrue_When_TareaIsMovedSuccessfully()
     {
         // Arrange
         var tareaRepo = new Mock<ITareaRepository>();
         var columnaRepo = new Mock<IColumnaRepository>();
         var mapper = new Mock<IMapper>();
+        var usuarioServiceMock = new Mock<IApplicationUserService>();
+        usuarioServiceMock.Setup(s => s.GetUserNameByIdAsync(It.IsAny<int>())).ReturnsAsync("Usuario Test");
 
         var tarea = new Tarea
         {
@@ -242,7 +292,7 @@ public class TareaHandlerTests
             id_columna = 2
         });
 
-        var handler = new MoverTareaHandler(tareaRepo.Object, columnaRepo.Object, mapper.Object);
+        var handler = new MoverTareaHandler(tareaRepo.Object, columnaRepo.Object, mapper.Object, usuarioServiceMock.Object);
         var command = new MoverTareaCommand(new MoverTareaDTO { id_tarea = 1, id_columna = 2, detalle = "gryytytyt" }, 5);
 
         // Act

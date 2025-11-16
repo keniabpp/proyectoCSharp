@@ -1,56 +1,62 @@
-// using AppTarea.Infrastructure.Persistence.Context;
-// using Domain.Entities;
-// using Domain.Enums;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using AppTarea.Infrastructure.Identity;
 
-// namespace AppTarea.Infrastructure.Persistence.SeedData
-// {
-//     public static class DbInitializer
-//     {
-//         public static void SeedRoles(AppDbContext context)
-//         {
-//             if (!context.Roles.Any())
-//             {
-//                 context.Roles.AddRange(
-//                     new Rol { nombre = "Admin" },
-//                     new Rol { nombre = "Usuario" }
-//                 );
-//                 context.SaveChanges();
-//             }
-//         }
+namespace AppTarea.Infrastructure.Persistence.Context
+{
+    public static class SeedData
+    {
+        public static async Task SeedAsync(AppDbContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        {
+            // Asegurar que la base de datos existe
+            await context.Database.EnsureCreatedAsync();
 
-        
+            // Seed de Roles predeterminados en Identity
+            await SeedRolesAsync(roleManager);
+            
+            // Seed de Usuario administrador (opcional)
+            await SeedAdminUserAsync(userManager, roleManager);
+        }
 
+        private static async Task SeedRolesAsync(RoleManager<ApplicationRole> roleManager)
+        {
+            // Roles predeterminados
+            string[] roleNames = { "Admin", "Usuario" };
 
-       
+            foreach (var roleName in roleNames)
+            {
+                if (!await roleManager.RoleExistsAsync(roleName))
+                {
+                    var role = new ApplicationRole(roleName);
+                    await roleManager.CreateAsync(role);
+                }
+            }
+        }
 
-//         public static void SeedColumnas(AppDbContext context)
-//         {
-//             if (!context.Columnas.Any())
-//             {
-//                 context.Columnas.AddRange(
-//                     new Columna
-//                     {
-//                         nombre = "Por hacer",
-//                         posicion = EstadoColumna.PorHacer
-//                     },
-//                     new Columna
-//                     {
-//                         nombre = "En progreso",
-//                         posicion = EstadoColumna.EnProgreso
-//                     },
-//                     new Columna
-//                     {
-//                         nombre = "Hecho",
-//                         posicion = EstadoColumna.Hecho
-//                     }
-//                 );
+        private static async Task SeedAdminUserAsync(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        {
+            // Crear usuario administrador por defecto si no existe
+            var adminEmail = "admin@apptarea.com";
+            var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
-//                 context.SaveChanges();
-//             }
-//         }
+            if (adminUser == null)
+            {
+                adminUser = new ApplicationUser
+                {
+                    UserName = adminEmail,
+                    Email = adminEmail,
+                    Nombre = "Administrador",
+                    Apellido = "Sistema",
+                    EmailConfirmed = true
+                };
 
+                var result = await userManager.CreateAsync(adminUser, "Admin123!");
 
-       
-
-//     }
-// }
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(adminUser, "Admin");
+                }
+            }
+        }
+    }
+}

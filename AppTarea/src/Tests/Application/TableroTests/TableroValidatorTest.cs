@@ -1,15 +1,21 @@
-
-using FluentValidation.TestHelper;
 using Application.Features.Tableros.Commands;
 using Application.Features.Tableros.DTOs;
 using Application.Features.Tableros.Validator;
-using Domain.Interfaces;
-using Moq;
 using Domain.Entities;
-public class TableroTestsValidator
+using Domain.Interfaces;
+using FluentValidation.TestHelper;
+using Moq;
+using Xunit;
+
+namespace Tests.Application.TableroTests;
+
+public class TableroValidatorTests
 {
+    /// <summary>
+    /// Verifica que CreateTableroCommandValidator valide correctamente cuando el nombre está vacío
+    /// </summary>
     [Fact]
-    public async Task CreateTablero()
+    public async Task Validate_Should_HaveError_When_NombreIsEmpty()
     {
         // Arrange
         var validator = new CreateTableroCommandValidator();
@@ -27,8 +33,11 @@ public class TableroTestsValidator
         result.ShouldHaveValidationErrorFor(c => c.TableroCreateDTO.nombre).WithErrorMessage("El nombre del tablero es obligatorio");
     }
 
+    /// <summary>
+    /// Verifica que DeleteTableroCommandValidator valide cuando el tablero no existe
+    /// </summary>
     [Fact]
-    public async Task DeleteTablero()
+    public async Task Validate_Should_HaveError_When_TableroDoesNotExist()
     {
         // Arrange
         var repo = new Mock<ITableroRepository>();

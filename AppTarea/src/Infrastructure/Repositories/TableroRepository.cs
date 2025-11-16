@@ -20,10 +20,7 @@ namespace AppTarea.Infrastructure.Repositories
             _context.Tableros.Add(tablero);
             await _context.SaveChangesAsync();
 
-            await _context.Entry(tablero).Reference(t => t.usuario).LoadAsync();
-            await _context.Entry(tablero).Reference(t => t.rol).LoadAsync();
-
-           return tablero;
+            return tablero;
         }
 
         public async Task<bool> DeleteAsync(int id)
@@ -38,12 +35,12 @@ namespace AppTarea.Infrastructure.Repositories
         
         public async Task<IEnumerable<Tablero>> GetAllAsync()
         {
-            return await _context.Tableros.Include(t => t.usuario).Include(t => t.rol).ToListAsync();
+            return await _context.Tableros.ToListAsync();
         }
 
         public async Task<Tablero?> GetByIdAsync(int id)
         {
-            return await _context.Tableros.Include(t => t.usuario)
+            return await _context.Tableros
            .FirstOrDefaultAsync(t => t.id_tablero == id);
 
         }
@@ -52,7 +49,6 @@ namespace AppTarea.Infrastructure.Repositories
         {
             var tableroExistente = await _context.Tableros.FindAsync(id);
             await _context.SaveChangesAsync();
-            await _context.Entry(tableroExistente!).Reference(t => t.usuario).LoadAsync();
 
             return tableroExistente!;
         }

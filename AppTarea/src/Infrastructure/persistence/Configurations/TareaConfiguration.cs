@@ -8,18 +8,6 @@ namespace AppTarea.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Tarea> builder)
         {
-            //Relación con Usuario (creador)
-            builder.HasOne(t => t.creador)
-                   .WithMany(u => u.tareas_creadas)
-                   .HasForeignKey(t => t.creado_por)
-                   .OnDelete(DeleteBehavior.Restrict);
-
-            // Relación con Usuario (asignado)
-            builder.HasOne(t => t.asignado)
-                   .WithMany(u => u.tareas_asignadas)
-                   .HasForeignKey(t => t.asignado_a)
-                   .OnDelete(DeleteBehavior.Restrict);
-
             // Relación con Tablero
             builder.HasOne(t => t.tablero)
                    .WithMany(tb => tb.tareas)
@@ -32,7 +20,8 @@ namespace AppTarea.Infrastructure.Persistence.Configurations
                    .HasForeignKey(t => t.id_columna)
                    .OnDelete(DeleteBehavior.Restrict);
 
-            
+            // No se configuran relaciones con Usuario para mantener la pureza del dominio
+            // Solo se usan IDs (creado_por, asignado_a) para referenciar AspNet Identity
         }
     }
 }

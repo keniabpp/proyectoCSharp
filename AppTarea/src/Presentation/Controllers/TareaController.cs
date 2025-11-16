@@ -5,6 +5,7 @@ using Application.Features.Tareas.Queries;
 using Application.Features.Tareas.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Presentation.Controllers
 {
@@ -67,7 +68,7 @@ namespace Presentation.Controllers
         public async Task<ActionResult<Tarea>> Update(int id, [FromBody] TareaUpdateDTO tareaUpdateDTO)
         {
             // Extraer el ID del usuario autenticado desde el token JWT
-            var id_usuario_claim = User.FindFirst("id")?.Value;
+            var id_usuario_claim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(id_usuario_claim))
             return Unauthorized("No se pudo identificar al usuario.");
 
@@ -85,7 +86,7 @@ namespace Presentation.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             // Extraer el ID del usuario autenticado desde el token JWT
-            var id_usuario_claim = User.FindFirst("id")?.Value;
+            var id_usuario_claim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(id_usuario_claim))
             return Unauthorized("No se pudo identificar al usuario.");
 
@@ -104,7 +105,7 @@ namespace Presentation.Controllers
         public async Task<IActionResult> MoverTarea([FromBody] MoverTareaDTO moverTareaDTO)
         {
            // Extraer el ID del usuario autenticado desde el token
-           var id_usuario_claim = User.FindFirst("id")?.Value;
+           var id_usuario_claim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
            if (string.IsNullOrEmpty(id_usuario_claim))
            return Unauthorized("No se pudo identificar al usuario.");
 

@@ -16,12 +16,12 @@ namespace AppTarea.Infrastructure.Repositories
 
         public async Task<IEnumerable<Usuario>> GetAllAsync()
         {
-            return await _context.Usuarios.Include(u => u.Rol).ToListAsync();
+            return await _context.Usuarios.ToListAsync();
         }
 
         public async Task<Usuario?> GetByIdAsync(int id)
         {
-            return await _context.Usuarios.Include(u => u.Rol)
+            return await _context.Usuarios
             .FirstOrDefaultAsync(u => u.id_usuario == id);
 
         }
@@ -30,7 +30,6 @@ namespace AppTarea.Infrastructure.Repositories
         {
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
-            await _context.Entry(usuario).Reference(u => u.Rol).LoadAsync();
 
             return usuario;
         }
@@ -39,7 +38,6 @@ namespace AppTarea.Infrastructure.Repositories
         {
             var usuarioExistente = await _context.Usuarios.FindAsync(id);
             await _context.SaveChangesAsync();
-            await _context.Entry(usuarioExistente!).Reference(u => u.Rol).LoadAsync();
             return usuarioExistente!;
         }
 
@@ -55,7 +53,7 @@ namespace AppTarea.Infrastructure.Repositories
 
         public async Task<Usuario?> GetByEmailAsync(string email)
         {
-            return await _context.Usuarios.Include(u => u.Rol).FirstOrDefaultAsync(u => u.email == email);
+            return await _context.Usuarios.FirstOrDefaultAsync(u => u.email == email);
         }
         
         

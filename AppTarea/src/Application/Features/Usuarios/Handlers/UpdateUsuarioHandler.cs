@@ -4,6 +4,7 @@ using Domain.Interfaces;
 using MediatR;
 using AutoMapper;
 using Application.Features.Usuarios.DTOs;
+using Application.Interfaces;
 
 namespace Application.Features.Usuarios.Handlers
 {
@@ -11,11 +12,13 @@ namespace Application.Features.Usuarios.Handlers
     {
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IMapper _mapper;
+        private readonly IRoleService _roleService;
 
-        public UpdateUsuarioHandler(IUsuarioRepository usuarioRepository, IMapper mapper)
+        public UpdateUsuarioHandler(IUsuarioRepository usuarioRepository, IMapper mapper, IRoleService roleService)
         {
             _usuarioRepository = usuarioRepository;
             _mapper = mapper;
+            _roleService = roleService;
         }
 
         public async Task<UsuarioDTO> Handle(UpdateUsuarioCommand request, CancellationToken cancellationToken)
@@ -38,7 +41,12 @@ namespace Application.Features.Usuarios.Handlers
 
             await _usuarioRepository.UpdateAsync(request.Id, usuarioExistente);
             
-            return _mapper.Map<UsuarioDTO>(usuarioExistente);
+            var usuarioDTO = _mapper.Map<UsuarioDTO>(usuarioExistente);
+            
+            // Poblar rolNombre
+            usuarioDTO.rolNombre = await _roleService.GetRoleNameByIdAsync(usuarioDTO.id_rol) ?? string.Empty;
+            
+            return usuarioDTO;
         }
     }
 }

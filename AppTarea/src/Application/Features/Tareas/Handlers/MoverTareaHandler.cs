@@ -4,6 +4,8 @@ using AutoMapper;
 using Domain.Enums;
 using Domain.Interfaces;
 using MediatR;
+using Application.Interfaces;
+
 namespace Application.Features.Tareas.Handlers
 {
     public class MoverTareaHandler : IRequestHandler<MoverTareaCommand, TareaDTO>
@@ -11,12 +13,14 @@ namespace Application.Features.Tareas.Handlers
         private readonly ITareaRepository _tareaRepository;
         private readonly IColumnaRepository _columnaRepository;
         private readonly IMapper _mapper;
+        private readonly IApplicationUserService _usuarioService;
 
-        public MoverTareaHandler(ITareaRepository tareaRepository, IColumnaRepository columnaRepository,  IMapper mapper)
+        public MoverTareaHandler(ITareaRepository tareaRepository, IColumnaRepository columnaRepository, IMapper mapper, IApplicationUserService usuarioService)
         {
             _tareaRepository = tareaRepository;
             _columnaRepository = columnaRepository;
             _mapper = mapper;
+            _usuarioService = usuarioService;
         }
 
         public async Task<TareaDTO> Handle(MoverTareaCommand request, CancellationToken cancellationToken)
@@ -46,8 +50,13 @@ namespace Application.Features.Tareas.Handlers
             
             var tareaActualizada = await _tareaRepository.GetByIdAsync(request.MoverTareaDTO.id_tarea);
 
+            var tareaDTO = _mapper.Map<TareaDTO>(tareaActualizada);
             
-            return _mapper.Map<TareaDTO>(tareaActualizada);
+            // Poblar nombre_creador y nombre_asignado
+            tareaDTO.nombre_creador = await _usuarioService.GetUserNameByIdAsync(tareaDTO.creado_por) ?? string.Empty;
+            tareaDTO.nombre_asignado = await _usuarioService.GetUserNameByIdAsync(tareaDTO.asignado_a) ?? string.Empty;
+            
+            return tareaDTO;
         }
         
         

@@ -40,7 +40,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Tablero>> Create([FromBody] TableroCreateDTO tableroCreateDTO)
         {
             var command = new CreateTableroCommand(tableroCreateDTO);
@@ -50,7 +50,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Tablero>> Update(int id, [FromBody] TableroUpdateDTO tableroUpdateDTO)
         {
             var command = new UpdateTableroCommand(id, tableroUpdateDTO);

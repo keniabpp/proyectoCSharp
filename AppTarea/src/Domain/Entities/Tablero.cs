@@ -16,15 +16,13 @@ namespace Domain.Entities
         public string nombre { get; set; } = string.Empty;
         public DateTime creado_en { get; set; } = DateTime.Now;
 
-        [ForeignKey("Usuario")]
-        public int creado_por { get; set; } // Clave foránea
-        public Usuario usuario { get; set; } = null!;
+        // Referencia al usuario de Identity por ID (sin navegación para mantener Domain limpio)
+        [Column("creado_por")]
+        public int creado_por { get; set; }
         
-        [ForeignKey("Rol")]
+        // Referencia al rol de Identity por ID (sin navegación para mantener Domain limpio)
         [Column("id_rol")]
         public int id_rol { get; set; }
-
-        public Rol rol { get; set; } = null!;
 
         [InverseProperty("tablero")]
         public ICollection<Tarea> tareas { get; set; } = new List<Tarea>();

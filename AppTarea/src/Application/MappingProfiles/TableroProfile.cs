@@ -11,8 +11,8 @@ namespace Application.MappingProfiles
         {
             // Lectura: Entidad → DTO
             CreateMap<Tablero, TableroDTO>()
-            .ForMember(dest => dest.nombre_usuario, opt => opt.MapFrom(src => src.usuario.nombre))
-            .ForMember(dest => dest.nombre_rol, opt => opt.MapFrom(src => src.rol.nombre));
+            .ForMember(dest => dest.nombre_usuario, opt => opt.Ignore()) // Se configurará en el handler con lógica de AspNetUsers
+            .ForMember(dest => dest.nombre_rol, opt => opt.Ignore()); // Se configurará en el handler con lógica de AspNetRoles
 
             // Creación: DTO → Entidad
             CreateMap<TableroCreateDTO, Tablero>()

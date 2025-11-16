@@ -29,13 +29,9 @@ namespace Domain.Entities
 
         public int id_columna { get; set; }
 
-        // Propiedades de navegación
-        [ForeignKey("creado_por")]
-        public Usuario creador { get; set; } = null!;
-
-        [ForeignKey("asignado_a")]
-        public Usuario asignado { get; set; } = null!;
-
+        // Propiedades de navegación solo a entidades del Domain
+        // creado_por y asignado_a referencian AspNetUsers por ID (sin navegación para mantener Domain limpio)
+        
         [ForeignKey("id_tablero")]
         public Tablero tablero { get; set; } = null!;
 

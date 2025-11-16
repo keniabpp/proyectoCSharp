@@ -33,13 +33,13 @@ namespace AppTarea.Infrastructure.Repositories
 
         public async Task<IEnumerable<Tarea>> GetAllAsync()
         {
-            return await _context.Tareas.Include(t => t.creador).Include(t => t.asignado).Include(t => t.tablero)
+            return await _context.Tareas.Include(t => t.tablero)
             .Include(t => t.columna).ToListAsync();
         }
 
         public async Task<Tarea?> GetByIdAsync(int id)
         {
-            return await _context.Tareas.Include(t => t.creador).Include(t => t.asignado)
+            return await _context.Tareas
             .Include(t => t.tablero).Include(t => t.columna).FirstOrDefaultAsync(t => t.id_tarea == id);
 
             
@@ -56,7 +56,7 @@ namespace AppTarea.Infrastructure.Repositories
 
         public async Task<List<Tarea>> TareasAsignadasAsync(int id_usuario)
         {
-            return await _context.Tareas.Include(t => t.creador).Include(t => t.asignado)
+            return await _context.Tareas
             .Include(t => t.columna).Include(t => t.tablero).Where(t => t.asignado_a == id_usuario).ToListAsync();
         }
 
@@ -65,8 +65,6 @@ namespace AppTarea.Infrastructure.Repositories
             var tareaExistente = await _context.Tareas.FindAsync(id);
             
             await _context.SaveChangesAsync();
-            await _context.Entry(tareaExistente!).Reference(t => t.creador).LoadAsync();
-            await _context.Entry(tareaExistente!).Reference(t => t.asignado).LoadAsync();
 
             return tareaExistente!;
         }

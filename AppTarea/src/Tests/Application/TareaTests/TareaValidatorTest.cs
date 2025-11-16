@@ -1,18 +1,22 @@
-using Xunit;
-using Moq;
-using FluentValidation.TestHelper;
 using Application.Features.Tareas.Commands;
 using Application.Features.Tareas.DTOs;
-using Application.Features.Tareas.Validator;
-using Domain.Interfaces;
-using Domain.Entities;
-using System.Threading.Tasks;
 using Application.Features.Tareas.Queries;
+using Application.Features.Tareas.Validator;
+using Domain.Entities;
+using Domain.Interfaces;
+using FluentValidation.TestHelper;
+using Moq;
+using Xunit;
+
+namespace Tests.Application.TareaTests;
 
 public class TareaValidatorTests
 {
+    /// <summary>
+    /// Verifica que CreateTareaCommandValidator no tenga errores cuando todos los datos son válidos
+    /// </summary>
     [Fact]
-    public async Task CreatedTarea()
+    public async Task Validate_Should_NotHaveErrors_When_AllDataIsValid()
     {
         // Arrange
         var usuarioRepoMock = new Mock<IUsuarioRepository>();
@@ -49,8 +53,11 @@ public class TareaValidatorTests
         result.ShouldNotHaveAnyValidationErrors();
     }
 
+    /// <summary>
+    /// Verifica que DeleteTareaCommandValidator no tenga errores cuando la tarea existe
+    /// </summary>
     [Fact]
-    public async Task DeleteTarea()
+    public async Task Validate_Should_NotHaveErrors_When_TareaExists()
     {
         // Arrange
         var repoMock = new Mock<ITareaRepository>();
@@ -68,8 +75,11 @@ public class TareaValidatorTests
         result.ShouldNotHaveAnyValidationErrors();
     }
 
+    /// <summary>
+    /// Verifica que GetTareaByIdQueryValidator no tenga errores cuando la tarea existe
+    /// </summary>
     [Fact]
-    public async Task TareaById()
+    public async Task Validate_Should_NotHaveErrors_When_TareaExistsById()
     {
         // Arrange
         var repoMock = new Mock<ITareaRepository>();
@@ -87,8 +97,11 @@ public class TareaValidatorTests
         result.ShouldNotHaveAnyValidationErrors();
     }
 
+    /// <summary>
+    /// Verifica que MoverTareaCommandValidator no tenga errores cuando tarea y columna existen
+    /// </summary>
     [Fact]
-    public async Task MoverTareaColumna()
+    public async Task Validate_Should_NotHaveErrors_When_TareaAndColumnaExist()
     {
         // Arrange
         var tareaRepoMock = new Mock<ITareaRepository>();
@@ -113,8 +126,11 @@ public class TareaValidatorTests
         result.ShouldNotHaveAnyValidationErrors();
     }
 
+    /// <summary>
+    /// Verifica que UpdateTareaCommandValidator no tenga errores cuando la tarea existe
+    /// </summary>
     [Fact]
-    public async Task UpdateTarea()
+    public async Task Validate_Should_NotHaveErrors_When_TareaExistsForUpdate()
     {
         // Arrange
         var repoMock = new Mock<ITareaRepository>();

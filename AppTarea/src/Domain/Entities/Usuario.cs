@@ -38,20 +38,9 @@ namespace Domain.Entities
         public string contrasena { get; set; } = string.Empty;
         [JsonIgnore]
 
-        public ICollection<Tablero> Tableros { get; set; } = new List<Tablero>();
-
-        [ForeignKey("Rol")]
+        // id_rol referencia AspNetRoles por ID (sin navegación para mantener Domain limpio)
         [Column("id_rol")]
         public int id_rol { get; set; }
-
-        public Rol? Rol { get; set; }
-
-        // Relaciones con tareas
-        [InverseProperty("creador")]
-        public ICollection<Tarea> tareas_creadas { get; set; } = new List<Tarea>();
-
-        [InverseProperty("asignado")]
-        public ICollection<Tarea> tareas_asignadas { get; set; } = new List<Tarea>();
 
         public Usuario() { }
 
