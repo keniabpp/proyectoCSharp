@@ -14,7 +14,6 @@ export class AdminHeader {
   constructor(private router: Router) {}
 
    logout() {
-    localStorage.removeItem('token');
     this.router.navigate(['/login']);
   }
 

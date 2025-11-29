@@ -11,7 +11,7 @@ export class AdminGuard implements CanActivate {
   canActivate(): boolean {
     const rol = localStorage.getItem('rol');
 
-    if (rol === 'admin') {
+    if (rol && rol.toLowerCase() === 'admin') {
       return true;
     }
 

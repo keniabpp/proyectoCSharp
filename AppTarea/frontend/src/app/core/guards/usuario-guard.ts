@@ -13,7 +13,7 @@ export class UsuarioGuard implements CanActivate {
   canActivate(): boolean {
     const rol = localStorage.getItem('rol');
 
-    if (rol === 'usuario') {
+    if (rol && rol.toLowerCase() === 'usuario') {
       return true;
     }
 

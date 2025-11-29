@@ -5,19 +5,19 @@
         <form (ngSubmit)="login()" #loginForm="ngForm">
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" [(ngModel)]="credentials.email" placeholder="Perez@.com" autocomplete="email">
+                <input type="email" class="form-control" id="email" name="Email" [(ngModel)]="credentials.Email" placeholder="Perez@.com" autocomplete="email" required>
             </div>
 
             <div class="mb-3">
                 <label for="contrasena" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="contrasena" name="contrasena" [(ngModel)]="credentials.contrasena"
-                placeholder="Que contenga números y MAYÚSCULAS" autocomplete="current-password">
+                <input type="password" class="form-control" id="contrasena" name="Contrasena" [(ngModel)]="credentials.Contrasena"
+                placeholder="Que contenga números y MAYÚSCULAS" autocomplete="current-password" required>
             </div>
 
             <div>
-                <button type="submit" class="btn btn-success w-100" [disabled]="loginForm.invalid">Iniciar Sesion</button>
+                <button type="submit" class="btn btn-success w-100" [disabled]="loginForm.invalid">Iniciar Sesión</button>
             </div>
-            <div *ngIf="errorMessage" class="text-danger mt-2">
+            <div *ngIf="errorMessage" class="alert alert-danger mt-2 text-center">
                 {{ errorMessage }}
             </div>
         </form>
