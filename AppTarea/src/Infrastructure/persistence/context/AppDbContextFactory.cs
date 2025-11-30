@@ -10,8 +10,8 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
     {
         var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
         
-        // Configuración de conexión para design time - usar la misma DB que la aplicación
-        var connectionString = "Server=localhost;Database=Tarea;Integrated Security=True;TrustServerCertificate=True;";
+        var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION")
+                               ?? "Server=localhost;Database=Tarea;Integrated Security=True;TrustServerCertificate=True;";
         
         optionsBuilder.UseSqlServer(connectionString);
         

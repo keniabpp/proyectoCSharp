@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 
 
 using Application;
@@ -18,6 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 //Configuración local + secretos del Secret Manager
 builder.Configuration
 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+.AddEnvironmentVariables()
 .AddUserSecrets<Program>();
 
 // Configurar servicios de infraestructura (incluye Identity)
@@ -92,7 +94,7 @@ using (var scope = app.Services.CreateScope())
         var roleManager = services.GetRequiredService<RoleManager<ApplicationRole>>();
         
         // Aplicar migraciones pendientes
-        await context.Database.EnsureCreatedAsync();
+        await context.Database.MigrateAsync();
         
         // Ejecutar seed data para crear roles por defecto
         await AppTarea.Infrastructure.Persistence.Context.SeedData.SeedAsync(context, userManager, roleManager);

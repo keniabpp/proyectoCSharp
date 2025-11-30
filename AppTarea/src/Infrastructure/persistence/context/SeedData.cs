@@ -15,7 +15,18 @@ namespace AppTarea.Infrastructure.Persistence.Context
             await SeedRolesAsync(roleManager);
             
             // Seed de Usuario administrador (opcional)
-            await SeedAdminUserAsync(userManager, roleManager);
+            // await SeedAdminUserAsync(userManager, roleManager);
+                // Seed columnas iniciales si no existen
+                if (!context.Columnas.Any())
+                {
+                    context.Columnas.AddRange(new List<Domain.Entities.Columna>
+                    {
+                        new Domain.Entities.Columna("Por Hacer", Domain.Enums.EstadoColumna.PorHacer),
+                        new Domain.Entities.Columna("En Progreso", Domain.Enums.EstadoColumna.EnProgreso),
+                        new Domain.Entities.Columna("Hecho", Domain.Enums.EstadoColumna.Hecho)
+                    });
+                    await context.SaveChangesAsync();
+                }
         }
 
         private static async Task SeedRolesAsync(RoleManager<ApplicationRole> roleManager)
@@ -33,30 +44,30 @@ namespace AppTarea.Infrastructure.Persistence.Context
             }
         }
 
-        private static async Task SeedAdminUserAsync(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
-        {
-            // Crear usuario administrador por defecto si no existe
-            var adminEmail = "admin@apptarea.com";
-            var adminUser = await userManager.FindByEmailAsync(adminEmail);
+        // private static async Task SeedAdminUserAsync(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        // {
+        //     // Crear usuario administrador por defecto si no existe
+        //     var adminEmail = "admin@apptarea.com";
+        //     var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
-            if (adminUser == null)
-            {
-                adminUser = new ApplicationUser
-                {
-                    UserName = adminEmail,
-                    Email = adminEmail,
-                    Nombre = "Administrador",
-                    Apellido = "Sistema",
-                    EmailConfirmed = true
-                };
+        //     if (adminUser == null)
+        //     {
+        //         adminUser = new ApplicationUser
+        //         {
+        //             UserName = adminEmail,
+        //             Email = adminEmail,
+        //             Nombre = "Administrador",
+        //             Apellido = "Sistema",
+        //             EmailConfirmed = true
+        //         };
 
-                var result = await userManager.CreateAsync(adminUser, "Admin123!");
+        //         var result = await userManager.CreateAsync(adminUser, "Admin123!");
 
-                if (result.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(adminUser, "Admin");
-                }
-            }
-        }
+        //         if (result.Succeeded)
+        //         {
+        //             await userManager.AddToRoleAsync(adminUser, "Admin");
+        //         }
+        //     }
+        // }
     }
 }

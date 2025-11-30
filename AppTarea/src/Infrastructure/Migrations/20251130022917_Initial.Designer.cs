@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251113220943_CreateAllTables")]
-    partial class CreateAllTables
+    [Migration("20251130022917_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -173,26 +173,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("Columnas");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Rol", b =>
-                {
-                    b.Property<int>("id_rol")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id_rol");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_rol"));
-
-                    b.Property<string>("nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("nombre");
-
-                    b.HasKey("id_rol");
-
-                    b.ToTable("Roles");
-                });
-
             modelBuilder.Entity("Domain.Entities.Tablero", b =>
                 {
                     b.Property<int>("id_tablero")
@@ -208,7 +188,8 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("creado_por")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("creado_por");
 
                     b.Property<int>("id_rol")
                         .HasColumnType("int")
@@ -221,10 +202,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("id_tablero");
 
                     b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("creado_por");
-
-                    b.HasIndex("id_rol");
 
                     b.ToTable("Tableros");
                 });
@@ -269,10 +246,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id_tarea");
-
-                    b.HasIndex("asignado_a");
-
-                    b.HasIndex("creado_por");
 
                     b.HasIndex("id_columna");
 
@@ -325,8 +298,6 @@ namespace Infrastructure.Migrations
                         .HasColumnName("telefono");
 
                     b.HasKey("id_usuario");
-
-                    b.HasIndex("id_rol");
 
                     b.ToTable("Usuarios");
                 });
@@ -449,38 +420,10 @@ namespace Infrastructure.Migrations
                     b.HasOne("AppTarea.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany("Tableros")
                         .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("Domain.Entities.Usuario", "usuario")
-                        .WithMany("Tableros")
-                        .HasForeignKey("creado_por")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Rol", "rol")
-                        .WithMany()
-                        .HasForeignKey("id_rol")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("rol");
-
-                    b.Navigation("usuario");
                 });
 
             modelBuilder.Entity("Domain.Entities.Tarea", b =>
                 {
-                    b.HasOne("Domain.Entities.Usuario", "asignado")
-                        .WithMany("tareas_asignadas")
-                        .HasForeignKey("asignado_a")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Usuario", "creador")
-                        .WithMany("tareas_creadas")
-                        .HasForeignKey("creado_por")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entities.Columna", "columna")
                         .WithMany("tareas")
                         .HasForeignKey("id_columna")
@@ -493,24 +436,9 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("asignado");
-
                     b.Navigation("columna");
 
-                    b.Navigation("creador");
-
                     b.Navigation("tablero");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Usuario", b =>
-                {
-                    b.HasOne("Domain.Entities.Rol", "Rol")
-                        .WithMany()
-                        .HasForeignKey("id_rol")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Rol");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -582,15 +510,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Tablero", b =>
                 {
                     b.Navigation("tareas");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Usuario", b =>
-                {
-                    b.Navigation("Tableros");
-
-                    b.Navigation("tareas_asignadas");
-
-                    b.Navigation("tareas_creadas");
                 });
 #pragma warning restore 612, 618
         }

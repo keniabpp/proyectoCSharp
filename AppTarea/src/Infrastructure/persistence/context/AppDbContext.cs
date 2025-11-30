@@ -14,7 +14,6 @@ namespace AppTarea.Infrastructure.Persistence.Context
 
         // Mantener las entidades existentes para compatibilidad
         public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Rol> RolesCustom { get; set; } // Renombrado para evitar conflicto con Identity
         public DbSet<Tablero> Tableros { get; set; }
         public DbSet<Columna> Columnas { get; set; }
         public DbSet<Tarea> Tareas { get; set; }
