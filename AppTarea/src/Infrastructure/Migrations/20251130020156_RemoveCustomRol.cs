@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateAllTables : Migration
+    public partial class RemoveCustomRol : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -42,16 +42,21 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Roles",
+                name: "Usuarios",
                 columns: table => new
                 {
-                    id_rol = table.Column<int>(type: "int", nullable: false)
+                    id_usuario = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    apellido = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    telefono = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    contrasena = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    id_rol = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roles", x => x.id_rol);
+                    table.PrimaryKey("PK_Usuarios", x => x.id_usuario);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,30 +114,6 @@ namespace Infrastructure.Migrations
                         principalTable: "ApplicationRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Usuarios",
-                columns: table => new
-                {
-                    id_usuario = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    apellido = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    telefono = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    contrasena = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    id_rol = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Usuarios", x => x.id_usuario);
-                    table.ForeignKey(
-                        name: "FK_Usuarios_Roles_id_rol",
-                        column: x => x.id_rol,
-                        principalTable: "Roles",
-                        principalColumn: "id_rol",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -240,18 +221,6 @@ namespace Infrastructure.Migrations
                         column: x => x.ApplicationUserId,
                         principalTable: "ApplicationUsers",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Tableros_Roles_id_rol",
-                        column: x => x.id_rol,
-                        principalTable: "Roles",
-                        principalColumn: "id_rol",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Tableros_Usuarios_creado_por",
-                        column: x => x.creado_por,
-                        principalTable: "Usuarios",
-                        principalColumn: "id_usuario",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -284,18 +253,6 @@ namespace Infrastructure.Migrations
                         column: x => x.id_tablero,
                         principalTable: "Tableros",
                         principalColumn: "id_tablero",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Tareas_Usuarios_asignado_a",
-                        column: x => x.asignado_a,
-                        principalTable: "Usuarios",
-                        principalColumn: "id_usuario",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Tareas_Usuarios_creado_por",
-                        column: x => x.creado_por,
-                        principalTable: "Usuarios",
-                        principalColumn: "id_usuario",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -349,26 +306,6 @@ namespace Infrastructure.Migrations
                 column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tableros_creado_por",
-                table: "Tableros",
-                column: "creado_por");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tableros_id_rol",
-                table: "Tableros",
-                column: "id_rol");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tareas_asignado_a",
-                table: "Tareas",
-                column: "asignado_a");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tareas_creado_por",
-                table: "Tareas",
-                column: "creado_por");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Tareas_id_columna",
                 table: "Tareas",
                 column: "id_columna");
@@ -377,11 +314,6 @@ namespace Infrastructure.Migrations
                 name: "IX_Tareas_id_tablero",
                 table: "Tareas",
                 column: "id_tablero");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Usuarios_id_rol",
-                table: "Usuarios",
-                column: "id_rol");
         }
 
         /// <inheritdoc />
@@ -406,6 +338,9 @@ namespace Infrastructure.Migrations
                 name: "Tareas");
 
             migrationBuilder.DropTable(
+                name: "Usuarios");
+
+            migrationBuilder.DropTable(
                 name: "Columnas");
 
             migrationBuilder.DropTable(
@@ -415,13 +350,7 @@ namespace Infrastructure.Migrations
                 name: "ApplicationUsers");
 
             migrationBuilder.DropTable(
-                name: "Usuarios");
-
-            migrationBuilder.DropTable(
                 name: "ApplicationRoles");
-
-            migrationBuilder.DropTable(
-                name: "Roles");
         }
     }
 }

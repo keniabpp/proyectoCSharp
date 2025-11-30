@@ -16,9 +16,12 @@ namespace AppTarea.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             // Configurar DbContext
+
+            var connStr = configuration.GetConnectionString("DefaultConnection");
+            Console.WriteLine($"[DEBUG] Cadena de conexión usada: {connStr}");
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(
-                    configuration.GetConnectionString("DefaultConnection"),
+                    connStr,
                     sqlServerOptions => sqlServerOptions.EnableRetryOnFailure(
                         maxRetryCount: 5,             // Número máximo de reintentos
                         maxRetryDelay: TimeSpan.FromSeconds(10), // Tiempo máximo de espera entre reintentos
