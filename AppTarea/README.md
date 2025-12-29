@@ -115,3 +115,15 @@ El proyecto sigue el patrón **Onion Architecture**:
 - **Presentation** → API con controladores, configuración y dependencias.  
 - **Tests** → Pruebas unitarias.  
 
+
+
+## 🧪 Pruebas unitarias (Backend)
+
+Para ejecutar los tests unitarios del backend, usa el siguiente comando desde la carpeta src/Tests:
+
+```bash
+dotnet test
+```
+
+Esto ejecutará todas las pruebas del backend y mostrará el resultado en la terminal
+
