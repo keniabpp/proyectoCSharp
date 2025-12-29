@@ -24,10 +24,10 @@ export class Login {
 
   login() {
     this.errorMessage = '';
-    
+    // console.log('Enviando credenciales:', this.credentials);
     this.authService.login(this.credentials).subscribe({
       next: (response) => {
-        
+        // console.log('Respuesta del backend:', response);
         // Adaptar a minúsculas o mayúsculas según la respuesta
         const rol = response.rol || response.Rol;
         localStorage.setItem('id', response.id_usuario?.toString() || '');
